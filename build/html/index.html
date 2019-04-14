@@ -1,0 +1,181 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Welcome &#8212; Dyssol Help 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Your first simulation with Dyssol" href="first.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="first.html" title="Your first simulation with Dyssol"
+             accesskey="N">next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="welcome">
+<h1>Welcome<a class="headerlink" href="#welcome" title="Permalink to this headline">¶</a></h1>
+<p>Dyssol, the <strong>dy</strong>namic <strong>s</strong>imulation of <strong>sol</strong>ids processes, is a novel dynamic flowsheet modelling system designed to simulate the time-dependent behaviour of complex production processes in solids processing technology. Key features including:</p>
+<ul class="simple">
+<li>Dynamic simulation of flowsheets to reflect the time-dependent behaviour of processes and to take into account the accumulation of mass and energy;</li>
+<li>Proper calculation of multidimensional distributed parameters of the solid phase, considering their possible interdependence;</li>
+<li>Flexibility and extensibility of the system for adding new models of apparatuses and solvers.</li>
+</ul>
+<p>And distinctive features including:</p>
+<ul class="simple">
+<li>Dynamic simulation of complex process structures;</li>
+<li>Advanced calculation algorithm for dynamic simulations;</li>
+<li>Consideration of solid, liquid, gas phases and their mixtures;</li>
+<li>Proper handling of multidimensional interdependent distributed parameters of solids;</li>
+<li>Providing standardized interfaces and templates for implementation of new units;</li>
+<li>High modularity and extensibility.</li>
+</ul>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">This help documentation explains you:</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="first.html">Your first simulation with Dyssol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="operation.html">Units library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="materials.html">Material database</a></li>
+<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">Unit developement</a></li>
+</ul>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="approaches-and-methods">
+<h2>Approaches and methods<a class="headerlink" href="#approaches-and-methods" title="Permalink to this headline">¶</a></h2>
+<p>The new system is based on the sequential-modular approach, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the units’ library with new models. To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.</p>
+<p>An example flowsheet of a granulation process is shown in the figure below.</p>
+<a class="reference internal image-reference" href="_images/egFlowsheet.png"><img alt="example flowsheet of a granulation process" class="align-center" src="_images/egFlowsheet.png" style="width: 650px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="flowsheet-simulation-of-solids">
+<h2>Flowsheet simulation of solids<a class="headerlink" href="#flowsheet-simulation-of-solids" title="Permalink to this headline">¶</a></h2>
+<p>One of the main challenges in simulation of solids processes is associated with the dispersity of granular materials: the solid phase can be distributed along several interdependent parameters, such as size, shape, moisture content or density. For correct handling of solids in this case an approach with transformation matrices is used (see figure below showing the application of the transformation matrix on the example of a sieve model). This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.</p>
+<a class="reference internal image-reference" href="_images/transMat.png"><img alt="approach with transformation matrices" class="align-center" src="_images/transMat.png" style="width: 800px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="software-system-architecture">
+<h2>Software system architecture<a class="headerlink" href="#software-system-architecture" title="Permalink to this headline">¶</a></h2>
+<p>To implement the Dyssol system, the C++ programming language and the object oriented paradigm are used (see figure below). To maximize the modularity of the simulation environment, models of units are not directly integrated into the framework, but may be implemented as separate objects and then added to the library of units.</p>
+<a class="reference internal image-reference" href="_images/archi.png"><img alt="" class="align-center" src="_images/archi.png" style="width: 500px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="further-information">
+<h1>Further information<a class="headerlink" href="#further-information" title="Permalink to this headline">¶</a></h1>
+<p>Dyssol project is funded by German Research Foundation (DFG) via SPP 1679 ‘’Dyn-Sim-FP’‘.</p>
+<p>Following references are applied in Dyssol project:</p>
+<ol class="arabic simple">
+<li>Skorych, V., Dosta, M., Hartge, E.-U., Heinrich, S.: Novel system for dynamic flowsheet simulation of solids processes. Powder Technology 314 (2017), 665-679.</li>
+<li>Skorych, V., Dosta, M., Hartge, E.-U., Heinrich, S., Ahrens, R., Le Borne, S.: Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes. Advanced Powder Technology  30 (2019), 555-564.</li>
+</ol>
+<p>If you need help, please contact…</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></li>
+<li><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></li>
+<li><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></li>
+</ul>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="#">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Welcome</a><ul>
+<li><a class="reference internal" href="#approaches-and-methods">Approaches and methods</a></li>
+<li><a class="reference internal" href="#flowsheet-simulation-of-solids">Flowsheet simulation of solids</a></li>
+<li><a class="reference internal" href="#software-system-architecture">Software system architecture</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#further-information">Further information</a></li>
+<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
+</ul>
+
+  <h4>Next topic</h4>
+  <p class="topless"><a href="first.html"
+                        title="next chapter">Your first simulation with Dyssol</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="first.html" title="Your first simulation with Dyssol"
+             >next</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Xiye Zhou.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>
