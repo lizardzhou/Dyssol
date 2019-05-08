@@ -33,7 +33,7 @@ And distinctive features including:
    :caption: This help documentation explains you:
 
    first
-   operation
+   units
    simulation
    materials
    evaluation
@@ -83,11 +83,13 @@ Further information
 
 Dyssol project is funded by German Research Foundation (DFG) via SPP 1679 ''Dyn-Sim-FP''.
 
-Following references are applied in Dyssol project: 
 
-1. Skorych, V., Dosta, M., Hartge, E.-U., Heinrich, S.: Novel system for dynamic flowsheet simulation of solids processes. Powder Technology 314 (2017), 665-679.
+.. seealso::
 
-2. Skorych, V., Dosta, M., Hartge, E.-U., Heinrich, S., Ahrens, R., Le Borne, S.: Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes. Advanced Powder Technology  30 (2019), 555-564.
+	1. Skorych, V., Dosta, M., Hartge, E.-U., Heinrich, S.: Novel system for dynamic flowsheet simulation of solids processes. Powder Technology 314 (2017), 665-679.
+
+	2. Skorych, V., Dosta, M., Hartge, E.-U., Heinrich, S., Ahrens, R., Le Borne, S.: Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes. Advanced Powder Technology  30 (2019), 555-564.
+
 
 If you need help, please contact...
 

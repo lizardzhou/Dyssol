@@ -1,53 +1,6 @@
-=============
-Units library
-=============
-
-Introduction to available operation units...
-
-
-|
-
-Mixer
------
-
-A mixer mixes two input material streams (:math:`In1`, :math:`In2`) into the one output stream (:math:`Out`), as shown in the scheme below.
-
-.. image:: ./pics/units/mixer.png
-   :width: 300px
-   :alt: mixer
-   :align: center
-
-The output stream will be defined for all time points for which the streams :math:`In1` and :math:`In2` are defined. Mixing of more streams can be implemented by connecting of several mixers sequentially.
-
-The parameters of output stream are calculated as:
-
-.. math::
-
-		\dot{m}_{out} &= \dot{m}_{in1}+\dot{m}_{in2}
-		
-		T_{out} &= \frac{ T_{in1}\,\dot{m}_{in1} + T_{in2}\,\dot{m}_{in2}}{\dot{m}_{out} } 
-		
-		P_{out} &= min( P_{in1},P_{in2} )
-
-
-where :math:`\dot{m}` is a mass flow, :math:`T` is a temperature and :math:`P` is a pressure.
-
-All secondary attributes of output stream, such as phase fractions, compounds fractions and multidimensional distributions are calculating depending on mass fractions of input streams.
-
-
-Application example
-^^^^^^^^^^^^^^^^^^^
-Write some text about the input and output data...
-
-.. image:: ./pics/units/mixer-eg.png
-   :width: 500px
-   :alt: mixer example
-   :align: center
-
-|
-
+========
 Splitter
---------
+========
 
 A splitter divides input stream (:math:`In`) into two output streams (:math:`Out1` and :math:`Out2`), as shown in the figure below.
 
@@ -197,53 +150,6 @@ One example for probability model...
 
 
 One example for Teipel / Hennig model...
-
-
-Crusher
--------
-
-
-
-Bunker
-------
-
-
-
-Granulator
-----------
-
-
-
-Batch cystallizer
------------------
-
-
-One-dimensonal
-^^^^^^^^^^^^^^
-
-
-Two-dimensonal
-^^^^^^^^^^^^^^
-
-
-
-Electrostatic precipitator
---------------------------
-
-
-
-
-
-Heat exchanger
---------------
-
-
-
-
-Calciner
---------
-
-
 
 
 
