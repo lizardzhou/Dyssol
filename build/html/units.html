@@ -45,6 +45,16 @@
   <div class="section" id="units-library">
 <h1>Units library<a class="headerlink" href="#units-library" title="Permalink to this headline">¶</a></h1>
 <p>An operation unit is a …</p>
+<div class="section" id="inlet-flow">
+<h2>Inlet flow<a class="headerlink" href="#inlet-flow" title="Permalink to this headline">¶</a></h2>
+<p>This unit allows defining the parameters of the input material, showing in the figure below.</p>
+<a class="reference internal image-reference" href="_images/inletflow.png"><img alt="mixer example" class="align-center" src="_images/inletflow.png" style="width: 300px;" /></a>
+</div>
+<div class="section" id="outlet-flow">
+<h2>Outlet flow<a class="headerlink" href="#outlet-flow" title="Permalink to this headline">¶</a></h2>
+<p>This unit serves to connect the output material flows, as shown in the figure below.</p>
+<a class="reference internal image-reference" href="_images/outletflow.png"><img alt="mixer example" class="align-center" src="_images/outletflow.png" style="width: 200px;" /></a>
+</div>
 <div class="section" id="mixer">
 <h2>Mixer<a class="headerlink" href="#mixer" title="Permalink to this headline">¶</a></h2>
 <p>A mixer mixes two input material streams (<span class="math notranslate nohighlight">\(In1\)</span>, <span class="math notranslate nohighlight">\(In2\)</span>) into the one output stream (<span class="math notranslate nohighlight">\(Out\)</span>), as shown in the scheme below.</p>
@@ -63,67 +73,12 @@
 <p class="last"><span class="math notranslate nohighlight">\(P\)</span> - pressure</p>
 </div>
 <p>All secondary attributes of output stream, such as phase fractions, compounds fractions and multidimensional distributions are calculated depending on mass fractions of input streams.</p>
-<div class="section" id="application-example">
-<h3>Application example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h3>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>Input parameters needed for the simulation:</p>
-<p>Mass flow in kg/s, value must be positive.</p>
-<p>Temperatur in K, value must be positive. ?</p>
-<p>Pressure in Pa, value must be positive. ?</p>
-<p>Phase fraction ?</p>
-<p class="last">Sauter diameter ?</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file at <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Mixer.dlfw&gt;</span></code>.</p>
 </div>
-<p>You can find a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Mixer.dlfw&gt;</span></code>.</p>
-<p>Input model parameters:</p>
-<table border="1" class="docutils">
-<colgroup>
-<col width="18%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-<col width="20%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">&#160;</th>
-<th class="head" colspan="2">Input 1</th>
-<th class="head" colspan="2">Input 2</th>
-</tr>
-<tr class="row-even"><th class="head">Timepoint [s]</th>
-<th class="head">Massflow [kg/s]</th>
-<th class="head">Temperature [K]</th>
-<th class="head">Massflow [kg/s]</th>
-<th class="head">Temperature [K]</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-odd"><td>0</td>
-<td>10</td>
-<td>300</td>
-<td>5</td>
-<td>400</td>
-</tr>
-<tr class="row-even"><td>60</td>
-<td>7.5</td>
-<td>300</td>
-<td>10</td>
-<td>400</td>
-</tr>
-</tbody>
-</table>
 <div class="line-block">
 <div class="line"><br /></div>
-</div>
-<p>Simulation result for mass flows:</p>
-<a class="reference internal image-reference" href="_images/mixer-egMass.png"><img alt="mixer example" class="align-center" src="_images/mixer-egMass.png" style="width: 700px;" /></a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<p>Simulation result for temperatures:</p>
-<a class="reference internal image-reference" href="_images/mixer-egTemp.png"><img alt="mixer example" class="align-center" src="_images/mixer-egTemp.png" style="width: 700px;" /></a>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </div>
 </div>
 <div class="section" id="splitter">
@@ -140,99 +95,315 @@
 <p><span class="math notranslate nohighlight">\(\dot{m}\)</span> - mass flow</p>
 <p class="last"><span class="math notranslate nohighlight">\(K_{splitt}\)</span> - Splitting factor</p>
 </div>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
-<div class="section" id="id1">
-<h3>Application example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Input parameters needed for the simulation:</p>
-<p>Mass flow in kg/s, value must be positive.</p>
-<p class="last">Splitting factor, value must between 0 and 1.</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="18%" />
+<col width="35%" />
+<col width="14%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Ksplitt</td>
+<td>Splitting factor</td>
+<td>[–]</td>
+<td>0 ≤ Ksplitt ≤ 1</td>
+</tr>
+</tbody>
+</table>
 </div>
-<p>Write some text about an example…</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file at <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Splitter.dlfw&gt;</span></code>.</p>
+</div>
 <div class="line-block">
 <div class="line"><br /></div>
-</div>
 </div>
 </div>
 <div class="section" id="screen">
 <h2>Screen<a class="headerlink" href="#screen" title="Permalink to this headline">¶</a></h2>
 <p>Screen unit is designed for classification of input material into two fractions according to particle size distribution (PSD), as shown below.</p>
 <a class="reference internal image-reference" href="_images/screen.png"><img alt="screen" class="align-center" src="_images/screen.png" style="width: 300px;" /></a>
-<p>In Dyssol, 4 models are available to describe the screen grade efficiency.</p>
-<p>In the following figure several grade efficiency curves for different parameters of separations sharpness are shown.</p>
+<p>In Dyssol, 4 models are available to describe the screen grade efficiency:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Plitt’s model</li>
+<li>Molerus &amp; Hoffmann model</li>
+<li>Probability model</li>
+<li>Teipel / Hennig model</li>
+</ul>
+</div></blockquote>
+<p>In the following figure, several grade efficiency curves for different parameters of separations sharpness are shown.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This figure only applies to the Plitt’s model and Molerus &amp; Hoffmann model.</p>
+</div>
 <a class="reference internal image-reference" href="_images/splitter-alpha.png"><img alt="splitter" class="align-center" src="_images/splitter-alpha.png" style="width: 500px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 <div class="section" id="plitt-s-model">
 <h3>Plitt’s model<a class="headerlink" href="#plitt-s-model" title="Permalink to this headline">¶</a></h3>
+<p>This model is described using the following equation:</p>
 <div class="math notranslate nohighlight">
 \[G(x_i) = 1 - exp\left(-0.693\,\left(\frac{x_i}{x_{cut}}\right)^\alpha\right)\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Notations applied in the models:</p>
 <p><span class="math notranslate nohighlight">\(G(x_i)\)</span> – grade efficiency: mass fraction of material within the size class <span class="math notranslate nohighlight">\(i\)</span> in the feed (<span class="math notranslate nohighlight">\(\dot{m}_{i,input}\)</span>) that leaves the screen in the coarse stream (<span class="math notranslate nohighlight">\(\dot{m}_{i,coarse}\)</span>)</p>
-<p><span class="math notranslate nohighlight">\(x_{cut}\)</span> – cut size of the classification model in meter, must have a non-negative value</p>
-<p><span class="math notranslate nohighlight">\(\alpha\)</span> – separation sharpness, value must between 0 and 100</p>
+<p><span class="math notranslate nohighlight">\(x_{cut}\)</span> – cut size of the classification model in meter</p>
+<p><span class="math notranslate nohighlight">\(\alpha\)</span> – sharpness of separation</p>
 <p class="last"><span class="math notranslate nohighlight">\(x_i\)</span> – size of a particle</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="8%" />
+<col width="19%" />
+<col width="45%" />
+<col width="8%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Xcut</td>
+<td><span class="math notranslate nohighlight">\(x_{cut}\)</span></td>
+<td>Cut size of the classification model</td>
+<td>[m]</td>
+<td>Xcut &gt; 0</td>
+</tr>
+<tr class="row-odd"><td>Alpha</td>
+<td><span class="math notranslate nohighlight">\(\alpha\)</span></td>
+<td>Sharpness of separation</td>
+<td>[–]</td>
+<td>0 ≤ Alpha ≤ 100</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file at <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Screen</span> <span class="pre">Plitt.dlfw&gt;</span></code>.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last">Plitt, L.R.: The analysis of solid–solid separations in classifiers. CIM Bulletin 64 (708), p. 42–47, 1971</p>
 </div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 <div class="section" id="molerus-hoffmann-model">
 <h3>Molerus &amp; Hoffmann model<a class="headerlink" href="#molerus-hoffmann-model" title="Permalink to this headline">¶</a></h3>
+<p>This model is described using the following equation:</p>
 <div class="math notranslate nohighlight">
 \[G(x_i) = \dfrac{1}{1 + \left( \dfrac{x_{cut}}{x_i} \right)^2 \cdot exp\left( \alpha \,\left( 1 - \left(\dfrac{x_i}{x_{cut}}\right)^2 \right)\right)}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Notations applied in the models:</p>
-<p><span class="math notranslate nohighlight">\(G(x_i)\)</span> – grade efficiency: mass fraction of material within the size class <span class="math notranslate nohighlight">\(i\)</span> in the feed (<span class="math notranslate nohighlight">\(\dot{m}_{i,input}\)</span>) that leaves the screen in the coarse stream (<span class="math notranslate nohighlight">\(\dot{m}_{i,coarse}\)</span>)</p>
-<p><span class="math notranslate nohighlight">\(x_{cut}\)</span> – cut size of the classification model in meter, must have a non-negative value</p>
-<p><span class="math notranslate nohighlight">\(\alpha\)</span> – separation sharpness, value must between 0 and 100</p>
+<p><span class="math notranslate nohighlight">\(G(x_i)\)</span> – grade efficiency: mass fraction of material within the size class <span class="math notranslate nohighlight">\(i\)</span> in the feed that leaves the screen in the coarse stream</p>
+<p><span class="math notranslate nohighlight">\(x_{cut}\)</span> – cut size of the classification model</p>
+<p><span class="math notranslate nohighlight">\(\alpha\)</span> – sharpness of separation</p>
 <p class="last"><span class="math notranslate nohighlight">\(x_i\)</span> – size of a particle</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="8%" />
+<col width="20%" />
+<col width="44%" />
+<col width="8%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Xcut</td>
+<td><span class="math notranslate nohighlight">\(x_{cut}\)</span></td>
+<td>Cut size of the classification model</td>
+<td>[m]</td>
+<td>Xcut &gt; 0</td>
+</tr>
+<tr class="row-odd"><td>Alpha</td>
+<td><span class="math notranslate nohighlight">\(\alpha\)</span></td>
+<td>Sharpness of separation</td>
+<td>[–]</td>
+<td>0 &lt; Alpha ≤ 100</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file at <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Screen</span> <span class="pre">Molerus-Hoffmann.dlfw&gt;</span></code>.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last">Molerus, O.; Hoffmann, H.: Darstellung von Windsichtertrennkurven durch ein stochastisches Modell, Chemie Ingenieur Technik, 41 (5+6), 1969, pp. 340-344</p>
 </div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 <div class="section" id="probability-model">
 <h3>Probability model<a class="headerlink" href="#probability-model" title="Permalink to this headline">¶</a></h3>
+<p>This model is described using the following equation:</p>
 <div class="math notranslate nohighlight">
 \[G(x_i) = \dfrac{ \sum\limits^{x_i}_{0} e^{-\dfrac{(x_i - \mu)^2}{2\sigma^2}} }{ \sum\limits^{N}_{0} e^{-\dfrac{(x_i - \mu)^2}{2\sigma^2}} }\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Notations applied in this model:</p>
-<p><span class="math notranslate nohighlight">\(G(x_i)\)</span> – grade efficiency: mass fraction of material within the size class <span class="math notranslate nohighlight">\(i\)</span> in the feed (<span class="math notranslate nohighlight">\(\dot{m}_{i,input}\)</span>) that leaves the screen in the coarse stream (<span class="math notranslate nohighlight">\(\dot{m}_{i,coarse}\)</span>)</p>
+<p><span class="math notranslate nohighlight">\(G(x_i)\)</span> – grade efficiency: mass fraction of material within the size class <span class="math notranslate nohighlight">\(i\)</span> in the feed that leaves the screen in the coarse stream</p>
 <p><span class="math notranslate nohighlight">\(x_i\)</span> – size of a particle</p>
-<p><span class="math notranslate nohighlight">\(\sigma\)</span> – standard deviation of the normal output distribution in meter, must be non-negative</p>
-<p><span class="math notranslate nohighlight">\(\mu\)</span> – mean of the normal output distribution in meter, must be non-negative</p>
+<p><span class="math notranslate nohighlight">\(\sigma\)</span> – standard deviation of the normal output distribution</p>
+<p><span class="math notranslate nohighlight">\(\mu\)</span> – mean of the normal output distribution</p>
 <p class="last"><span class="math notranslate nohighlight">\(N\)</span> – number of classes of particle size distribution</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="18%" />
+<col width="12%" />
+<col width="47%" />
+<col width="5%" />
+<col width="18%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Mean</td>
+<td><span class="math notranslate nohighlight">\(\mu\)</span></td>
+<td>Mean of the normal output distribution</td>
+<td>[m]</td>
+<td>Mean &gt; 0</td>
+</tr>
+<tr class="row-odd"><td>Standard deviation</td>
+<td><span class="math notranslate nohighlight">\(\sigma\)</span></td>
+<td>Standard deviation of the normal output distribution</td>
+<td>[m]</td>
+<td>Standard deviation &gt; 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Screen</span> <span class="pre">Probability.dlfw&gt;</span></code>.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last">Radichkov, R.; Müller, T.; Kienle, A.; Heinrich, S.; Peglow, M.; Mörl, L.: A numerical bifurcation analysis of continuous fluidized bed spray granulation with external product classification, Chemical Engineering and Processing 45, 2006, pp. 826–837</p>
 </div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 <div class="section" id="teipel-hennig-model">
 <h3>Teipel / Hennig model<a class="headerlink" href="#teipel-hennig-model" title="Permalink to this headline">¶</a></h3>
+<p>This model is described using the following equation:</p>
 <div class="math notranslate nohighlight">
 \[G(x_i) = \left(  1-   \left( 1 + 3 \cdot \left( \dfrac{x_i}{x_{cut}} \right)^{\left(\dfrac{x_i}{x_{cut}} + \alpha \right)\cdot \beta} \right)^{-1/2}    \right) \cdot (1 - a) + a\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Notations applied in the models:</p>
-<p><span class="math notranslate nohighlight">\(G(x_i)\)</span> – grade efficiency: mass fraction of material within the size class <span class="math notranslate nohighlight">\(i\)</span> in the feed (<span class="math notranslate nohighlight">\(\dot{m}_{i,input}\)</span>) that leaves the screen in the coarse stream (<span class="math notranslate nohighlight">\(\dot{m}_{i,coarse}\)</span>)</p>
-<p><span class="math notranslate nohighlight">\(x_{cut}\)</span> – cut size of the classification model in meter, must have a non-negative value</p>
-<p><span class="math notranslate nohighlight">\(\alpha\)</span> – separation sharpness, value must between 0 and 100</p>
-<p><span class="math notranslate nohighlight">\(\beta\)</span> - separation sharpness, value must between 0 and 100</p>
-<p><span class="math notranslate nohighlight">\(a\)</span> - separation offset, value must between 0 and 1</p>
+<p><span class="math notranslate nohighlight">\(G(x_i)\)</span> – grade efficiency: mass fraction of material within the size class <span class="math notranslate nohighlight">\(i\)</span> in the feed that leaves the screen in the coarse stream</p>
+<p><span class="math notranslate nohighlight">\(x_{cut}\)</span> – cut size of the classification model</p>
+<p><span class="math notranslate nohighlight">\(\alpha\)</span> – sharpness of separation</p>
+<p><span class="math notranslate nohighlight">\(\beta\)</span> - sharpness of separation</p>
+<p><span class="math notranslate nohighlight">\(a\)</span> - separation offset</p>
 <p class="last"><span class="math notranslate nohighlight">\(x_i\)</span> – size of a particle</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="8%" />
+<col width="18%" />
+<col width="46%" />
+<col width="8%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Xcut</td>
+<td><span class="math notranslate nohighlight">\(x_{cut}\)</span></td>
+<td>Cut size of the classification model</td>
+<td>[m]</td>
+<td>Xcut &gt; 0</td>
+</tr>
+<tr class="row-odd"><td>Alpha</td>
+<td><span class="math notranslate nohighlight">\(\alpha\)</span></td>
+<td>Sharpness of separation 1</td>
+<td>[–]</td>
+<td>0 &lt; Alpha ≤ 100</td>
+</tr>
+<tr class="row-even"><td>Beta</td>
+<td><span class="math notranslate nohighlight">\(\beta\)</span></td>
+<td>Sharpness of separation 2</td>
+<td>[–]</td>
+<td>0 &lt; Beta ≤ 100</td>
+</tr>
+<tr class="row-odd"><td>Offset</td>
+<td><span class="math notranslate nohighlight">\(a\)</span></td>
+<td>Separation offset</td>
+<td>[–]</td>
+<td>0 ≤ Offset ≤ 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Screen</span> <span class="pre">Teipel-Hennig.dlfw&gt;</span></code>.</p>
 </div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <p class="last">Hennig, M. and Teipel, U. (2016), Stationäre Siebklassierung. Chemie Ingenieur Technik, 88: 911–918</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
 </div>
 </div>
 </div>
@@ -240,26 +411,92 @@
 <h2>Crusher<a class="headerlink" href="#crusher" title="Permalink to this headline">¶</a></h2>
 <p>A crusher comminutes the input material stream and reduces the average particle size. The schema is illustrated below.</p>
 <a class="reference internal image-reference" href="_images/crusher.png"><img alt="splitter" class="align-center" src="_images/crusher.png" style="width: 200px;" /></a>
-<p>This unit can be described using 3 models in Dyssol: Bond’s model, cone model and const model.</p>
+<p>This unit can be described using 3 models in Dyssol:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Bond’s model</li>
+<li>Cone model</li>
+<li>Const model</li>
+</ul>
+</div></blockquote>
 <div class="section" id="bond-s-model">
 <h3>Bond’s model<a class="headerlink" href="#bond-s-model" title="Permalink to this headline">¶</a></h3>
-<p>This model is used to perform milling of the input stream. The crushing is performed according to the model proposed by Bond.</p>
+<p>This model is used to perform milling of the input stream. The crushing is performed according to the model proposed by Bond. The simplification is made, and the particle size distribution of the output stream is described by the normal function.</p>
 <div class="math notranslate nohighlight">
-\[x_{out} = \dfrac{1}{ \left( \dfrac{P}{10\,w_i\,\dot{m}} + \dfrac{1}{\sqrt{x_{in}}} \right)^2}\]</div>
-<p>After simplification, the particle size distribution of the output stream is described with normal function:</p>
+\[x_{80,out} = \dfrac{1}{ \left( \dfrac{P}{10\,w_i\,\dot{m}} + \dfrac{1}{\sqrt{x_{80,in}}} \right)^2}\]</div>
+<div class="math notranslate nohighlight">
+\[\mu = x_{80,out} - 0.83\sigma\]</div>
 <div class="math notranslate nohighlight">
 \[q_3(x) = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-\dfrac{(x-\mu)^2}{2\sigma^2}}\]</div>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p>Notations applied in this model:</p>
-<p><span class="math notranslate nohighlight">\(x_{out}\)</span> – characteristic particle size of the output stream (<span class="math notranslate nohighlight">\(x_{80}\)</span>)</p>
-<p><span class="math notranslate nohighlight">\(x_{in}\)</span> – characteristic particle size of the input stream (<span class="math notranslate nohighlight">\(x_{80}\)</span>)</p>
+<p><span class="math notranslate nohighlight">\(x_{80,out}\)</span> – characteristic particle size of the output stream</p>
+<p><span class="math notranslate nohighlight">\(x_{80,in}\)</span> – characteristic particle size of the input stream</p>
 <p><span class="math notranslate nohighlight">\(w_i\)</span> – Bond Work Index, dependent on the material</p>
 <p><span class="math notranslate nohighlight">\(P\)</span> – power input</p>
-<p><span class="math notranslate nohighlight">\(\dot{m}\)</span> – mass flow of the input stream</p>
-<p><span class="math notranslate nohighlight">\(q_3(x)\)</span> – mass related density distribution</p>
-<p><span class="math notranslate nohighlight">\(\sigma\)</span> – standard deviation of the output distribution</p>
-<p class="last"><span class="math notranslate nohighlight">\(\mu\)</span> – mean of the output distribution</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}\)</span> – mass flow of solids in the input stream</p>
+<p><span class="math notranslate nohighlight">\(q_3(x)\)</span> – output mass related density distribution</p>
+<p><span class="math notranslate nohighlight">\(\sigma\)</span> – standard deviation of the output normal distribution</p>
+<p class="last"><span class="math notranslate nohighlight">\(\mu\)</span> – mean value of the output normal distribution</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Solid phase and particle size distribution are required for the simulation.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="17%" />
+<col width="14%" />
+<col width="41%" />
+<col width="8%" />
+<col width="21%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>P</td>
+<td><span class="math notranslate nohighlight">\(P\)</span></td>
+<td>Power input</td>
+<td>[kW]</td>
+<td>P &gt; 0</td>
+</tr>
+<tr class="row-odd"><td>Wi</td>
+<td><span class="math notranslate nohighlight">\(w_i\)</span></td>
+<td>Bond work index</td>
+<td>[kWh/t]</td>
+<td>1 ≤ Wi ≤ 100</td>
+</tr>
+<tr class="row-even"><td>Standard deviation</td>
+<td><span class="math notranslate nohighlight">\(\sigma\)</span></td>
+<td>Standard deviation of the output distribution</td>
+<td>[m]</td>
+<td>Standard deviation &gt; 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Crusher</span> <span class="pre">Bond.dlfw&gt;</span></code>.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>F.C. Bond, Crushing and grinding calculation – Part I, British Chemical Engineering 6 (6) (1961) 378-385.</p>
+<p>F.C. Bond, Crushing and grinding calculation – Part II, British Chemical Engineering 6 (8), (1961) 543-548.</p>
+<p class="last">Denver Sala Basic: Selection Guide for Process Equipment, 1993.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
 </div>
 <div class="section" id="average-bond-work-indices-for-various-materials">
 <h4>Average Bond Work Indices for various materials<a class="headerlink" href="#average-bond-work-indices-for-various-materials" title="Permalink to this headline">¶</a></h4>
@@ -425,45 +662,9 @@
 </tr>
 </tbody>
 </table>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">Denver Sala Basic: Selection Guide for Process Equipment, 1993</p>
+<div class="line-block">
+<div class="line"><br /></div>
 </div>
-</div>
-<div class="section" id="id2">
-<h4>Application example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<div class="admonition note">
-<p class="first admonition-title">Note</p>
-<p>Input parameters needed for the simulation:</p>
-<p>Power input in kW, value must be positve.</p>
-<p>Bond Work Index in kWh/t, value must between 1 and 100.</p>
-<p class="last">Standard deviation of output distribution in m, value must be positve.</p>
-</div>
-<p>You can find a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Crusher</span> <span class="pre">Bond.dlfw&gt;</span></code>.</p>
-<p>Input model parameters:</p>
-<blockquote>
-<div><table border="1" class="docutils">
-<colgroup>
-<col width="14%" />
-<col width="24%" />
-<col width="61%" />
-</colgroup>
-<thead valign="bottom">
-<tr class="row-odd"><th class="head">Pressure</th>
-<th class="head">Bond Work Index</th>
-<th class="head">Standard deviation of output distribution</th>
-</tr>
-</thead>
-<tbody valign="top">
-<tr class="row-even"><td>100 kW</td>
-<td>10 kWh/t</td>
-<td>0.0008 m</td>
-</tr>
-</tbody>
-</table>
-</div></blockquote>
-<p>Simulation result for particle size distribution:</p>
-<a class="reference internal image-reference" href="_images/crusherBondResult.png"><img alt="bond" class="align-center" src="_images/crusherBondResult.png" style="width: 700px;" /></a>
 </div>
 </div>
 <div class="section" id="cone-model">
@@ -496,10 +697,6 @@
 <p><span class="math notranslate nohighlight">\(CSS\)</span> – close size setting of a cone crusher</p>
 <p class="last"><span class="math notranslate nohighlight">\(\alpha_1, \alpha_2, n\)</span> – parameters of the King selection function</p>
 </div>
-<div class="admonition seealso">
-<p class="first admonition-title">See also</p>
-<p class="last">King, R. P., Modeling and simulation of mineral processing systems, Butterworth &amp; Heinemann, Oxford, 2001.</p>
-</div>
 <p><span class="math notranslate nohighlight">\(B_{ki}\)</span> is calculated by the Vogel breakage function.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}B_{ki} =
@@ -513,10 +710,644 @@
 <p><span class="math notranslate nohighlight">\(x'\)</span> – minimum fragment size which can be achieved by crushing</p>
 <p class="last"><span class="math notranslate nohighlight">\(q\)</span> – parameter of the Vogel breakage function</p>
 </div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Solid phase and particle size distribution are required for the simulation.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="6%" />
+<col width="13%" />
+<col width="62%" />
+<col width="5%" />
+<col width="15%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>CSS</td>
+<td><span class="math notranslate nohighlight">\(CSS\)</span></td>
+<td>Close size setting of a cone crusher. Parameter of the King selection function</td>
+<td>[m]</td>
+<td>CSS &gt; 0</td>
+</tr>
+<tr class="row-odd"><td>alpha1</td>
+<td><span class="math notranslate nohighlight">\(\alpha_1\)</span></td>
+<td>Parameter of the King selection function</td>
+<td>[–]</td>
+<td>0.5 ≤ alpha1 ≤ 0.95</td>
+</tr>
+<tr class="row-even"><td>alpha2</td>
+<td><span class="math notranslate nohighlight">\(\alpha_2\)</span></td>
+<td>Parameter of the King selection function</td>
+<td>[–]</td>
+<td>1.7 ≤ alpha2 ≤ 3.5</td>
+</tr>
+<tr class="row-odd"><td>n</td>
+<td><span class="math notranslate nohighlight">\(n\)</span></td>
+<td>Parameter of the King selection function</td>
+<td>[–]</td>
+<td>1 ≤ n ≤ 3</td>
+</tr>
+<tr class="row-even"><td>d’</td>
+<td><span class="math notranslate nohighlight">\(x'\)</span></td>
+<td>Minimum fragment size achieved by crushing. Parameter of the Vogel breakage function</td>
+<td>[m]</td>
+<td>d’ &gt; 0</td>
+</tr>
+<tr class="row-odd"><td>q</td>
+<td><span class="math notranslate nohighlight">\(q\)</span></td>
+<td>Parameter of the Vogel breakage function</td>
+<td>[–]</td>
+<td>&#160;</td>
+</tr>
+</tbody>
+</table>
+</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Crusher</span> <span class="pre">Cone.dlfw&gt;</span></code>.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>King, R. P., Modeling and simulation of mineral processing systems, Butterworth &amp; Heinemann, Oxford, 2001.</p>
 <p class="last">Vogel, L., Peukert, W., Modelling of Grinding in an Air Classifier Mill Based on A Fundamental Material Function, KONA, 21, 2003, 109-120.</p>
 </div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="const-output-model">
+<h3>Const output model<a class="headerlink" href="#const-output-model" title="Permalink to this headline">¶</a></h3>
+<p>This model sets a normal distribution with the specified constant parameters to the output stream. Outlet distribution does not depend on the inlet distribution.</p>
+<div class="math notranslate nohighlight">
+\[q_3(x) = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-\dfrac{(x-\mu)^2}{2\sigma^2}}\]</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Notations:</p>
+<p><span class="math notranslate nohighlight">\(q_3(x)\)</span> – output mass related density distribution</p>
+<p><span class="math notranslate nohighlight">\(\sigma\)</span> – standard deviation of the output normal distribution</p>
+<p class="last"><span class="math notranslate nohighlight">\(\mu\)</span> – mean value of the output normal distribution</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Solid phase and particle size distribution are required for the simulation.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="17%" />
+<col width="13%" />
+<col width="45%" />
+<col width="6%" />
+<col width="20%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Mean</td>
+<td><span class="math notranslate nohighlight">\(\mu\)</span></td>
+<td>Mean of the normal output distribution</td>
+<td>[m]</td>
+<td>Mean &gt; 0</td>
+</tr>
+<tr class="row-odd"><td>Standard deviation</td>
+<td><span class="math notranslate nohighlight">\(\sigma\)</span></td>
+<td>Standard deviation of the normal output distribution</td>
+<td>[m]</td>
+<td>Standard deviation &gt; 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Crusher</span> <span class="pre">Const.dlfw&gt;</span></code>.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="bunker">
+<h2>Bunker<a class="headerlink" href="#bunker" title="Permalink to this headline">¶</a></h2>
+<p>Bunker unit performs accumulation of the solid part of the input material with ideal mixing, see figure below. The bunker mass is controlled to match the user-defined target mass.</p>
+<a class="reference internal image-reference" href="_images/bunker.png"><img alt="" class="align-center" src="_images/bunker.png" style="width: 200px;" /></a>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Solid phase is required for the simulation.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="19%" />
+<col width="46%" />
+<col width="10%" />
+<col width="25%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Target mass</td>
+<td>Target mass within the bunker</td>
+<td>[kg]</td>
+<td>Target mass &gt; 0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Bunker.dlfw&gt;</span></code>.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="granulator">
+<h2>Granulator<a class="headerlink" href="#granulator" title="Permalink to this headline">¶</a></h2>
+<p>This unit represents a simplified model of a fluidized bed granulation reactor, see figure below.</p>
+<a class="reference internal image-reference" href="_images/granulator.png"><img alt="" class="align-center" src="_images/granulator.png" style="width: 500px;" /></a>
+<p>The model does not take into account attrition of particles inside the apparatus and does not keep properly any secondary distributed properties except size.</p>
+<div class="math notranslate nohighlight">
+\[\frac{dq_{3,i}}{dt} = -G_e\,\frac{q_{3,i} - q_{3,i-1}\,\left(\frac{d_{p,i}}{d_{p,i-1}}\right)^3}{\Delta d_i} + \frac{\dot{m}_{in}}{M_{tot}}\,q_{3,i}^{in} - \frac{\dot{m}_{out}}{M_{tot}}\,q_{3,i}\]</div>
+<div class="math notranslate nohighlight">
+\[G_e = \frac{2\dot{m}_e}{\rho_{s,susp} \cdot A_{tot}}\]</div>
+<div class="math notranslate nohighlight">
+\[A_{tot} = \frac{6M_{tot}}{\rho_s} \sum\limits_{i} \frac{q_{3,i}\cdot \Delta d_i}{d_{p,i}}\]</div>
+<div class="math notranslate nohighlight">
+\[\dot{m}_e = \dot{m}_{s,susp}\,(1 - K_{os})\]</div>
+<div class="math notranslate nohighlight">
+\[\dot{m}_{out} = \dot{m}_{in} + \dot{m}_{e}\]</div>
+<div class="math notranslate nohighlight">
+\[\dot{m}_{dust} = \dot{m}_{s,susp}\cdot K_{os} + (\dot{m}_{susp} - \dot{m}_{s,susp} + \dot{m}_{fl,g})\]</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Notations:</p>
+<p><span class="math notranslate nohighlight">\(q_3\)</span> – mass density distribution of particles inside apparatus</p>
+<p><span class="math notranslate nohighlight">\(q_3^{in}\)</span> – mass density distribution of external particles from <strong>ExternalNuclei</strong> stream</p>
+<p><span class="math notranslate nohighlight">\(\Delta d\)</span> – class size</p>
+<p><span class="math notranslate nohighlight">\(d_p\)</span> – particle diameter in a class</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{in}\)</span> – mass flow of input nuclei</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{out}\)</span> – output mass flow of the product</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{dust}\)</span> – output mass flow from the <strong>DustOutput</strong></p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{susp}\)</span> – total mass flow of the suspension</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{s,susp}\)</span> – mass flow of the solid phase in the <strong>Suspension</strong> inlet</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{fl,g}\)</span> – mass flow of the gas phase in the <strong>FluidizationGas</strong> inlet</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{e}\)</span> – effective mass stream of the injected suspension</p>
+<p><span class="math notranslate nohighlight">\(M_{tot}\)</span> – holdup mass</p>
+<p><span class="math notranslate nohighlight">\(\rho_{s,susp}\)</span> – density of solids in the holdup</p>
+<p><span class="math notranslate nohighlight">\(G_{e}\)</span> – effective growth rate</p>
+<p><span class="math notranslate nohighlight">\(A_{tot}\)</span> – total surface of particles in the granulator</p>
+<p class="last"><span class="math notranslate nohighlight">\(K_{os}\)</span> – overspray part in the suspension</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">particle size distribution is required for the simulation. This unit is applied for solid, liquid and gas phases.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="7%" />
+<col width="20%" />
+<col width="48%" />
+<col width="8%" />
+<col width="17%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Kos</td>
+<td><span class="math notranslate nohighlight">\(K_{os}\)</span></td>
+<td>Overspray part in the suspension</td>
+<td>[–]</td>
+<td>0 ≤ Kos ≤ 1</td>
+</tr>
+<tr class="row-odd"><td>RTol</td>
+<td>–</td>
+<td>Relative tolerance for equation solver</td>
+<td>[–]</td>
+<td>0 &lt; RTol ≤ 1</td>
+</tr>
+<tr class="row-even"><td>ATol</td>
+<td>–</td>
+<td>Absolute tolerance for equation solver</td>
+<td>[–]</td>
+<td>0 &lt; ATol ≤ 1</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>State variables:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="8%" />
+<col width="27%" />
+<col width="55%" />
+<col width="9%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Atot</td>
+<td><span class="math notranslate nohighlight">\(A_{tot}\)</span></td>
+<td>Total surface of particles in the granulator</td>
+<td>[m2]</td>
+</tr>
+<tr class="row-odd"><td>Mtot</td>
+<td><span class="math notranslate nohighlight">\(M_{tot}\)</span></td>
+<td>Total mass of all particles in the granulator</td>
+<td>[kg]</td>
+</tr>
+<tr class="row-even"><td>Mout</td>
+<td><span class="math notranslate nohighlight">\(\dot{m}_{out}\)</span></td>
+<td>Output mass flow of the product</td>
+<td>[kg/s]</td>
+</tr>
+<tr class="row-odd"><td>Mdust</td>
+<td><span class="math notranslate nohighlight">\(\dot{m}_{dust}\)</span></td>
+<td>Output mass flow of dust</td>
+<td>[kg/s]</td>
+</tr>
+<tr class="row-even"><td>G</td>
+<td><span class="math notranslate nohighlight">\(G_{e}\)</span></td>
+<td>Effective growth rate</td>
+<td>[m/s]</td>
+</tr>
+<tr class="row-odd"><td>PSDi</td>
+<td><span class="math notranslate nohighlight">\(q_{3,i}\)</span></td>
+<td>Mass density distribution of particles</td>
+<td>[1/m]</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Granulator.dlfw&gt;</span></code>.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">S.Heinrich, M. Peglow, M. Ihlow, M. Henneberg, L. Mörl, Analysis of the start-up process in continuous fluidized bed spray granulation by population balance modelling, Chem. Eng. Sci. 57 (2002) 4369-4390.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="agglomerator">
+<h2>Agglomerator<a class="headerlink" href="#agglomerator" title="Permalink to this headline">¶</a></h2>
+<p>This unit represents a simplified model of agglomeration process, see figure below.</p>
+<a class="reference internal image-reference" href="_images/agglomerator.png"><img alt="" class="align-center" src="_images/agglomerator.png" style="width: 400px;" /></a>
+<p>The model does not take into account attrition of particles inside the apparatus and does not keep properly any secondary distributed property except size.</p>
+<p>Mass related density distribution of output stream is calculated according to following equations:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial n(v,t)}{\partial t} = B_{agg}(n,v,t) - D_{agg}(n,v,t) + \dot{n}_{in}(t) - \dot{n}_{out}(t)\]</div>
+<div class="math notranslate nohighlight">
+\[B_{agg}(n,v,t) = \frac{1}{2}\,\beta_0\,\textstyle \int\limits_{0}^{v} \beta(u,v - u)\,n(u,t)\,n(v-u,t)\,du\]</div>
+<div class="math notranslate nohighlight">
+\[D_{agg}(n,v,t) = \beta_0\,n(v,t)\, \textstyle \int\limits_{0}^{\infty}\,\beta(v,u)\,n(u,t)\,du\]</div>
+<div class="math notranslate nohighlight">
+\[\dot{m}_{out}(t) = \dot{m}_{in}(t)\]</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Notations:</p>
+<p><span class="math notranslate nohighlight">\(v,u\)</span> – volumes of agglomerating particles</p>
+<p><span class="math notranslate nohighlight">\(n(v,t)\)</span> – number density function</p>
+<p><span class="math notranslate nohighlight">\(\dot{n}_{in}(t)\)</span>, <span class="math notranslate nohighlight">\(\dot{n}_{out}(t)\)</span> – number density functions of inlet and outlet streams, correspondingly</p>
+<p><span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span>, <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> –  birth and death rates of particles with volume <span class="math notranslate nohighlight">\(v\)</span> caused due to agglomeration</p>
+<p><span class="math notranslate nohighlight">\(\beta_0\)</span> – agglomeration rate constant, dependent on operating conditions but independent from particle sizes</p>
+<p><span class="math notranslate nohighlight">\(\beta(v,u)\)</span> – the agglomeration kernel, see section <a class="reference internal" href="#label-agg-kernels"><span class="std std-ref">Kernels</span></a>.</p>
+<p><span class="math notranslate nohighlight">\(t\)</span> – time</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{in}\)</span> – mass flow in the input stream</p>
+<p class="last"><span class="math notranslate nohighlight">\(\dot{m}_{out}\)</span> – mass flow in the output stream</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">solid phase and particle size distribution are required for the simulation.</p>
+</div>
+<p>The method of calculating <span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span> and <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> is determined by the selected solver via unit parameter <a class="reference internal" href="#label-agg-solvers"><span class="std std-ref">Solvers</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="6%" />
+<col width="13%" />
+<col width="54%" />
+<col width="5%" />
+<col width="22%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Beta0</td>
+<td><span class="math notranslate nohighlight">\(\beta_0\)</span></td>
+<td>Size independent agglomeration rate constant</td>
+<td>[–]</td>
+<td>0 &lt; Beta0 ≤ <span class="math notranslate nohighlight">\(10^{20}\)</span></td>
+</tr>
+<tr class="row-odd"><td>Step</td>
+<td>–</td>
+<td>Maximum time step of internal DAE solver. Default value is 0.</td>
+<td>[–]</td>
+<td>0 ≤ Step ≤ <span class="math notranslate nohighlight">\(10^{9}\)</span></td>
+</tr>
+<tr class="row-even"><td>Solver</td>
+<td>–</td>
+<td>Solver used to calculate birth and death rates</td>
+<td>[–]</td>
+<td>–</td>
+</tr>
+<tr class="row-odd"><td>Kernel</td>
+<td>–</td>
+<td>Agglomeration kernel type, must be an integer</td>
+<td>[–]</td>
+<td>0 ≤ Kernel ≤ 9</td>
+</tr>
+<tr class="row-even"><td>Rank</td>
+<td>–</td>
+<td>Rank of the kernel (applied for FFT solver only), must be an integer</td>
+<td>[–]</td>
+<td>1 ≤ Rank ≤ 10</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Agglomerator.dlfw&gt;</span></code>.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">V.Skorych, M. Dosta, E.-U. Hartge, S. Heinrich, R. Ahrens, S. Le Borne, Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology 30 (3) (2019), 555-564.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="kernels">
+<span id="label-agg-kernels"></span><h3>Kernels<a class="headerlink" href="#kernels" title="Permalink to this headline">¶</a></h3>
+<p>The agglomeration kernels are applied to describe the agglomeration frequency between particles of volumes <span class="math notranslate nohighlight">\(v\)</span> and <span class="math notranslate nohighlight">\(u\)</span>, which produce a new particle with the size <span class="math notranslate nohighlight">\((v + u)\)</span>. In Dyssol environment, 10 types of kernels are numbered with integers from 0 to 9, as listed below.</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="6%" />
+<col width="11%" />
+<col width="83%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Number</th>
+<th class="head">Name</th>
+<th class="head">Kernel equation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>0</td>
+<td>Constant</td>
+<td><span class="math notranslate nohighlight">\(\beta (u,v)=1\)</span></td>
+</tr>
+<tr class="row-odd"><td>1</td>
+<td>Sum</td>
+<td><span class="math notranslate nohighlight">\(\beta (u,v)=u+v\)</span></td>
+</tr>
+<tr class="row-even"><td>2</td>
+<td>Product</td>
+<td><span class="math notranslate nohighlight">\(\beta (u,v)=uv\)</span></td>
+</tr>
+<tr class="row-odd"><td>3</td>
+<td>Brownian</td>
+<td><span class="math notranslate nohighlight">\(\beta (u,v)=\left(u^{\frac{1}{3}}+v^{\frac{1}{3}} \right)\,\left(u^{-\frac{1}{3}}+v^{-\frac{1}{3}} \right)\)</span></td>
+</tr>
+<tr class="row-even"><td>4</td>
+<td>Shear</td>
+<td><span class="math notranslate nohighlight">\(\beta (u,v)=\left(u^{\frac{1}{3}}+v^{\frac{1}{3}} \right)^{\frac{7}{3}}\)</span></td>
+</tr>
+<tr class="row-odd"><td>5</td>
+<td>Peglow</td>
+<td><span class="math notranslate nohighlight">\(\beta (u,v)=\dfrac{ (u+v)^{0.71} }{(uv)^{0.062} }\)</span></td>
+</tr>
+<tr class="row-even"><td>6</td>
+<td>Coagulation</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v)=u^{\frac{2}{3}}+v^{\frac{2}{3}}\)</span></td>
+</tr>
+<tr class="row-odd"><td>7</td>
+<td>Gravitational</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v)=\left(u^{\frac{1}{3}}+v^{\frac{1}{3}} \right)^2 \left|u^{\frac{1}{6}}-v^{\frac{1}{6}} \right|\)</span></td>
+</tr>
+<tr class="row-even"><td>8</td>
+<td>Kinetic energy</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v)=\left(u^{\frac{1}{3}}+v^{\frac{1}{3}} \right)^2 \, \sqrt{\frac{1}{u}+\frac{1}{v}}\)</span></td>
+</tr>
+<tr class="row-odd"><td>9</td>
+<td>Thompson</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v)=\dfrac{(u-v)^2}{u+v}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="solvers">
+<span id="label-agg-solvers"></span><h3>Solvers<a class="headerlink" href="#solvers" title="Permalink to this headline">¶</a></h3>
+<p>Solvers are applied to calculate the birth and death rate of agglomerates according to different mathematical models. In Dyssol, 3 solver types are available:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Cell average</li>
+<li>Fast Fourier transformation (FFT)</li>
+<li>Fixed pivot</li>
+</ul>
+</div></blockquote>
+<p>The applied equations in all solvers are listed as follows. For notation in the equations, please refer to the <code class="docutils literal notranslate"><span class="pre">Notations</span></code> above.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial n(v,t)}{\partial t} = B_{agg}(n,v,t) - D_{agg}(n,v,t)\]</div>
+<div class="math notranslate nohighlight">
+\[B_{agg}(n,v,t) = \frac{1}{2}\,\beta_0\,\textstyle \int\limits_{0}^{v} \beta(u,v - u)\,n(u,t)\,n(v-u,t)\,du\]</div>
+<div class="math notranslate nohighlight">
+\[D_{agg}(n,v,t) = \beta_0\,n(v,t)\, \textstyle \int\limits_{0}^{\infty}\,\beta(v,u)\,n(u,t)\,du\]</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="cell-average-solver">
+<h4>Cell average solver<a class="headerlink" href="#cell-average-solver" title="Permalink to this headline">¶</a></h4>
+<p>This solver calculates the birth rate <span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span> and death rate <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> using a cell average technique.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">solid phase and particle size distribution are required for the simulation. Equidistant volume grid for particle size distribution must be used.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">J.Kumar, M. Peglow, G. Warnecke, S. Heinrich, An efficient numerical technique for solving population balance equation involving aggregation, breakage, growth and nucleation, Powder Technology 182 (1) (2008), 81-104.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="fft-solver">
+<h4>FFT solver<a class="headerlink" href="#fft-solver" title="Permalink to this headline">¶</a></h4>
+<p>This solver calculates the birth rate <span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span> and death rate <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> based on a separable approximation of the agglomeration kernel and a subsequent fast Fourier transformation.</p>
+<p>The agglomeration kernel <span class="math notranslate nohighlight">\(\beta (v,u)\)</span> is represented in a separable form with the separation rank <span class="math notranslate nohighlight">\(M\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[\beta (v,u) = \sum\limits_{i=1}^{M} a_i(v)\,b_i(u)\]</div>
+<p>Then birth and death rate terms are transformed to following equations with <span class="math notranslate nohighlight">\(\psi_i = a_i\,n\)</span> and <span class="math notranslate nohighlight">\(\varphi_i = b_i\,n\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[B_{agg}(n,v,t) = \frac{1}{2}\,\textstyle \int\limits_{0}^{v} \psi_i(v - u,t)\,\varphi_i(u,t)\,du\]</div>
+<div class="math notranslate nohighlight">
+\[D_{agg}(n,v,t) = \psi_i(v,t)\, \textstyle \int\limits_{0}^{\infty}\varphi_i(u,t)\,du\]</div>
+<p>The separation turns the birth rate agglomeration integral into a convolution form <span class="math notranslate nohighlight">\(\varphi_i * \psi_i\)</span>, which after piecewise constant discretization, is computed based on the convolution theorem</p>
+<div class="math notranslate nohighlight">
+\[\varphi_i * \psi_i = IFFT(FFT(\varphi_i) \odot FFT(\psi_i))\]</div>
+<p>applying the direct and inverse fast Fourier transformation (<span class="math notranslate nohighlight">\(FFT/IFFT\)</span>) and the elementwise product <span class="math notranslate nohighlight">\(\odot\)</span>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>List of kernels separation equations</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Kernel</th>
+<th class="head">Separation equation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Constant</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v) = \sum\limits_{i=1}^1 a_i(v)\,b_i(u),\)</span>
+<span class="math notranslate nohighlight">\(a_1 (v) = 1, b_1 (u) = 1\)</span></td>
+</tr>
+<tr class="row-odd"><td>Sum</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v) = \sum\limits_{i=1}^2 a_i(v)\,b_i(u),\)</span>
+<span class="math notranslate nohighlight">\(a_1 (v) = v, a_2 (v)= 1, b_1 (u) = 1, b_2 (u)= u\)</span></td>
+</tr>
+<tr class="row-even"><td>Brownian</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v) = \sum\limits_{i=1}^3 a_i(v)\,b_i(u),\)</span>
+<span class="math notranslate nohighlight">\(a_1 (v) = \sqrt{2}, a_2 (v) = v^{\frac{1}{3}}, a_3 (v)= v^{-\frac{1}{3}}\)</span>
+<span class="math notranslate nohighlight">\(b_1 (u) = \sqrt{2}, b_2 (u) = u^{-\frac{1}{3}}, b_3 (u)= u^{\frac{1}{3}}\)</span></td>
+</tr>
+<tr class="row-odd"><td>Product, Shear, Peglow, Coagulation, Gravitational, Kinetic energy, Thompson</td>
+<td>Approximated by a rank-M separable function
+<span class="math notranslate nohighlight">\(\beta (v,u) \approx \sum\limits_{i=1}^{M} a_i(v)\,b_i(u)\)</span>
+using adaptive cross approximation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">solid phase and particle size distribution are required for the simulation. Equidistant volume grid for particle size distribution must be used. Grid for particle size distribution must start from 0.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p>V.Skorych, M. Dosta, E.-U. Hartge, S. Heinrich, R. Ahrens, S. Le Borne, Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology 30 (3) (2019), 555-564.</p>
+<p class="last">S.Le Borne, L. Shahmuradyan, K. Sundmacher, Fast evaluation of univariate aggregation integrals on equidistant grids. Computers and Chemical Engineering 74 (2015), 115-127.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="fixed-pivot-solver">
+<h4>Fixed pivot solver<a class="headerlink" href="#fixed-pivot-solver" title="Permalink to this headline">¶</a></h4>
+<p>This solver calculates the birth rate <span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span> and death rate <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> using a fixed pivot technique.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">solid phase and particle size distribution are required for the simulation.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">S.Kumar, D. Ramkrishna, On the solution of population balance equations by discretization – I. A fixed pivot technique. Chem. Eng. Sci. 51 (8) (1996), 1311-1332.</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="time-delay">
+<h2>Time delay<a class="headerlink" href="#time-delay" title="Permalink to this headline">¶</a></h2>
+<p>This unit copies the complete information of the input stream <span class="math notranslate nohighlight">\(In\)</span> at any given timepoint <span class="math notranslate nohighlight">\(t\)</span> to the output stream <span class="math notranslate nohighlight">\(Out\)</span> at the timepoint <span class="math notranslate nohighlight">\(t + \Delta t\)</span>, delaying the signal by a constant delay factor <span class="math notranslate nohighlight">\(\Delta t\)</span>, which you will be asked to define for the simulation.</p>
+<p>The scheme is shown in the figure below.</p>
+<a class="reference internal image-reference" href="_images/timedelay.png"><img alt="" class="align-center" src="_images/timedelay.png" style="width: 300px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Input parameters needed for the simulation:</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="14%" />
+<col width="21%" />
+<col width="20%" />
+<col width="8%" />
+<col width="36%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Name</th>
+<th class="head">Symbol</th>
+<th class="head">Description</th>
+<th class="head">Units</th>
+<th class="head">Boundaries</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Time delay</td>
+<td><span class="math notranslate nohighlight">\(\Delta t\)</span></td>
+<td>Unit time delay</td>
+<td>[s]</td>
+<td>0 ≤ Time delay ≤ <span class="math notranslate nohighlight">\(10^6\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file in install path <code class="docutils literal notranslate"><span class="pre">&lt;Example</span> <span class="pre">Flowsheets/Units/Time</span> <span class="pre">Delay.dlfw&gt;</span></code>.</p>
 </div>
 </div>
 </div>
@@ -530,14 +1361,10 @@
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Units library</a><ul>
-<li><a class="reference internal" href="#mixer">Mixer</a><ul>
-<li><a class="reference internal" href="#application-example">Application example</a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#splitter">Splitter</a><ul>
-<li><a class="reference internal" href="#id1">Application example</a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#inlet-flow">Inlet flow</a></li>
+<li><a class="reference internal" href="#outlet-flow">Outlet flow</a></li>
+<li><a class="reference internal" href="#mixer">Mixer</a></li>
+<li><a class="reference internal" href="#splitter">Splitter</a></li>
 <li><a class="reference internal" href="#screen">Screen</a><ul>
 <li><a class="reference internal" href="#plitt-s-model">Plitt’s model</a></li>
 <li><a class="reference internal" href="#molerus-hoffmann-model">Molerus &amp; Hoffmann model</a></li>
@@ -548,12 +1375,25 @@
 <li><a class="reference internal" href="#crusher">Crusher</a><ul>
 <li><a class="reference internal" href="#bond-s-model">Bond’s model</a><ul>
 <li><a class="reference internal" href="#average-bond-work-indices-for-various-materials">Average Bond Work Indices for various materials</a></li>
-<li><a class="reference internal" href="#id2">Application example</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#cone-model">Cone model</a></li>
+<li><a class="reference internal" href="#const-output-model">Const output model</a></li>
 </ul>
 </li>
+<li><a class="reference internal" href="#bunker">Bunker</a></li>
+<li><a class="reference internal" href="#granulator">Granulator</a></li>
+<li><a class="reference internal" href="#agglomerator">Agglomerator</a><ul>
+<li><a class="reference internal" href="#kernels">Kernels</a></li>
+<li><a class="reference internal" href="#solvers">Solvers</a><ul>
+<li><a class="reference internal" href="#cell-average-solver">Cell average solver</a></li>
+<li><a class="reference internal" href="#fft-solver">FFT solver</a></li>
+<li><a class="reference internal" href="#fixed-pivot-solver">Fixed pivot solver</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#time-delay">Time delay</a></li>
 </ul>
 </li>
 </ul>

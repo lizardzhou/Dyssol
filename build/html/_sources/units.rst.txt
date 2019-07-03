@@ -5,10 +5,32 @@ Units library
 An operation unit is a ...
 
 
+Inlet flow
+==========
+
+This unit allows defining the parameters of the input material, showing in the figure below.
+
+
+.. image:: ./pics/units/inletflow.png
+   :width: 300px
+   :alt: mixer example
+   :align: center  
+
+
+
+Outlet flow
+===========
+
+This unit serves to connect the output material flows, as shown in the figure below.
+
+.. image:: ./pics/units/outletflow.png
+   :width: 200px
+   :alt: mixer example
+   :align: center
+
 
 Mixer
 =====
-
 
 A mixer mixes two input material streams (:math:`In1`, :math:`In2`) into the one output stream (:math:`Out`), as shown in the scheme below.
 
@@ -47,51 +69,35 @@ The parameters of output stream are calculated as:
 All secondary attributes of output stream, such as phase fractions, compounds fractions and multidimensional distributions are calculated depending on mass fractions of input streams.
 
 
-Application example
-^^^^^^^^^^^^^^^^^^^
+.. seealso:: 
 
-.. note:: Input parameters needed for the simulation:
-
-	Mass flow in kg/s, value must be positive.
-	
-	Temperatur in K, value must be positive. ?
-	
-	Pressure in Pa, value must be positive. ?
-	
-	Phase fraction ?
-	
-	Sauter diameter ?
+	a demostration file at ``<Example Flowsheets/Units/Mixer.dlfw>``.
 	
 
-You can find a demostration file in install path ``<Example Flowsheets/Units/Mixer.dlfw>``.
+.. REMOVED CONTENTS ..
+.. Input model parameters:
 
-Input model parameters:
+.. +---------------+-----------------------------------+-----------------------------------+
+.. |               | Input 1                           | Input 2                           |
+.. +---------------+-----------------+-----------------+-----------------+-----------------+
+.. | Timepoint [s] | Massflow [kg/s] | Temperature [K] | Massflow [kg/s] | Temperature [K] |
+.. +===============+=================+=================+=================+=================+
+.. | 0             | 10              | 300             | 5               | 400             |
+.. +---------------+-----------------+-----------------+-----------------+-----------------+
+.. | 60            | 7.5             | 300             | 10              | 400             |
+.. +---------------+-----------------+-----------------+-----------------+-----------------+
 
-+---------------+-----------------------------------+-----------------------------------+
-|               | Input 1                           | Input 2                           |
-+---------------+-----------------+-----------------+-----------------+-----------------+
-| Timepoint [s] | Massflow [kg/s] | Temperature [K] | Massflow [kg/s] | Temperature [K] |
-+===============+=================+=================+=================+=================+
-| 0             | 10              | 300             | 5               | 400             |
-+---------------+-----------------+-----------------+-----------------+-----------------+
-| 60            | 7.5             | 300             | 10              | 400             |
-+---------------+-----------------+-----------------+-----------------+-----------------+
-
-|
 	
-Simulation result for mass flows:
+.. Simulation result for mass flows:
 
-.. image:: ./pics/units/mixer-egMass.png
+.. .. image:: ./pics/units/mixer-egMass.png
    :width: 700px
    :alt: mixer example
    :align: center
-   
-|   
   
-  
-Simulation result for temperatures: 
+.. Simulation result for temperatures: 
  
-.. image:: ./pics/units/mixer-egTemp.png
+.. .. image:: ./pics/units/mixer-egTemp.png
    :width: 700px
    :alt: mixer example
    :align: center   
@@ -118,30 +124,29 @@ You can specify the splitting factor :math:`K_{splitt}`, which is defined in fol
 	\dot{m}_{out1} &= K_{splitt} \cdot \dot{m}_{in}
 	
 	\dot{m}_{out2} &= (1-K_{splitt} ) \cdot \dot{m}_{in}
+	
 
 .. note:: Notations:
 
 	:math:`\dot{m}` - mass flow
 	
 	:math:`K_{splitt}` - Splitting factor
-
-
-
-|
-
-Application example
-^^^^^^^^^^^^^^^^^^^
-
+	
+	
 .. note:: Input parameters needed for the simulation:
 	
-	Mass flow in kg/s, value must be positive.
+	+---------+------------------+-------+-----------------+
+	| Name    | Description      | Units | Boundaries      |
+	+=========+==================+=======+=================+
+	| Ksplitt | Splitting factor | [--]  | 0 ≤ Ksplitt ≤ 1 |
+	+---------+------------------+-------+-----------------+
+
+
+.. seealso:: 
+
+	a demostration file at ``<Example Flowsheets/Units/Splitter.dlfw>``.
 	
-	Splitting factor, value must between 0 and 1.
-
-Write some text about an example...
-
 |
-
 
 Screen
 ======
@@ -154,18 +159,28 @@ Screen unit is designed for classification of input material into two fractions 
    :align: center
 
 
-In Dyssol, 4 models are available to describe the screen grade efficiency. 
+In Dyssol, 4 models are available to describe the screen grade efficiency: 
 
-In the following figure several grade efficiency curves for different parameters of separations sharpness are shown.
+	- Plitt's model
+	- Molerus & Hoffmann model
+	- Probability model 
+	- Teipel / Hennig model
+
+In the following figure, several grade efficiency curves for different parameters of separations sharpness are shown. 
+
+.. note:: This figure only applies to the Plitt's model and Molerus & Hoffmann model.
 
 .. image:: ./pics/units/splitter-alpha.png
    :width: 500px
    :alt: splitter
    :align: center
 
+|
 
 Plitt's model
 ^^^^^^^^^^^^^
+
+This model is described using the following equation:
 
 .. math::
 
@@ -176,20 +191,38 @@ Plitt's model
 
 	:math:`G(x_i)` – grade efficiency: mass fraction of material within the size class :math:`i` in the feed (:math:`\dot{m}_{i,input}`) that leaves the screen in the coarse stream (:math:`\dot{m}_{i,coarse}`)
 
-	:math:`x_{cut}` – cut size of the classification model in meter, must have a non-negative value
+	:math:`x_{cut}` – cut size of the classification model in meter
 
-	:math:`\alpha` – separation sharpness, value must between 0 and 100
+	:math:`\alpha` – sharpness of separation
 
 	:math:`x_i` – size of a particle
 
+
+.. note:: Input parameters needed for the simulation:
 	
+	+-------+----------------+--------------------------------------+-------+-----------------+
+	| Name  |Symbol          | Description                          | Units | Boundaries      |
+	+=======+================+======================================+=======+=================+
+	| Xcut  |:math:`x_{cut}` | Cut size of the classification model | [m]   | Xcut > 0        |
+	+-------+----------------+--------------------------------------+-------+-----------------+
+	| Alpha |:math:`\alpha`  | Sharpness of separation              | [--]  | 0 ≤ Alpha ≤ 100 |
+	+-------+----------------+--------------------------------------+-------+-----------------+
+
+.. seealso:: 
+
+	a demostration file at ``<Example Flowsheets/Units/Screen Plitt.dlfw>``.
+
+
 .. seealso::
 
-	Plitt, L.R.: The analysis of solid–solid separations in classifiers. CIM Bulletin 64 (708), p. 42–47, 1971	
-
+	Plitt, L.R.: The analysis of solid–solid separations in classifiers. CIM Bulletin 64 (708), p. 42–47, 1971
+	
+|
 
 Molerus & Hoffmann model
 ^^^^^^^^^^^^^^^^^^^^^^^^
+
+This model is described using the following equation:
 
 .. math::
 
@@ -198,22 +231,40 @@ Molerus & Hoffmann model
 
 .. note:: Notations applied in the models:
 
-	:math:`G(x_i)` – grade efficiency: mass fraction of material within the size class :math:`i` in the feed (:math:`\dot{m}_{i,input}`) that leaves the screen in the coarse stream (:math:`\dot{m}_{i,coarse}`)
+	:math:`G(x_i)` – grade efficiency: mass fraction of material within the size class :math:`i` in the feed that leaves the screen in the coarse stream
 
-	:math:`x_{cut}` – cut size of the classification model in meter, must have a non-negative value
+	:math:`x_{cut}` – cut size of the classification model
 
-	:math:`\alpha` – separation sharpness, value must between 0 and 100
+	:math:`\alpha` – sharpness of separation
 
 	:math:`x_i` – size of a particle
+
+
+.. note:: Input parameters needed for the simulation:
+	
+	+-------+-----------------+--------------------------------------+-------+-----------------+
+	| Name  | Symbol          | Description                          | Units | Boundaries      |
+	+=======+=================+======================================+=======+=================+
+	| Xcut  | :math:`x_{cut}` | Cut size of the classification model | [m]   | Xcut > 0        |
+	+-------+-----------------+--------------------------------------+-------+-----------------+
+	| Alpha | :math:`\alpha`  | Sharpness of separation              | [--]  | 0 < Alpha ≤ 100 |
+	+-------+-----------------+--------------------------------------+-------+-----------------+
+
+.. seealso::
+	
+	a demostration file at ``<Example Flowsheets/Units/Screen Molerus-Hoffmann.dlfw>``.
 
 
 .. seealso::
 
 	Molerus, O.; Hoffmann, H.: Darstellung von Windsichtertrennkurven durch ein stochastisches Modell, Chemie Ingenieur Technik, 41 (5+6), 1969, pp. 340-344
-
+	
+|
 
 Probability model
 ^^^^^^^^^^^^^^^^^
+
+This model is described using the following equation:
 
 .. math::
 
@@ -222,23 +273,42 @@ Probability model
 
 .. note:: Notations applied in this model:
 
-	:math:`G(x_i)` – grade efficiency: mass fraction of material within the size class :math:`i` in the feed (:math:`\dot{m}_{i,input}`) that leaves the screen in the coarse stream (:math:`\dot{m}_{i,coarse}`)
+	:math:`G(x_i)` – grade efficiency: mass fraction of material within the size class :math:`i` in the feed that leaves the screen in the coarse stream
 
 	:math:`x_i` – size of a particle
 	
-	:math:`\sigma` – standard deviation of the normal output distribution in meter, must be non-negative
+	:math:`\sigma` – standard deviation of the normal output distribution
 
-	:math:`\mu` – mean of the normal output distribution in meter, must be non-negative
+	:math:`\mu` – mean of the normal output distribution
 
 	:math:`N` – number of classes of particle size distribution
 
 
+.. note:: Input parameters needed for the simulation:
+
+	+------------------------+----------------+----------------------------------------------------------------+-------+-------------------------+
+	| Name                   | Symbol         | Description                                                    | Units | Boundaries              |
+	+========================+================+================================================================+=======+=========================+
+	| Mean                   |:math:`\mu`     | Mean of the normal output distribution                         | [m]   | Mean > 0                |
+	+------------------------+----------------+----------------------------------------------------------------+-------+-------------------------+
+	| Standard deviation     |:math:`\sigma`  | Standard deviation of the normal output distribution           | [m]   | Standard deviation > 0  |
+	+------------------------+----------------+----------------------------------------------------------------+-------+-------------------------+
+
+
+.. seealso::
+	
+	a demostration file in install path ``<Example Flowsheets/Units/Screen Probability.dlfw>``.
+
+
 .. seealso::
 	Radichkov, R.; Müller, T.; Kienle, A.; Heinrich, S.; Peglow, M.; Mörl, L.: A numerical bifurcation analysis of continuous fluidized bed spray granulation with external product classification, Chemical Engineering and Processing 45, 2006, pp. 826–837
-
+	
+|
 
 Teipel / Hennig model
 ^^^^^^^^^^^^^^^^^^^^^
+
+This model is described using the following equation:
 
 .. math::
 
@@ -247,23 +317,43 @@ Teipel / Hennig model
 	
 .. note:: Notations applied in the models:
 
-	:math:`G(x_i)` – grade efficiency: mass fraction of material within the size class :math:`i` in the feed (:math:`\dot{m}_{i,input}`) that leaves the screen in the coarse stream (:math:`\dot{m}_{i,coarse}`)
+	:math:`G(x_i)` – grade efficiency: mass fraction of material within the size class :math:`i` in the feed that leaves the screen in the coarse stream
 
-	:math:`x_{cut}` – cut size of the classification model in meter, must have a non-negative value
+	:math:`x_{cut}` – cut size of the classification model
 
-	:math:`\alpha` – separation sharpness, value must between 0 and 100
+	:math:`\alpha` – sharpness of separation
 	
-	:math:`\beta` - separation sharpness, value must between 0 and 100
+	:math:`\beta` - sharpness of separation
 	
-	:math:`a` - separation offset, value must between 0 and 1
+	:math:`a` - separation offset
 
 	:math:`x_i` – size of a particle
 	
 
+.. note:: Input parameters needed for the simulation:
+
+	+-------+----------------+----------------------------------------+-------+-----------------+
+	| Name  |Symbol          | Description                            | Units | Boundaries      |
+	+=======+================+========================================+=======+=================+
+	| Xcut  |:math:`x_{cut}` |   Cut size of the classification model | [m]   | Xcut > 0        |
+	+-------+----------------+----------------------------------------+-------+-----------------+
+	| Alpha |:math:`\alpha`  |   Sharpness of separation 1            | [--]  | 0 < Alpha ≤ 100 |
+	+-------+----------------+----------------------------------------+-------+-----------------+
+	| Beta  |:math:`\beta`   |  Sharpness of separation 2             | [--]  | 0 < Beta ≤ 100  |
+	+-------+----------------+----------------------------------------+-------+-----------------+
+	| Offset|:math:`a`       | Separation offset                      | [--]  | 0 ≤ Offset ≤ 1  |
+	+-------+----------------+----------------------------------------+-------+-----------------+
+
 .. seealso::
+	
+	a demostration file in install path ``<Example Flowsheets/Units/Screen Teipel-Hennig.dlfw>``.
+
+
+.. seealso::
+
 	Hennig, M. and Teipel, U. (2016), Stationäre Siebklassierung. Chemie Ingenieur Technik, 88: 911–918
-
-
+	
+|
 
 Crusher
 =======
@@ -275,46 +365,83 @@ A crusher comminutes the input material stream and reduces the average particle 
    :alt: splitter
    :align: center
 
-This unit can be described using 3 models in Dyssol: Bond's model, cone model and const model.
+This unit can be described using 3 models in Dyssol: 
+
+	- Bond's model
+	- Cone model
+	- Const model
 
 
 Bond's model
 ^^^^^^^^^^^^
 
-This model is used to perform milling of the input stream. The crushing is performed according to the model proposed by Bond.
+This model is used to perform milling of the input stream. The crushing is performed according to the model proposed by Bond. The simplification is made, and the particle size distribution of the output stream is described by the normal function.
 
 
 .. math::
 	
-	x_{out} = \dfrac{1}{ \left( \dfrac{P}{10\,w_i\,\dot{m}} + \dfrac{1}{\sqrt{x_{in}}} \right)^2}
-
-
-After simplification, the particle size distribution of the output stream is described with normal function: 
+	x_{80,out} = \dfrac{1}{ \left( \dfrac{P}{10\,w_i\,\dot{m}} + \dfrac{1}{\sqrt{x_{80,in}}} \right)^2}
 
 .. math::
+	
+	\mu = x_{80,out} - 0.83\sigma
+	
+.. math::	
 	
 	q_3(x) = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-\dfrac{(x-\mu)^2}{2\sigma^2}}
+
+	
 
 
 .. note:: Notations applied in this model:
 	
-	:math:`x_{out}` – characteristic particle size of the output stream (:math:`x_{80}`)
+	:math:`x_{80,out}` – characteristic particle size of the output stream
 	
-	:math:`x_{in}` – characteristic particle size of the input stream (:math:`x_{80}`)
+	:math:`x_{80,in}` – characteristic particle size of the input stream
 	
 	:math:`w_i` – Bond Work Index, dependent on the material 
 	
 	:math:`P` – power input 
 	
-	:math:`\dot{m}` – mass flow of the input stream
+	:math:`\dot{m}` – mass flow of solids in the input stream
 	
-	:math:`q_3(x)` – mass related density distribution
+	:math:`q_3(x)` – output mass related density distribution
 	
-	:math:`\sigma` – standard deviation of the output distribution
+	:math:`\sigma` – standard deviation of the output normal distribution
 	
-	:math:`\mu` – mean of the output distribution
+	:math:`\mu` – mean value of the output normal distribution
+	
+	
+.. note:: Solid phase and particle size distribution are required for the simulation.	
 
 
+.. note:: Input parameters needed for the simulation:
+
+	+--------------------+----------------+-----------------------------------------------+---------+------------------------+
+	| Name               | Symbol         | Description                                   | Units   | Boundaries             |
+	+====================+================+===============================================+=========+========================+
+	| P                  |:math:`P`       | Power input                                   | [kW]    | P > 0                  |
+	+--------------------+----------------+-----------------------------------------------+---------+------------------------+
+	| Wi                 |:math:`w_i`     | Bond work index                               | [kWh/t] | 1 ≤ Wi ≤ 100           |
+	+--------------------+----------------+-----------------------------------------------+---------+------------------------+
+	| Standard deviation |:math:`\sigma`  | Standard deviation of the output distribution | [m]     | Standard deviation > 0 |
+	+--------------------+----------------+-----------------------------------------------+---------+------------------------+
+
+
+.. seealso::
+	
+	a demostration file in install path ``<Example Flowsheets/Units/Crusher Bond.dlfw>``.	
+	
+
+.. seealso::
+
+	F.C. Bond, Crushing and grinding calculation – Part I, British Chemical Engineering 6 (6) (1961) 378-385.
+	
+	F.C. Bond, Crushing and grinding calculation – Part II, British Chemical Engineering 6 (8), (1961) 543-548.
+	
+	Denver Sala Basic: Selection Guide for Process Equipment, 1993.
+	
+|
 
 Average Bond Work Indices for various materials
 """""""""""""""""""""""""""""""""""""""""""""""
@@ -381,44 +508,7 @@ Average Bond Work Indices for various materials
 | Iron ore, magnetite         | 10.97                   | Zinc ore           | 12.72                   |
 +-----------------------------+-------------------------+--------------------+-------------------------+
 
-
-.. seealso::
-
-	Denver Sala Basic: Selection Guide for Process Equipment, 1993
-
-
-
-Application example
-"""""""""""""""""""
-
-.. note:: Input parameters needed for the simulation:
-	
-	Power input in kW, value must be positve.
-	
-	Bond Work Index in kWh/t, value must between 1 and 100.
-	
-	Standard deviation of output distribution in m, value must be positve.
-
-
-You can find a demostration file in install path ``<Example Flowsheets/Units/Crusher Bond.dlfw>``.	
-	
-Input model parameters:
-	
-	+----------+-----------------+-------------------------------------------+
-	| Pressure | Bond Work Index | Standard deviation of output distribution |
-	+==========+=================+===========================================+
-	| 100 kW   | 10 kWh/t        | 0.0008 m                                  |
-	+----------+-----------------+-------------------------------------------+
-
-
-Simulation result for particle size distribution:
-
-.. image:: ./pics/units/crusherBondResult.png
-	:width: 700px
-	:alt: bond
-	:align: center
-
-
+|
 
 Cone model
 ^^^^^^^^^^
@@ -452,11 +542,13 @@ The model is described below as
     1											  & x_k \geqslant x_{max}
 	\end{cases} 
 
+
 .. math::
 		
 	x_{min} = CSS \cdot \alpha_1
 	
 	x_{max} = CSS \cdot \alpha_2
+
 		
 .. note:: Notations:
 	
@@ -465,11 +557,6 @@ The model is described below as
 	:math:`CSS` – close size setting of a cone crusher
 	
 	:math:`\alpha_1, \alpha_2, n` – parameters of the King selection function
-
-.. seealso::
-	
-	King, R. P., Modeling and simulation of mineral processing systems, Butterworth & Heinemann, Oxford, 2001.
-
 
 
 :math:`B_{ki}` is calculated by the Vogel breakage function.
@@ -489,8 +576,498 @@ The model is described below as
 	
 	:math:`q` – parameter of the Vogel breakage function
 
+
+.. note:: Solid phase and particle size distribution are required for the simulation.	
+
+
+.. note:: Input parameters needed for the simulation:
+
+	+--------+------------------+---------------------------------------------------------------------------------------+-------+---------------------+
+	| Name   | Symbol           | Description                                                                           | Units | Boundaries          |
+	+========+==================+=======================================================================================+=======+=====================+
+	| CSS    | :math:`CSS`      | Close size setting of a cone crusher. Parameter of the King selection function        | [m]   | CSS > 0             |
+	+--------+------------------+---------------------------------------------------------------------------------------+-------+---------------------+
+	| alpha1 | :math:`\alpha_1` | Parameter of the King selection function                                              | [--]  | 0.5 ≤ alpha1 ≤ 0.95 |
+	+--------+------------------+---------------------------------------------------------------------------------------+-------+---------------------+
+	| alpha2 | :math:`\alpha_2` | Parameter of the King selection function                                              | [--]  | 1.7 ≤ alpha2 ≤ 3.5  |
+	+--------+------------------+---------------------------------------------------------------------------------------+-------+---------------------+
+	| n      | :math:`n`        | Parameter of the King selection function                                              | [--]  | 1 ≤ n ≤ 3           |
+	+--------+------------------+---------------------------------------------------------------------------------------+-------+---------------------+
+	| d’     | :math:`x'`       | Minimum fragment size achieved by crushing. Parameter of the Vogel breakage function  | [m]   | d’ > 0              |
+	+--------+------------------+---------------------------------------------------------------------------------------+-------+---------------------+
+	| q      | :math:`q`        | Parameter of the Vogel breakage function                                              | [--]  |                     |
+	+--------+------------------+---------------------------------------------------------------------------------------+-------+---------------------+
+
+
 .. seealso::
 	
+	a demostration file in install path ``<Example Flowsheets/Units/Crusher Cone.dlfw>``.	
+	
+
+.. seealso::
+	
+	King, R. P., Modeling and simulation of mineral processing systems, Butterworth & Heinemann, Oxford, 2001.
+	
 	Vogel, L., Peukert, W., Modelling of Grinding in an Air Classifier Mill Based on A Fundamental Material Function, KONA, 21, 2003, 109-120.
+
+
+|
+
+Const output model
+^^^^^^^^^^^^^^^^^^
+
+This model sets a normal distribution with the specified constant parameters to the output stream. Outlet distribution does not depend on the inlet distribution.
+
+.. math::	
+	
+	q_3(x) = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-\dfrac{(x-\mu)^2}{2\sigma^2}}
+	
+
+.. note:: Notations:
+	
+	:math:`q_3(x)` – output mass related density distribution
+	
+	:math:`\sigma` – standard deviation of the output normal distribution
+	
+	:math:`\mu` – mean value of the output normal distribution
+	
+
+.. note:: Solid phase and particle size distribution are required for the simulation.	
+
+
+.. note:: Input parameters needed for the simulation:	
+	
+	+--------------------+----------------+------------------------------------------------------+-------+------------------------+
+	| Name               | Symbol         | Description                                          | Units | Boundaries             |
+	+====================+================+======================================================+=======+========================+
+	| Mean               | :math:`\mu`    | Mean of the normal output distribution               | [m]   | Mean > 0               |
+	+--------------------+----------------+------------------------------------------------------+-------+------------------------+
+	| Standard deviation | :math:`\sigma` | Standard deviation of the normal output distribution | [m]   | Standard deviation > 0 |
+	+--------------------+----------------+------------------------------------------------------+-------+------------------------+
+
+
+.. seealso::
+	
+	a demostration file in install path ``<Example Flowsheets/Units/Crusher Const.dlfw>``.	
+	
+|
+
+Bunker
+======
+
+Bunker unit performs accumulation of the solid part of the input material with ideal mixing, see figure below. The bunker mass is controlled to match the user-defined target mass.
+
+.. image:: ./pics/units/bunker.png
+   :width: 200px
+   :alt: 
+   :align: center
+
+
+.. note:: Solid phase is required for the simulation.
+
+
+.. note:: Input parameters needed for the simulation:	
+
+	+-------------+-------------------------------+-------+-----------------+
+	| Name        | Description                   | Units | Boundaries      |
+	+=============+===============================+=======+=================+
+	| Target mass | Target mass within the bunker | [kg]  | Target mass > 0 |
+	+-------------+-------------------------------+-------+-----------------+
+
+
+.. seealso::
+	
+	a demostration file in install path ``<Example Flowsheets/Units/Bunker.dlfw>``.	
+
+|
+
+Granulator
+==========
+
+This unit represents a simplified model of a fluidized bed granulation reactor, see figure below. 
+
+.. image:: ./pics/units/granulator.png
+   :width: 500px
+   :alt: 
+   :align: center
+
+The model does not take into account attrition of particles inside the apparatus and does not keep properly any secondary distributed properties except size.
+
+.. math::
+
+	\frac{dq_{3,i}}{dt} = -G_e\,\frac{q_{3,i} - q_{3,i-1}\,\left(\frac{d_{p,i}}{d_{p,i-1}}\right)^3}{\Delta d_i} + \frac{\dot{m}_{in}}{M_{tot}}\,q_{3,i}^{in} - \frac{\dot{m}_{out}}{M_{tot}}\,q_{3,i}
+
+.. math::	
+
+	G_e = \frac{2\dot{m}_e}{\rho_{s,susp} \cdot A_{tot}}
+
+.. math::	
+
+	A_{tot} = \frac{6M_{tot}}{\rho_s} \sum\limits_{i} \frac{q_{3,i}\cdot \Delta d_i}{d_{p,i}}
+
+.. math::	
+
+	\dot{m}_e = \dot{m}_{s,susp}\,(1 - K_{os})
+
+.. math::	
+
+	\dot{m}_{out} = \dot{m}_{in} + \dot{m}_{e}
+
+.. math::
+	
+	\dot{m}_{dust} = \dot{m}_{s,susp}\cdot K_{os} + (\dot{m}_{susp} - \dot{m}_{s,susp} + \dot{m}_{fl,g})
+
+
+.. note:: Notations:
+	
+	:math:`q_3` – mass density distribution of particles inside apparatus
+	
+	:math:`q_3^{in}` – mass density distribution of external particles from **ExternalNuclei** stream
+	
+	:math:`\Delta d` – class size
+	
+	:math:`d_p` – particle diameter in a class
+	
+	:math:`\dot{m}_{in}` – mass flow of input nuclei
+	
+	:math:`\dot{m}_{out}` – output mass flow of the product
+	
+	:math:`\dot{m}_{dust}` – output mass flow from the **DustOutput**
+	
+	:math:`\dot{m}_{susp}` – total mass flow of the suspension
+	
+	:math:`\dot{m}_{s,susp}` – mass flow of the solid phase in the **Suspension** inlet
+	
+	:math:`\dot{m}_{fl,g}` – mass flow of the gas phase in the **FluidizationGas** inlet
+
+	:math:`\dot{m}_{e}` – effective mass stream of the injected suspension
+	
+	:math:`M_{tot}` – holdup mass
+	
+	:math:`\rho_{s,susp}` – density of solids in the holdup
+	
+	:math:`G_{e}` – effective growth rate
+	
+	:math:`A_{tot}` – total surface of particles in the granulator
+	
+	:math:`K_{os}` – overspray part in the suspension
+
+
+.. note:: particle size distribution is required for the simulation. This unit is applied for solid, liquid and gas phases.
+
+
+.. note:: Input parameters needed for the simulation:	
+	
+	+------+-----------------+----------------------------------------+-------+--------------+
+	| Name | Symbol          | Description                            | Units | Boundaries   |
+	+======+=================+========================================+=======+==============+
+	| Kos  | :math:`K_{os}`  | Overspray part in the suspension       | [--]  | 0 ≤ Kos ≤ 1  |
+	+------+-----------------+----------------------------------------+-------+--------------+
+	| RTol | --              | Relative tolerance for equation solver | [--]  | 0 < RTol ≤ 1 |
+	+------+-----------------+----------------------------------------+-------+--------------+
+	| ATol | --              | Absolute tolerance for equation solver | [--]  | 0 < ATol ≤ 1 |
+	+------+-----------------+----------------------------------------+-------+--------------+
+	
+
+.. note:: State variables:
+
+	+-------+-----------------------+-----------------------------------------------+--------+
+	| Name  | Symbol                | Description                                   | Units  |
+	+=======+=======================+===============================================+========+
+	| Atot  | :math:`A_{tot}`       | Total surface of particles in the granulator  | [m2]   |
+	+-------+-----------------------+-----------------------------------------------+--------+
+	| Mtot  | :math:`M_{tot}`       | Total mass of all particles in the granulator | [kg]   |
+	+-------+-----------------------+-----------------------------------------------+--------+
+	| Mout  | :math:`\dot{m}_{out}` | Output mass flow of the product               | [kg/s] |
+	+-------+-----------------------+-----------------------------------------------+--------+
+	| Mdust | :math:`\dot{m}_{dust}`| Output mass flow of dust                      | [kg/s] |
+	+-------+-----------------------+-----------------------------------------------+--------+
+	| G     | :math:`G_{e}`         | Effective growth rate                         | [m/s]  |
+	+-------+-----------------------+-----------------------------------------------+--------+
+	| PSDi  | :math:`q_{3,i}`       | Mass density distribution of particles        | [1/m]  |
+	+-------+-----------------------+-----------------------------------------------+--------+
+	
+
+.. seealso::
+	
+	a demostration file in install path ``<Example Flowsheets/Units/Granulator.dlfw>``.	
+	
+
+.. seealso:: 
+	S.Heinrich, M. Peglow, M. Ihlow, M. Henneberg, L. Mörl, Analysis of the start-up process in continuous fluidized bed spray granulation by population balance modelling, Chem. Eng. Sci. 57 (2002) 4369-4390.
+
+|
+
+Agglomerator
+============
+
+This unit represents a simplified model of agglomeration process, see figure below. 
+
+.. image:: ./pics/units/agglomerator.png
+   :width: 400px
+   :alt: 
+   :align: center
+
+The model does not take into account attrition of particles inside the apparatus and does not keep properly any secondary distributed property except size.
+
+Mass related density distribution of output stream is calculated according to following equations:	
+	
+.. math::
+
+	\frac{\partial n(v,t)}{\partial t} = B_{agg}(n,v,t) - D_{agg}(n,v,t) + \dot{n}_{in}(t) - \dot{n}_{out}(t)
+
+.. math::
+
+	B_{agg}(n,v,t) = \frac{1}{2}\,\beta_0\,\textstyle \int\limits_{0}^{v} \beta(u,v - u)\,n(u,t)\,n(v-u,t)\,du
+
+.. math::
+	
+	D_{agg}(n,v,t) = \beta_0\,n(v,t)\, \textstyle \int\limits_{0}^{\infty}\,\beta(v,u)\,n(u,t)\,du
+
+.. math::
+	
+	\dot{m}_{out}(t) = \dot{m}_{in}(t)
+
+
+.. note:: Notations:
+
+	:math:`v,u` – volumes of agglomerating particles
+	
+	:math:`n(v,t)` – number density function
+	
+	:math:`\dot{n}_{in}(t)`, :math:`\dot{n}_{out}(t)` – number density functions of inlet and outlet streams, correspondingly
+	
+	:math:`B_{agg}(n,v,t)`, :math:`D_{agg}(n,v,t)` –  birth and death rates of particles with volume :math:`v` caused due to agglomeration
+	
+	:math:`\beta_0` – agglomeration rate constant, dependent on operating conditions but independent from particle sizes
+	
+	:math:`\beta(v,u)` – the agglomeration kernel, see section :ref:`label-agg-kernels`.
+	
+	:math:`t` – time
+	
+	:math:`\dot{m}_{in}` – mass flow in the input stream
+	
+	:math:`\dot{m}_{out}` – mass flow in the output stream
+
+
+.. note:: solid phase and particle size distribution are required for the simulation. 
+
+
+The method of calculating :math:`B_{agg}(n,v,t)` and :math:`D_{agg}(n,v,t)` is determined by the selected solver via unit parameter :ref:`label-agg-solvers`.
+
+
+.. note:: Input parameters needed for the simulation:	
+	
+	+--------+-----------------+-----------------------------------------------------------------------+-------+-----------------------------+
+	| Name   | Symbol          | Description                                                           | Units | Boundaries                  |
+	+========+=================+=======================================================================+=======+=============================+
+	| Beta0  | :math:`\beta_0` | Size independent agglomeration rate constant                          | [--]  | 0 < Beta0 ≤ :math:`10^{20}` |
+	+--------+-----------------+-----------------------------------------------------------------------+-------+-----------------------------+
+	| Step   | --              | Maximum time step of internal DAE solver. Default value is 0.         | [--]  | 0 ≤ Step ≤ :math:`10^{9}`   |
+	+--------+-----------------+-----------------------------------------------------------------------+-------+-----------------------------+
+	| Solver | --              | Solver used to calculate birth and death rates                        | [--]  | --                          |
+	+--------+-----------------+-----------------------------------------------------------------------+-------+-----------------------------+
+	| Kernel | --              | Agglomeration kernel type, must be an integer                         | [--]  | 0 ≤ Kernel ≤ 9              |
+	+--------+-----------------+-----------------------------------------------------------------------+-------+-----------------------------+
+	| Rank   | --              | Rank of the kernel (applied for FFT solver only), must be an integer  | [--]  | 1 ≤ Rank ≤ 10               |
+	+--------+-----------------+-----------------------------------------------------------------------+-------+-----------------------------+
+
+
+.. seealso::
+	
+	a demostration file in install path ``<Example Flowsheets/Units/Agglomerator.dlfw>``.	
+	
+
+.. seealso:: 
+
+	V.Skorych, M. Dosta, E.-U. Hartge, S. Heinrich, R. Ahrens, S. Le Borne, Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology 30 (3) (2019), 555-564.
+
+|
+
+.. _label-agg-kernels:
+
+Kernels
+^^^^^^^
+
+The agglomeration kernels are applied to describe the agglomeration frequency between particles of volumes :math:`v` and :math:`u`, which produce a new particle with the size :math:`(v + u)`. In Dyssol environment, 10 types of kernels are numbered with integers from 0 to 9, as listed below.
+
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| Number | Name           | Kernel equation                                                                                                    |
+	+========+================+====================================================================================================================+
+	| 0      | Constant       | :math:`\beta (u,v)=1`                                                                                              |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 1      | Sum            | :math:`\beta (u,v)=u+v`                                                                                            |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 2      | Product        | :math:`\beta (u,v)=uv`                                                                                             |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 3      | Brownian       | :math:`\beta (u,v)=\left(u^{\frac{1}{3}}+v^{\frac{1}{3}} \right)\,\left(u^{-\frac{1}{3}}+v^{-\frac{1}{3}} \right)` |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 4      | Shear          | :math:`\beta (u,v)=\left(u^{\frac{1}{3}}+v^{\frac{1}{3}} \right)^{\frac{7}{3}}`                                    |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 5      | Peglow         | :math:`\beta (u,v)=\dfrac{ (u+v)^{0.71} }{(uv)^{0.062} }`                                                          |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 6      | Coagulation    | :math:`\beta(u,v)=u^{\frac{2}{3}}+v^{\frac{2}{3}}`                                                                 |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 7      | Gravitational  | :math:`\beta(u,v)=\left(u^{\frac{1}{3}}+v^{\frac{1}{3}} \right)^2 \left|u^{\frac{1}{6}}-v^{\frac{1}{6}} \right|`   |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 8      | Kinetic energy | :math:`\beta(u,v)=\left(u^{\frac{1}{3}}+v^{\frac{1}{3}} \right)^2 \, \sqrt{\frac{1}{u}+\frac{1}{v}}`               |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+	| 9      | Thompson       | :math:`\beta(u,v)=\dfrac{(u-v)^2}{u+v}`                                                                            |
+	+--------+----------------+--------------------------------------------------------------------------------------------------------------------+
+
+|
+
+.. _label-agg-solvers:
+
+Solvers
+^^^^^^^
+
+Solvers are applied to calculate the birth and death rate of agglomerates according to different mathematical models. In Dyssol, 3 solver types are available:
+
+	- Cell average
+	- Fast Fourier transformation (FFT)
+	- Fixed pivot
+
+
+The applied equations in all solvers are listed as follows. For notation in the equations, please refer to the ``Notations`` above.
+
+.. math::
+
+	\frac{\partial n(v,t)}{\partial t} = B_{agg}(n,v,t) - D_{agg}(n,v,t)
+
+.. math::
+
+	B_{agg}(n,v,t) = \frac{1}{2}\,\beta_0\,\textstyle \int\limits_{0}^{v} \beta(u,v - u)\,n(u,t)\,n(v-u,t)\,du
+
+.. math::
+	
+	D_{agg}(n,v,t) = \beta_0\,n(v,t)\, \textstyle \int\limits_{0}^{\infty}\,\beta(v,u)\,n(u,t)\,du
+
+
+
+|
+
+Cell average solver
+"""""""""""""""""""
+
+This solver calculates the birth rate :math:`B_{agg}(n,v,t)` and death rate :math:`D_{agg}(n,v,t)` using a cell average technique. 
+
+
+.. note:: solid phase and particle size distribution are required for the simulation. Equidistant volume grid for particle size distribution must be used.
+
+
+.. seealso:: J.Kumar, M. Peglow, G. Warnecke, S. Heinrich, An efficient numerical technique for solving population balance equation involving aggregation, breakage, growth and nucleation, Powder Technology 182 (1) (2008), 81-104.
+
+|
+
+FFT solver
+""""""""""
+
+This solver calculates the birth rate :math:`B_{agg}(n,v,t)` and death rate :math:`D_{agg}(n,v,t)` based on a separable approximation of the agglomeration kernel and a subsequent fast Fourier transformation.
+
+The agglomeration kernel :math:`\beta (v,u)` is represented in a separable form with the separation rank :math:`M` as:
+
+.. math::
+	
+	\beta (v,u) = \sum\limits_{i=1}^{M} a_i(v)\,b_i(u)
+	
+Then birth and death rate terms are transformed to following equations with :math:`\psi_i = a_i\,n` and :math:`\varphi_i = b_i\,n`.
+
+.. math::
+
+	B_{agg}(n,v,t) = \frac{1}{2}\,\textstyle \int\limits_{0}^{v} \psi_i(v - u,t)\,\varphi_i(u,t)\,du
+
+.. math::
+	
+	D_{agg}(n,v,t) = \psi_i(v,t)\, \textstyle \int\limits_{0}^{\infty}\varphi_i(u,t)\,du	
+
+The separation turns the birth rate agglomeration integral into a convolution form :math:`\varphi_i * \psi_i`, which after piecewise constant discretization, is computed based on the convolution theorem
+
+.. math::
+	
+	\varphi_i * \psi_i = IFFT(FFT(\varphi_i) \odot FFT(\psi_i))
+
+applying the direct and inverse fast Fourier transformation (:math:`FFT/IFFT`) and the elementwise product :math:`\odot`.
+
+
+.. note:: List of kernels separation equations
+	
+	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
+	| Kernel                                                                       | Separation equation                                                                                   |
+	+==============================================================================+=======================================================================================================+
+	| Constant                                                                     | :math:`\beta(u,v) = \sum\limits_{i=1}^1 a_i(v)\,b_i(u),`                                              |
+	|                                                                              | :math:`a_1 (v) = 1, b_1 (u) = 1`                                                                      |
+	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
+	| Sum                                                                          | :math:`\beta(u,v) = \sum\limits_{i=1}^2 a_i(v)\,b_i(u),`                                              |
+	|                                                                              | :math:`a_1 (v) = v, a_2 (v)= 1, b_1 (u) = 1, b_2 (u)= u`                                              |
+	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
+	| Brownian                                                                     | :math:`\beta(u,v) = \sum\limits_{i=1}^3 a_i(v)\,b_i(u),`                                              |
+	|                                                                              | :math:`a_1 (v) = \sqrt{2}, a_2 (v) = v^{\frac{1}{3}}, a_3 (v)= v^{-\frac{1}{3}}`                      |
+	|                                                                              | :math:`b_1 (u) = \sqrt{2}, b_2 (u) = u^{-\frac{1}{3}}, b_3 (u)= u^{\frac{1}{3}}`                      |
+	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
+	| Product, Shear, Peglow, Coagulation, Gravitational, Kinetic energy, Thompson | Approximated by a rank-M separable function                                                           |
+	|                                                                              | :math:`\beta (v,u) \approx \sum\limits_{i=1}^{M} a_i(v)\,b_i(u)`                                      |
+	|                                                                              | using adaptive cross approximation                                                                    |
+	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
+
+
+
+.. note:: solid phase and particle size distribution are required for the simulation. Equidistant volume grid for particle size distribution must be used. Grid for particle size distribution must start from 0.
+
+
+.. seealso:: 
+
+	V.Skorych, M. Dosta, E.-U. Hartge, S. Heinrich, R. Ahrens, S. Le Borne, Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology 30 (3) (2019), 555-564. 
+
+	S.Le Borne, L. Shahmuradyan, K. Sundmacher, Fast evaluation of univariate aggregation integrals on equidistant grids. Computers and Chemical Engineering 74 (2015), 115-127.
+	
+|
+
+Fixed pivot solver
+""""""""""""""""""
+
+This solver calculates the birth rate :math:`B_{agg}(n,v,t)` and death rate :math:`D_{agg}(n,v,t)` using a fixed pivot technique. 
+
+
+.. note:: solid phase and particle size distribution are required for the simulation. 
+
+
+.. seealso:: S.Kumar, D. Ramkrishna, On the solution of population balance equations by discretization – I. A fixed pivot technique. Chem. Eng. Sci. 51 (8) (1996), 1311-1332.
+
+|
+
+Time delay
+==========
+
+This unit copies the complete information of the input stream :math:`In` at any given timepoint :math:`t` to the output stream :math:`Out` at the timepoint :math:`t + \Delta t`, delaying the signal by a constant delay factor :math:`\Delta t`, which you will be asked to define for the simulation.
+
+The scheme is shown in the figure below.
+
+.. image:: ./pics/units/timedelay.png
+   :width: 300px
+   :alt: 
+   :align: center
+   
+|
+
+.. note:: Input parameters needed for the simulation:
+
+	+------------+------------------+-----------------+-------+-------------------------------+
+	| Name       | Symbol           | Description     | Units | Boundaries                    |
+	+============+==================+=================+=======+===============================+
+	| Time delay | :math:`\Delta t` | Unit time delay | [s]   | 0 ≤ Time delay ≤ :math:`10^6` |
+	+------------+------------------+-----------------+-------+-------------------------------+
+
+
+.. seealso::
+	
+	a demostration file in install path ``<Example Flowsheets/Units/Time Delay.dlfw>``.	
+
+
+
+
+
+
+
 
 

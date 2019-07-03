@@ -1,22 +1,42 @@
-Your first simulation with Dyssol
-=================================
-
-Blabla...
+Get started
+===========
 
 
+
+|
 
 Installation
 ------------
-How to install...
 
 
+
+
+
+
+|
 
 Launch Software
 ---------------
-How to launch...
+
+You can launch the software either by double-clicking the icon or by command lines.
+
+Lauch by command lines
+""""""""""""""""""""""
 
 
+
+
+
+|
+
+Introduction to GUI
+-------------------
+
+
+
+|
 
 Run your first simulation
 -------------------------
-Example about a process simulation...
+
+.. Example about a process simulation... --> Screening process in "Get started"
