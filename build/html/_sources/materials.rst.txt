@@ -1,3 +1,6 @@
+
+.. _label-materialDat:
+
 =================
 Material database
 =================

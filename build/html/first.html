@@ -44,33 +44,808 @@
             
   <div class="section" id="get-started">
 <h1>Get started<a class="headerlink" href="#get-started" title="Permalink to this headline">¶</a></h1>
+<p>Here you will get an overview of first steps you need to use Dyssol, including installation, introduction to the graphical user interface (GUI)</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="section" id="installation">
 <h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>After installation, you can find the following folders and files in the installation directory <code class="docutils literal notranslate"><span class="pre">\Program</span> <span class="pre">Files\Dyssol</span></code>.</p>
+<ul>
+<li><p class="first">Folders:</p>
+<blockquote>
+<div><p><strong>Example flowsheets</strong>: flowsheet examples</p>
+<p><strong>Example units</strong>: source code of units written in C++</p>
+<p><strong>Example solvers</strong>: source code of solvers written in C++</p>
+<p><strong>Help</strong>: documentation files in form of PDF</p>
+<p><strong>Licenses</strong>: information about licenses</p>
+<p><strong>Solvers</strong>: libraries of developed solvers</p>
+<p><strong>Units</strong>: libraries of developed units</p>
+<p><strong>VCProject</strong>: template project for Microsoft Visual Studio</p>
+</div></blockquote>
+</li>
+<li><p class="first">Files:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">Dyssol.exe</span></code>: executable file of Dyssol program</p>
+<p><code class="docutils literal notranslate"><span class="pre">DyssolC.exe</span></code>: command line utility of Dyssol program</p>
+<p><code class="docutils literal notranslate"><span class="pre">ExampleConfigFile.txt</span></code>: example configuration file for command line utility</p>
+<p><code class="docutils literal notranslate"><span class="pre">LICENSE</span></code>: license agreement</p>
+<p><code class="docutils literal notranslate"><span class="pre">Materials.dmdb</span></code>: default materials database</p>
+<p><code class="docutils literal notranslate"><span class="pre">unins000.dat</span></code>: shortcut for Dyssol uninstaller</p>
+</div></blockquote>
+</li>
+</ul>
 <div class="line-block">
 <div class="line"><br /></div>
-</div>
-</div>
-<div class="section" id="launch-software">
-<h2>Launch Software<a class="headerlink" href="#launch-software" title="Permalink to this headline">¶</a></h2>
-<p>You can launch the software either by double-clicking the icon or by command lines.</p>
-<div class="section" id="lauch-by-command-lines">
-<h3>Lauch by command lines<a class="headerlink" href="#lauch-by-command-lines" title="Permalink to this headline">¶</a></h3>
-<div class="line-block">
-<div class="line"><br /></div>
-</div>
 </div>
 </div>
 <div class="section" id="introduction-to-gui">
 <h2>Introduction to GUI<a class="headerlink" href="#introduction-to-gui" title="Permalink to this headline">¶</a></h2>
+<p>After installation and launching Dyssol, you will see the GUI, which is introduced below by corresponding screenshots.</p>
+<div class="section" id="menu">
+<h3>Menu<a class="headerlink" href="#menu" title="Permalink to this headline">¶</a></h3>
+<p>You can find File, Flowsheet, Modules, Tools and Help in the menu bar.</p>
+<div class="section" id="file">
+<h4>File<a class="headerlink" href="#file" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/fileMenu.png"><img alt="" class="align-center" src="_images/fileMenu.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Command line interface:</p>
+<blockquote>
+<div><p>Using this option, you can save your current simulation to a <a class="reference internal" href="#label-config-file"><span class="std std-ref">Configuration file</span></a> in <code class="docutils literal notranslate"><span class="pre">*.txt</span></code> form. In the configuration file, you may have the following activities. However, it is impossible to change the flowsheet structure in the configuration file.</p>
+<ul class="simple">
+<li>Run simulations in command line mode</li>
+<li>Batch runs of multiple simulations</li>
+<li>Change simulation parameters: simulation time, unit parameters, grid parameters, holdups, distributed parameters of solids, simulation options</li>
+<li>Possibility to save flowsheet as the configuration file for the command line mode</li>
+</ul>
+<p>Please refer to the help document in directory <code class="docutils literal notranslate"><span class="pre">Dyssol\Help\Command</span> <span class="pre">Line.pdf</span></code> for more information.</p>
+<a class="reference internal image-reference" href="_images/command.png"><img alt="" class="align-center" src="_images/command.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
+<div class="section" id="flowsheet">
+<h4>Flowsheet<a class="headerlink" href="#flowsheet" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/flowsheets.png"><img alt="" class="align-center" src="_images/flowsheets.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Compounds editor:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/compounds.png"><img alt="" class="align-center" src="_images/compounds.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Phases editor:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/phases.png"><img alt="" class="align-center" src="_images/phases.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Grids specification:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/grid1.png"><img alt="" class="align-center" src="_images/grid1.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/grid2.png"><img alt="" class="align-center" src="_images/grid2.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Holdups editor:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/holdup1.png"><img alt="" class="align-center" src="_images/holdup1.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Main control:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/holdup2.png"><img alt="" class="align-center" src="_images/holdup2.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Concentrated parameters:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/holdup3.png"><img alt="" class="align-center" src="_images/holdup3.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Distributed parameters:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/holdup4.png"><img alt="" class="align-center" src="_images/holdup4.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Options:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/options1.png"><img alt="" class="align-center" src="_images/options1.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Convergence:</p>
+<blockquote>
+<div><p>For more information, please refer to <a class="reference internal" href="simulation.html#label-convergence"><span class="std std-ref">Convergence</span></a> or the help document in directory <code class="docutils literal notranslate"><span class="pre">Dyssol\Help\Convergence.pdf</span></code>.</p>
+</div></blockquote>
+</li>
+</ul>
+<a class="reference internal image-reference" href="_images/options2.png"><img alt="" class="align-center" src="_images/options2.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Service:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/options3.png"><img alt="" class="align-center" src="_images/options3.png" style="width: 480px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Calculation sequence:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/sequence.png"><img alt="" class="align-center" src="_images/sequence.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Recycle streams:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/recycle.png"><img alt="" class="align-center" src="_images/recycle.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="modules">
+<h4>Modules<a class="headerlink" href="#modules" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/modules.png"><img alt="" class="align-center" src="_images/modules.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="tools">
+<h4>Tools<a class="headerlink" href="#tools" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/tools.png"><img alt="" class="align-center" src="_images/tools.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Models manager:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/modelsManag.png"><img alt="" class="align-center" src="_images/modelsManag.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul>
+<li><p class="first">Materials Database:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/database.png"><img alt="" class="align-center" src="_images/database.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Tab Compounds - Compounds List:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/dat1.png"><img alt="" class="align-center" src="_images/dat1.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Tab Compounds - Properties:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/dat2.png"><img alt="" class="align-center" src="_images/dat2.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Tab Compounds - Correlations:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/dat3.png"><img alt="" class="align-center" src="_images/dat3.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Tab Compounds - Correlations plot:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/dat4.png"><img alt="" class="align-center" src="_images/dat4.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<ul class="simple">
+<li>Tab Interactions:</li>
+</ul>
+<a class="reference internal image-reference" href="_images/dat5.png"><img alt="" class="align-center" src="_images/dat5.png" style="width: 960px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div>
+<div class="section" id="help">
+<h4>Help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/help.png"><img alt="" class="align-center" src="_images/help.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="tabs">
+<h3>Tabs<a class="headerlink" href="#tabs" title="Permalink to this headline">¶</a></h3>
+<p>Tabs are needed for the parameter setup. They are named by Flowsheet, Simulator, Streams and Units.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/tabs.png"><img alt="" class="align-center" src="_images/tabs.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="id1">
+<h4>Flowsheet<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<ul>
+<li><p class="first">Units:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/units.png"><img alt="" class="align-center" src="_images/units.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Streams:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/streams.png"><img alt="" class="align-center" src="_images/streams.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Model selection:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/modelSelect.png"><img alt="" class="align-center" src="_images/modelSelect.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Ports connection:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/ports.png"><img alt="" class="align-center" src="_images/ports.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Unit parameters:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/unitParam.png"><img alt="" class="align-center" src="_images/unitParam.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="simulator">
+<h4>Simulator<a class="headerlink" href="#simulator" title="Permalink to this headline">¶</a></h4>
+<p>Here you can start your simulation based on your time input.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/simulator.png"><img alt="" class="align-center" src="_images/simulator.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="stream">
+<h4>Stream<a class="headerlink" href="#stream" title="Permalink to this headline">¶</a></h4>
+<p>Here you will find the simulation results, including the stream results summarized in table and plot.</p>
+<ul>
+<li><p class="first">Table view:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/table.png"><img alt="" class="align-center" src="_images/table.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Plot view:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/plot.png"><img alt="" class="align-center" src="_images/plot.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="units">
+<h4>Units<a class="headerlink" href="#units" title="Permalink to this headline">¶</a></h4>
+<p>In Units tab, you can control the operation units.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/unitsTab.png"><img alt="" class="align-center" src="_images/unitsTab.png" style="width: 960px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="run-your-first-simulation">
 <h2>Run your first simulation<a class="headerlink" href="#run-your-first-simulation" title="Permalink to this headline">¶</a></h2>
+<p>In Dyssol, you can simulate your process either by the normal graphical user interface or by a pre-difined configuration file.</p>
+<div class="section" id="graphical-user-interface">
+<h3>Graphical user interface<a class="headerlink" href="#graphical-user-interface" title="Permalink to this headline">¶</a></h3>
+<p>Here you can find a detailed guide for simulating the <a class="reference internal" href="units.html#label-screen"><span class="std std-ref">Screen</span></a> process.</p>
+<p>A flowsheet of this example is shown below with all stream names.</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/flowsheet.png"><img alt="" class="align-center" src="_images/flowsheet.png" style="width: 500px;" /></a>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>You need to follow these 12 steps to complete the simulation and analyze the result.</p>
+<ol class="arabic">
+<li><p class="first">Add <strong>units</strong> to the flowsheet and name them:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/1.png"><img alt="" class="align-center" src="_images/1.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Add <strong>streams</strong> to the flowsheet and name them:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/2.png"><img alt="" class="align-center" src="_images/2.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Select a <strong>model</strong> for each unit on the flowsheet:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/3-1.png"><img alt="" class="align-center" src="_images/3-1.png" style="width: 960px;" /></a>
+<a class="reference internal image-reference" href="_images/3-2.png"><img alt="" class="align-center" src="_images/3-2.png" style="width: 960px;" /></a>
+<a class="reference internal image-reference" href="_images/3-3.png"><img alt="" class="align-center" src="_images/3-3.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Connect <strong>ports</strong> of each unit to the streams:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/4.png"><img alt="" class="align-center" src="_images/4.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Setup <strong>parameters</strong> of units:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/5.png"><img alt="" class="align-center" src="_images/5.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Add <strong>compounds</strong> to the flowsheet:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/6.png"><img alt="" class="align-center" src="_images/6.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Add <strong>phases</strong> to the flowsheet:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/7.png"><img alt="" class="align-center" src="_images/7.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Specify <strong>grids</strong> for distributed parameters of solids:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/8.png"><img alt="" class="align-center" src="_images/8.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Setup <strong>feeds</strong> of inlets and <strong>holdups</strong> of units:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/9-1.png"><img alt="" class="align-center" src="_images/9-1.png" style="width: 960px;" /></a>
+<a class="reference internal image-reference" href="_images/9-2.png"><img alt="" class="align-center" src="_images/9-2.png" style="width: 960px;" /></a>
+<a class="reference internal image-reference" href="_images/9-3.png"><img alt="" class="align-center" src="_images/9-3.png" style="width: 960px;" /></a>
+<a class="reference internal image-reference" href="_images/9-4.png"><img alt="" class="align-center" src="_images/9-4.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first">Specify the simulation <strong>time</strong>:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/10.png"><img alt="" class="align-center" src="_images/10.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Run</strong> the simulation:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/11.png"><img alt="" class="align-center" src="_images/11.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+<li><p class="first"><strong>Analyze</strong> the results:</p>
+<blockquote>
+<div><a class="reference internal image-reference" href="_images/12-1.png"><img alt="" class="align-center" src="_images/12-1.png" style="width: 960px;" /></a>
+<a class="reference internal image-reference" href="_images/12-2.png"><img alt="" class="align-center" src="_images/12-2.png" style="width: 960px;" /></a>
+</div></blockquote>
+</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="configuration-file">
+<span id="label-config-file"></span><h3>Configuration file<a class="headerlink" href="#configuration-file" title="Permalink to this headline">¶</a></h3>
+<p>You may start your simulation by command lines with the help of <code class="docutils literal notranslate"><span class="pre">DyssolC.exe</span></code>, which can be found in the installation directory. The command <code class="docutils literal notranslate"><span class="pre">DyssolC</span></code> can be started from the command prompt.</p>
+<p>As the single input argument, a configuration file (in the following case named <code class="docutils literal notranslate"><span class="pre">script.txt</span></code>) must be loaded.</p>
+<div class="highlight-RST notranslate"><div class="highlight"><pre><span></span>&gt; DyssolC.exe script.txt
+</pre></div>
+</div>
+<p>The configuration file is a text file describing all necessary parameters for your simulation file. Details about the parameters are described in the tables below.</p>
+<p>You can find an exemplary configuration file <code class="docutils literal notranslate"><span class="pre">ExampleConfigFile.txt</span></code> in the installation directory.</p>
+<p>Only 3 parameters from the list are mandatory parameters: <code class="docutils literal notranslate"><span class="pre">SOURCE_FILE</span></code>, <code class="docutils literal notranslate"><span class="pre">MODELS_PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">MATERIALS_DATABASE</span></code>. The rest are optional and will override parameters set in initial file, specified as <code class="docutils literal notranslate"><span class="pre">SOURCE_FILE</span></code>. If <code class="docutils literal notranslate"><span class="pre">RESULT_FILE</span></code> parameter is not specified, results of the simulation will be written to a <code class="docutils literal notranslate"><span class="pre">SOURCE_FILE</span></code>.</p>
+<p>Parameters <code class="docutils literal notranslate"><span class="pre">MODELS_PATH</span></code>, <code class="docutils literal notranslate"><span class="pre">DISTRIBUTION_GRID</span></code>, <code class="docutils literal notranslate"><span class="pre">UNIT_PARAMETER</span></code>, <code class="docutils literal notranslate"><span class="pre">UNIT_HOLDUP_*</span></code> can be mentioned several times in the script file, the rest should be places only ones.</p>
+<p>You can find the lists of all available parameters in the configuration file.</p>
+<div class="section" id="general">
+<h4>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Identifier</th>
+<th class="head">Parameter</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">SOURCE_FILE</span></code>:
+Full path to the <a href="#id2"><span class="problematic" id="id3">*</span></a>.dflw file with initial flowsheet</td>
+<td><code class="docutils literal notranslate"><span class="pre">C:\Path\to\source\file.dflw</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">RESULT_FILE</span></code>:
+Full path to the file where simulation results will be written</td>
+<td><code class="docutils literal notranslate"><span class="pre">C:\Path\to\result\file.dflw</span></code></td>
+</tr>
+<tr class="row-even"><td rowspan="2"><code class="docutils literal notranslate"><span class="pre">MODELS_PATH</span></code>:
+Path to the directory where <a href="#id4"><span class="problematic" id="id5">*</span></a>.dll libraries of units and solvers can be found</td>
+<td rowspan="2"><code class="docutils literal notranslate"><span class="pre">C:\Path\to\dir\with\models\</span></code></td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"><td rowspan="2"><code class="docutils literal notranslate"><span class="pre">MATERIALS_DATABASE</span></code>:
+Full path to the file with materials database</td>
+<td rowspan="2"><code class="docutils literal notranslate"><span class="pre">C:\Path\to\database.dmdb</span></code></td>
+</tr>
+<tr class="row-odd"></tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="simulation">
+<h4>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="65%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Identifier</th>
+<th class="head">Parameter</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">SIMULATION_TIME</span></code>:
+End simulation time in [s]</td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="options">
+<h4>Options<a class="headerlink" href="#options" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="51%" />
+<col width="49%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Identifier</th>
+<th class="head">Parameter</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">RELATIVE_TOLERANCE</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">ABSOLUTE_TOLERANCE</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">MINIMAL_FRACTION</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">INIT_TIME_WINDOW</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">MIN_TIME_WINDOW</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">MAX_TIME_WINDOW</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">MAX_ITERATIONS_NUM</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">WINDOW_CHANGE_RATE</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">ITER_UPPER_LIMIT</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">ITER_LOWER_LIMIT</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">ITER_UPPER_LIMIT_1</span></code></td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-odd"><td rowspan="4"><code class="docutils literal notranslate"><span class="pre">CONVERGENCE_METHOD</span></code></td>
+<td rowspan="4"><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code> represented by numbers:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code> = 0 – Direct substitution</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code> = 1 – Wegstein</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code> = 2 – Steffensen</p>
+</td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><code class="docutils literal notranslate"><span class="pre">ACCEL_PARAMETER</span></code>:
+Parameter of Wegstein’s method</td>
+<td rowspan="2"><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">RELAX_PARAMETER</span></code>:
+Parameter of Direct Substitution method</td>
+<td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code></td>
+</tr>
+<tr class="row-even"><td rowspan="4"><code class="docutils literal notranslate"><span class="pre">EXTRAPOL_METHOD</span></code>:
+Extrapolation method</td>
+<td rowspan="4"><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code> represented by numbers:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code> = 0 – Linear</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code> = 1 – Cubic spline</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;method&gt;</span></code> = 2 – Nearest neighbor</p>
+</td>
+</tr>
+<tr class="row-odd"></tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"></tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="grids">
+<h4>Grids<a class="headerlink" href="#grids" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Identifier</th>
+<th class="head">Parameter</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="12"><code class="docutils literal notranslate"><span class="pre">DISTRIBUTION_GRID</span></code>:
+Specification of meshes for distributed parameters of solids</td>
+<td><p class="first">General form:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;distribution&gt;</span> <span class="pre">&lt;type&gt;</span> <span class="pre">&lt;classes&gt;</span> <span class="pre">[&lt;grid&gt;]</span> <span class="pre">(&lt;min&gt;</span> <span class="pre">&lt;max&gt;</span> <span class="pre">|</span> <span class="pre">&lt;boundaries&gt;</span> <span class="pre">|</span> <span class="pre">&lt;names&gt;)</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">For Continuous not Manual:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;distribution&gt;</span> <span class="pre">&lt;type&gt;</span> <span class="pre">&lt;classes&gt;</span> <span class="pre">&lt;grid&gt;</span> <span class="pre">&lt;min&gt;</span> <span class="pre">&lt;max&gt;</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first">For Discrete or Continuous Manual:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;distribution&gt;</span> <span class="pre">&lt;type&gt;</span> <span class="pre">&lt;classes&gt;</span> <span class="pre">&lt;boundaries&gt;</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">For Symbolic:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;distribution&gt;</span> <span class="pre">&lt;type&gt;</span> <span class="pre">&lt;classes&gt;</span> <span class="pre">&lt;names&gt;</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;distribution&gt;</span></code> – index of the distribution as it stated in Grid Specification window</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> – distribution type represented by numbers:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> = 0 – Continuous</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> = 1 – Discrete</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> = 2 – Symbolic</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;classes&gt;</span></code> – number of classes</td>
+</tr>
+<tr class="row-odd"><td><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> – type of the grid (if &lt;type&gt; = 0) represented by numbers:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> = 0 – Manual</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> = 1 – Equidistant</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> = 2 – Geometric increasing</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> = 3 – Logarithmic increasing</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> = 4 – Geometric decreasing</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> = 5 – Logarithmic decreasing</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;min&gt;</span></code> – min value, if <code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> = 0 and <code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> <span class="math notranslate nohighlight">\(\neq\)</span> 0</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&lt;max&gt;</span></code> – max value, if <code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> = 0 and <code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> <span class="math notranslate nohighlight">\(\neq\)</span> 0</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;boundaries&gt;</span></code> – class boundary values, if (<code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> = 0 and <code class="docutils literal notranslate"><span class="pre">&lt;grid&gt;</span></code> = 0) or (<code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> = 1)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&lt;names&gt;</span></code> – names of classes boundary values (if <code class="docutils literal notranslate"><span class="pre">&lt;type&gt;</span></code> = 2)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="unit-parameters">
+<h4>Unit parameters<a class="headerlink" href="#unit-parameters" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="36%" />
+<col width="64%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Identifier</th>
+<th class="head">Parameter</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td rowspan="11"><code class="docutils literal notranslate"><span class="pre">UNIT_PARAMETER</span></code>: Specification of unit parameters</td>
+<td><p class="first">General form:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;parameter&gt;</span> <span class="pre">(&lt;value&gt;</span> <span class="pre">|</span> <span class="pre">&lt;time&gt;</span> <span class="pre">&lt;value&gt;</span> <span class="pre">[&lt;time&gt;</span> <span class="pre">&lt;value&gt;</span> <span class="pre">[…]]</span> <span class="pre">|</span> <span class="pre">&lt;string&gt;</span> <span class="pre">|</span> <span class="pre">&lt;solver&gt;)</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">For constant parameter:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;parameter&gt;</span> <span class="pre">&lt;value&gt;</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first">For time-dependent parameter:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;parameter&gt;</span> <span class="pre">&lt;time&gt;</span> <span class="pre">&lt;value&gt;</span> <span class="pre">[&lt;time&gt;</span> <span class="pre">&lt;value&gt;</span> <span class="pre">[…]]</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><p class="first">For string parameter:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;parameter&gt;</span> <span class="pre">&lt;string&gt;</span></code></p>
+</td>
+</tr>
+<tr class="row-even"><td><p class="first">For solver parameter:</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;parameter&gt;</span> <span class="pre">&lt;solver&gt;</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span></code> – index of the unit</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;parameter&gt;</span></code> – index of the parameter</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code> – numerical value of the parameter</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;time&gt;</span></code> – value of the time point (for time-dependent parameters)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">&lt;string&gt;</span></code> – numerical value of the parameter (for string parameters)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">&lt;solver&gt;</span></code> – name of a <code class="docutils literal notranslate"><span class="pre">*.dll</span></code> file with solver (for solver parameter)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="holdups">
+<h4>Holdups<a class="headerlink" href="#holdups" title="Permalink to this headline">¶</a></h4>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="38%" />
+<col width="62%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Identifier</th>
+<th class="head">Parameter</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">UNIT_HOLDUP_MTP</span></code>: Specification of holdups: mass, temperature and pressure</td>
+<td><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;holdup&gt;</span> <span class="pre">&lt;timepoint&gt;</span> <span class="pre">&lt;mass&gt;</span> <span class="pre">&lt;temperature&gt;</span> <span class="pre">&lt;pressure&gt;</span></code> with:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span></code> – index of the unit</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;holdup&gt;</span></code> – index of the holdup in the unit</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;timepoint&gt;</span></code> – index of the time point</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;mass&gt;</span></code> – mass value</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;temperature&gt;</span></code> – temperature value</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;pressure&gt;</span></code> – pressure value</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">UNIT_HOLDUP_PHASES</span></code>: Specification of holdups: phase fractions</td>
+<td><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;holdup&gt;</span> <span class="pre">&lt;timepoint&gt;</span> <span class="pre">&lt;fraction&gt;</span> <span class="pre">[fraction</span> <span class="pre">[…]]</span></code> with:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span></code> – index of the unit</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;holdup&gt;</span></code> – index of the holdup in the unit</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;timepoint&gt;</span></code> – index of the time point</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;fraction&gt;</span></code> – mass fraction of the phase, number of parameters must correspond to the number of phases</p>
+</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">UNIT_HOLDUP_COMP</span></code>: Specification of holdups: compound fractions in phase</td>
+<td><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;holdup&gt;</span> <span class="pre">&lt;phase&gt;</span> <span class="pre">&lt;timepoint&gt;</span> <span class="pre">&lt;fraction&gt;</span> <span class="pre">[fraction</span> <span class="pre">[…]]</span></code> with:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span></code> – index of the unit</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;holdup&gt;</span></code> – index of the holdup in the unit</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;phase&gt;</span></code> – index of the phase</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;timepoint&gt;</span></code> – index of the time point</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;fraction&gt;</span></code> – mass fraction of the compound, number of parameters must correspond to the number of compounds</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">UNIT_HOLDUP_SOLID</span></code>:
+Specification of holdups: distributed parameters of solids</td>
+<td><p class="first"><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span> <span class="pre">&lt;holdup&gt;</span> <span class="pre">&lt;distribution&gt;</span> <span class="pre">&lt;compound&gt;</span> <span class="pre">&lt;timepoint&gt;</span> <span class="pre">&lt;psdtype&gt;</span> <span class="pre">&lt;function&gt;</span> <span class="pre">&lt;psdgridtype&gt;</span> <span class="pre">(&lt;param1&gt;</span> <span class="pre">&lt;param2&gt;</span> <span class="pre">|</span> <span class="pre">&lt;values&gt;)</span></code> with:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;unit&gt;</span></code> – index of the unit</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;holdup&gt;</span></code> – index of the holdup in the unit</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;distribution&gt;</span></code> – index of the distribution as specified in Distributions Sequence</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;compound&gt;</span></code> – index of the compound, <code class="docutils literal notranslate"><span class="pre">&lt;compound&gt;</span></code> = 0 for total mixture</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;timepoint&gt;</span></code> – index of the time point</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> – PSD type, if &lt;distribution&gt; corresponds to a PSD. Represented with numbers:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = -1 – Not a PSD</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = 0 – q3</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = 1 – Q3</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = 2 – q0</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = 3 – Q0</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = 4 – Mass fraction</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = 5 – Number</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = 6 – q2</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdtype&gt;</span></code> = 7 – Q2</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code> – index of the distribution function represented by numbers:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code> = 0 – Manual</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code> = 1 – Normal distribution</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code> = 2 – RRSB</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code> = 3 – GGS</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code> = 4 – Logarithmic Normal</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdgridtype&gt;</span></code> – type of the grid if <code class="docutils literal notranslate"><span class="pre">&lt;distribution&gt;</span></code> corresponds to a PSD:</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdgridtype&gt;</span></code> = -1 – Not a PSD</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdgridtype&gt;</span></code> = 0 – Diameters</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;psdgridtype&gt;</span></code> = 1 – Volumes</p>
+<p><code class="docutils literal notranslate"><span class="pre">&lt;param1&gt;</span></code>, <code class="docutils literal notranslate"><span class="pre">&lt;param2&gt;</span></code> – parameters of the distribution function (only if <code class="docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code> <span class="math notranslate nohighlight">\(\neq\)</span> 0)</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">&lt;values&gt;</span></code> – list of distribution values (only if <code class="docutils literal notranslate"><span class="pre">&lt;function&gt;</span></code> = 0)</p>
+</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</div>
+</div>
 </div>
 </div>
 
@@ -84,12 +859,37 @@
   <ul>
 <li><a class="reference internal" href="#">Get started</a><ul>
 <li><a class="reference internal" href="#installation">Installation</a></li>
-<li><a class="reference internal" href="#launch-software">Launch Software</a><ul>
-<li><a class="reference internal" href="#lauch-by-command-lines">Lauch by command lines</a></li>
+<li><a class="reference internal" href="#introduction-to-gui">Introduction to GUI</a><ul>
+<li><a class="reference internal" href="#menu">Menu</a><ul>
+<li><a class="reference internal" href="#file">File</a></li>
+<li><a class="reference internal" href="#flowsheet">Flowsheet</a></li>
+<li><a class="reference internal" href="#modules">Modules</a></li>
+<li><a class="reference internal" href="#tools">Tools</a></li>
+<li><a class="reference internal" href="#help">Help</a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#introduction-to-gui">Introduction to GUI</a></li>
-<li><a class="reference internal" href="#run-your-first-simulation">Run your first simulation</a></li>
+<li><a class="reference internal" href="#tabs">Tabs</a><ul>
+<li><a class="reference internal" href="#id1">Flowsheet</a></li>
+<li><a class="reference internal" href="#simulator">Simulator</a></li>
+<li><a class="reference internal" href="#stream">Stream</a></li>
+<li><a class="reference internal" href="#units">Units</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#run-your-first-simulation">Run your first simulation</a><ul>
+<li><a class="reference internal" href="#graphical-user-interface">Graphical user interface</a></li>
+<li><a class="reference internal" href="#configuration-file">Configuration file</a><ul>
+<li><a class="reference internal" href="#general">General</a></li>
+<li><a class="reference internal" href="#simulation">Simulation</a></li>
+<li><a class="reference internal" href="#options">Options</a></li>
+<li><a class="reference internal" href="#grids">Grids</a></li>
+<li><a class="reference internal" href="#unit-parameters">Unit parameters</a></li>
+<li><a class="reference internal" href="#holdups">Holdups</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

@@ -28,53 +28,65 @@ And distinctive features including:
 
 * High modularity and extensibility.
 
+This documentation helps you to get familiar with simulating solid processes using Dyssol. You can also find the introduction of the Dyssol system structure. Furthermore, as a developer, you will get useful information about how to customize your own operation units.
+
 .. toctree::
    :maxdepth: 1
-   :caption: This help documentation explains you:
+   :caption: The structure of this help documentation includes:
 
    first
    units
    simulation
+   data
    materials
-   evaluation
+   solver
+   multiDim
+   time
    developer
 
 |
 
+Flowsheet simulation of solids
+------------------------------
+One of the main challenges in simulation of solids processes is associated with the dispersity of granular materials: the solid phase can be distributed along several interdependent parameters, such as size, shape, moisture content or density. 
+
+In Dyssol, an approach with **transformation matrices** is used for correct handling of solids in this case. This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.
+
+|
+
+
 Approaches and methods
 ----------------------
 
-The new system is based on the sequential-modular approach, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the units’ library with new models. To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.
+The new system in Dyssol is based on the **sequential-modular approach**, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the :ref:`label-unitsLib` with new models. 
 
-An example flowsheet of a granulation process is shown in the figure below.
+To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.
 
-.. image:: ./pics/egFlowsheet.png
+.. An example flowsheet of a granulation process is shown in the figure below.
+
+.. .. image:: ./pics/egFlowsheet.png
    :width: 650px
    :alt: example flowsheet of a granulation process
    :align: center
 
 |
 
-Flowsheet simulation of solids
-------------------------------
-One of the main challenges in simulation of solids processes is associated with the dispersity of granular materials: the solid phase can be distributed along several interdependent parameters, such as size, shape, moisture content or density. For correct handling of solids in this case an approach with transformation matrices is used (see figure below showing the application of the transformation matrix on the example of a sieve model). This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.
-
-.. image:: ./pics/transMat.png
-   :width: 800px
-   :alt: approach with transformation matrices
-   :align: center
-
-|
 
 Software system architecture
 ----------------------------
 
-To implement the Dyssol system, the C++ programming language and the object oriented paradigm are used (see figure below). To maximize the modularity of the simulation environment, models of units are not directly integrated into the framework, but may be implemented as separate objects and then added to the library of units.
+To implement the Dyssol system, the C++ programming language and the object oriented paradigm are applied. 
+
+To maximize the modularity of the simulation environment, models of units and solvers are not directly integrated into the framework, but may be implemented as separate objects and then added to the :ref:`label-unitsLib` using standardized interfaces and templates.
+
+You can get an overview of the Dyssol system structure in the figure below.
 
 .. image:: ./pics/archi.png
-   :width: 500px
+   :width: 960px
    :alt: 
    :align: center
+
+For a detailed explanation about important elements in the structure, please refer to :ref:`label-solver`, :ref:`label-simulation`, :ref:`label-materialDat`, :ref:`label-dataStor` and :ref:`label-multiDim`.
 
 |
 

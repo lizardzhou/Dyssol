@@ -55,41 +55,47 @@
 <li>Providing standardized interfaces and templates for implementation of new units;</li>
 <li>High modularity and extensibility.</li>
 </ul>
+<p>This documentation helps you to get familiar with simulating solid processes using Dyssol. You can also find the introduction of the Dyssol system structure. Furthermore, as a developer, you will get useful information about how to customize your own operation units.</p>
 <div class="toctree-wrapper compound">
-<p class="caption"><span class="caption-text">This help documentation explains you:</span></p>
+<p class="caption"><span class="caption-text">The structure of this help documentation includes:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="first.html">Get started</a></li>
 <li class="toctree-l1"><a class="reference internal" href="units.html">Units library</a></li>
-<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation core</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data.html">Data storage subsystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="materials.html">Material database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="evaluation.html">Evaluation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solver.html">Solver</a></li>
+<li class="toctree-l1"><a class="reference internal" href="multiDim.html">Multidimentional distributed parameters of solids</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time.html">Time points management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer.html">Unit developement</a></li>
 </ul>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="approaches-and-methods">
-<h2>Approaches and methods<a class="headerlink" href="#approaches-and-methods" title="Permalink to this headline">¶</a></h2>
-<p>The new system is based on the sequential-modular approach, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the units’ library with new models. To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.</p>
-<p>An example flowsheet of a granulation process is shown in the figure below.</p>
-<a class="reference internal image-reference" href="_images/egFlowsheet.png"><img alt="example flowsheet of a granulation process" class="align-center" src="_images/egFlowsheet.png" style="width: 650px;" /></a>
+<div class="section" id="flowsheet-simulation-of-solids">
+<h2>Flowsheet simulation of solids<a class="headerlink" href="#flowsheet-simulation-of-solids" title="Permalink to this headline">¶</a></h2>
+<p>One of the main challenges in simulation of solids processes is associated with the dispersity of granular materials: the solid phase can be distributed along several interdependent parameters, such as size, shape, moisture content or density.</p>
+<p>In Dyssol, an approach with <strong>transformation matrices</strong> is used for correct handling of solids in this case. This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="flowsheet-simulation-of-solids">
-<h2>Flowsheet simulation of solids<a class="headerlink" href="#flowsheet-simulation-of-solids" title="Permalink to this headline">¶</a></h2>
-<p>One of the main challenges in simulation of solids processes is associated with the dispersity of granular materials: the solid phase can be distributed along several interdependent parameters, such as size, shape, moisture content or density. For correct handling of solids in this case an approach with transformation matrices is used (see figure below showing the application of the transformation matrix on the example of a sieve model). This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.</p>
-<a class="reference internal image-reference" href="_images/transMat.png"><img alt="approach with transformation matrices" class="align-center" src="_images/transMat.png" style="width: 800px;" /></a>
+<div class="section" id="approaches-and-methods">
+<h2>Approaches and methods<a class="headerlink" href="#approaches-and-methods" title="Permalink to this headline">¶</a></h2>
+<p>The new system in Dyssol is based on the <strong>sequential-modular approach</strong>, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the <a class="reference internal" href="units.html#label-unitslib"><span class="std std-ref">Units library</span></a> with new models.</p>
+<p>To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
 <div class="section" id="software-system-architecture">
 <h2>Software system architecture<a class="headerlink" href="#software-system-architecture" title="Permalink to this headline">¶</a></h2>
-<p>To implement the Dyssol system, the C++ programming language and the object oriented paradigm are used (see figure below). To maximize the modularity of the simulation environment, models of units are not directly integrated into the framework, but may be implemented as separate objects and then added to the library of units.</p>
-<a class="reference internal image-reference" href="_images/archi.png"><img alt="" class="align-center" src="_images/archi.png" style="width: 500px;" /></a>
+<p>To implement the Dyssol system, the C++ programming language and the object oriented paradigm are applied.</p>
+<p>To maximize the modularity of the simulation environment, models of units and solvers are not directly integrated into the framework, but may be implemented as separate objects and then added to the <a class="reference internal" href="units.html#label-unitslib"><span class="std std-ref">Units library</span></a> using standardized interfaces and templates.</p>
+<p>You can get an overview of the Dyssol system structure in the figure below.</p>
+<a class="reference internal image-reference" href="_images/archi.png"><img alt="" class="align-center" src="_images/archi.png" style="width: 960px;" /></a>
+<p>For a detailed explanation about important elements in the structure, please refer to <a class="reference internal" href="solver.html#label-solver"><span class="std std-ref">Solver</span></a>, <a class="reference internal" href="simulation.html#label-simulation"><span class="std std-ref">Simulation core</span></a>, <a class="reference internal" href="materials.html#label-materialdat"><span class="std std-ref">Material database</span></a>, <a class="reference internal" href="data.html#label-datastor"><span class="std std-ref">Data storage subsystem</span></a> and <a class="reference internal" href="multiDim.html#label-multidim"><span class="std std-ref">Multidimentional distributed parameters of solids</span></a>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -128,8 +134,8 @@
   <h3><a href="#">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Welcome</a><ul>
-<li><a class="reference internal" href="#approaches-and-methods">Approaches and methods</a></li>
 <li><a class="reference internal" href="#flowsheet-simulation-of-solids">Flowsheet simulation of solids</a></li>
+<li><a class="reference internal" href="#approaches-and-methods">Approaches and methods</a></li>
 <li><a class="reference internal" href="#software-system-architecture">Software system architecture</a></li>
 </ul>
 </li>

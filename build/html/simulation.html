@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Simulation &#8212; Dyssol Help 0.0.1 documentation</title>
+    <title>Simulation core &#8212; Dyssol Help 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -14,10 +14,11 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Material database" href="materials.html" />
+    <link rel="next" title="Data storage subsystem" href="data.html" />
     <link rel="prev" title="Units library" href="units.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -27,7 +28,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="materials.html" title="Material database"
+          <a href="data.html" title="Data storage subsystem"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="units.html" title="Units library"
@@ -41,17 +42,26 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="simulation">
-<h1>Simulation<a class="headerlink" href="#simulation" title="Permalink to this headline">¶</a></h1>
-<p>Introduction to simulation…</p>
-<div class="section" id="methods">
-<h2>Methods<a class="headerlink" href="#methods" title="Permalink to this headline">¶</a></h2>
+  <div class="section" id="simulation-core">
+<span id="label-simulation"></span><h1>Simulation core<a class="headerlink" href="#simulation-core" title="Permalink to this headline">¶</a></h1>
+<p>Introduction to simulation structure…</p>
+<div class="section" id="discretization">
+<h2>Discretization<a class="headerlink" href="#discretization" title="Permalink to this headline">¶</a></h2>
 </div>
-<div class="section" id="time-step">
-<h2>Time step<a class="headerlink" href="#time-step" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="material-streams">
+<h2>Material streams<a class="headerlink" href="#material-streams" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="simulator">
+<h2>Simulator<a class="headerlink" href="#simulator" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="algorithm">
+<h3>Algorithm<a class="headerlink" href="#algorithm" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="sequential-modular-approach">
+<h3>Sequential-modular approach<a class="headerlink" href="#sequential-modular-approach" title="Permalink to this headline">¶</a></h3>
 </div>
 <div class="section" id="convergence">
-<h2>Convergence<a class="headerlink" href="#convergence" title="Permalink to this headline">¶</a></h2>
+<span id="label-convergence"></span><h3>Convergence<a class="headerlink" href="#convergence" title="Permalink to this headline">¶</a></h3>
+</div>
 </div>
 </div>
 
@@ -63,10 +73,15 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Simulation</a><ul>
-<li><a class="reference internal" href="#methods">Methods</a></li>
-<li><a class="reference internal" href="#time-step">Time step</a></li>
+<li><a class="reference internal" href="#">Simulation core</a><ul>
+<li><a class="reference internal" href="#discretization">Discretization</a></li>
+<li><a class="reference internal" href="#material-streams">Material streams</a></li>
+<li><a class="reference internal" href="#simulator">Simulator</a><ul>
+<li><a class="reference internal" href="#algorithm">Algorithm</a></li>
+<li><a class="reference internal" href="#sequential-modular-approach">Sequential-modular approach</a></li>
 <li><a class="reference internal" href="#convergence">Convergence</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -75,8 +90,8 @@
   <p class="topless"><a href="units.html"
                         title="previous chapter">Units library</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="materials.html"
-                        title="next chapter">Material database</a></p>
+  <p class="topless"><a href="data.html"
+                        title="next chapter">Data storage subsystem</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -107,7 +122,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="materials.html" title="Material database"
+          <a href="data.html" title="Data storage subsystem"
              >next</a> |</li>
         <li class="right" >
           <a href="units.html" title="Units library"
