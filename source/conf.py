@@ -85,7 +85,8 @@ html_theme = 'classic'
 #
 html_theme_options = {
 	"stickysidebar": "true",
-	"sidebarwidth": "300px"
+	"sidebarwidth": "300px",
+	"body_max_width": "1000px"
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

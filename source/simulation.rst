@@ -1,21 +1,42 @@
-==========
-Simulation
-==========
 
-Introduction to simulation...
+.. _label-simulation:
 
+===============
+Simulation core
+===============
 
-Methods
--------
-
+Introduction to simulation structure...
 
 
-Time step
+Discretization
+--------------
+
+
+Material streams
+----------------
+
+
+
+Simulator
 ---------
 
+Algorithm
+"""""""""
 
 
+.. Main method and approaches
+.. """"""""""""""""""""""""""
+
+
+Sequential-modular approach
+"""""""""""""""""""""""""""
+
+
+
+
+.. _label-convergence:
 
 Convergence
------------
+"""""""""""
+
 

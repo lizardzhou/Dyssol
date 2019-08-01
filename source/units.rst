@@ -1,8 +1,23 @@
+
+.. _label-unitsLib:
+
 =============
 Units library
 =============
 
-An operation unit is a ...
+An operation unit performs one of the following tasks:
+
+- Streams processing: examples are Inlet flow, Outlet flow, Mixer and Splitter.
+
+- Steady-state simulation: example is Screen.
+
+- Dynamic simulation: examples are Granulator, Agglomerator and Bunker.
+
+A basic unit provides interfaces to the simulation system. It contains program interfaces to: material streams, equation solvers and material database. Moreover, you can develope your own units using the template for creating custom units and then add them to the units library.
+
+For more information, please refer to the help document under ``Dyssol\Help\Units`` and ``Dyssol\Help\Units development.pdf``.
+
+|
 
 
 Inlet flow
@@ -147,6 +162,8 @@ You can specify the splitting factor :math:`K_{splitt}`, which is defined in fol
 	a demostration file at ``<Example Flowsheets/Units/Splitter.dlfw>``.
 	
 |
+
+.. _label-screen:
 
 Screen
 ======
@@ -1062,7 +1079,6 @@ The scheme is shown in the figure below.
 .. seealso::
 	
 	a demostration file in install path ``<Example Flowsheets/Units/Time Delay.dlfw>``.	
-
 
 
 

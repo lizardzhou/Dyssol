@@ -1,0 +1,6 @@
+
+.. _label-solver:
+
+======
+Solver
+======
