@@ -13,7 +13,12 @@ An operation unit performs one of the following tasks:
 
 - Dynamic simulation: examples are Granulator, Agglomerator and Bunker.
 
-A basic unit provides interfaces to the simulation system. It contains program interfaces to: material streams, equation solvers and material database. Moreover, you can develope your own units using the template for creating custom units and then add them to the units library.
+A basic unit provides interfaces to the simulation system. It contains program interfaces to material streams, equation solvers and material database. Moreover, you can develope your own units using the template for creating custom units and then add them to the units library.
+
+.. image:: ./pics/units/structure.png
+   :width: 400px
+   :alt: 
+   :align: center 
 
 For more information, please refer to the help document under ``Dyssol\Help\Units`` and ``Dyssol\Help\Units development.pdf``.
 
@@ -239,7 +244,7 @@ This model is described using the following equation:
 Molerus & Hoffmann model
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-This model is described using the following equation:
+This model is described using the following equation: 
 
 .. math::
 
@@ -371,6 +376,8 @@ This model is described using the following equation:
 	Hennig, M. and Teipel, U. (2016), Stationäre Siebklassierung. Chemie Ingenieur Technik, 88: 911–918
 	
 |
+
+.. _label-crusher:
 
 Crusher
 =======
