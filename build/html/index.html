@@ -68,6 +68,7 @@
 <li class="toctree-l1"><a class="reference internal" href="multiDim.html">Multidimentional distributed parameters of solids</a></li>
 <li class="toctree-l1"><a class="reference internal" href="time.html">Time points management</a></li>
 <li class="toctree-l1"><a class="reference internal" href="developer.html">Unit developement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical background</a></li>
 </ul>
 </div>
 <div class="line-block">
@@ -83,7 +84,7 @@
 </div>
 <div class="section" id="approaches-and-methods">
 <h2>Approaches and methods<a class="headerlink" href="#approaches-and-methods" title="Permalink to this headline">¶</a></h2>
-<p>The new system in Dyssol is based on the <strong>sequential-modular approach</strong>, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the <a class="reference internal" href="units.html#label-unitslib"><span class="std std-ref">Units library</span></a> with new models.</p>
+<p>The new system in Dyssol is based on the <a class="reference internal" href="theory.html#label-seqmodule"><span class="std std-ref">Sequential-modular approach</span></a>, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the <a class="reference internal" href="units.html#label-unitslib"><span class="std std-ref">Units library</span></a> with new models.</p>
 <p>To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.</p>
 <div class="line-block">
 <div class="line"><br /></div>

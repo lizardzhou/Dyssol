@@ -44,10 +44,74 @@
             
   <div class="section" id="multidimentional-distributed-parameters-of-solids">
 <span id="label-multidim"></span><h1>Multidimentional distributed parameters of solids<a class="headerlink" href="#multidimentional-distributed-parameters-of-solids" title="Permalink to this headline">¶</a></h1>
-<p>You can see an example for a sieve model in the figure below, showing the application of the transformation matrix.</p>
+<div class="section" id="tree-data-structures">
+<h2>Tree data structures<a class="headerlink" href="#tree-data-structures" title="Permalink to this headline">¶</a></h2>
+<p>Normally, solid phase is described with a set of <strong>distributed parameters</strong>, which can be <strong>interdependent</strong> (more parameters depend on each other). All interdependent distributed parameters form a multidimensional matrix and each entry of the matrix describes mass fractions of the solid material with the specified combination of parameters.</p>
+<p>Currently, following distrubution parameters are available in Dyssol:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Compound</li>
+<li>Size</li>
+<li>Porosity</li>
+<li>Form factor</li>
+<li>Color</li>
+<li>Other user-defined parameters</li>
+</ul>
+</div></blockquote>
+<p>In the example below, you can find how the particle parameter distribution is described with 3-dimensional (size, compound and shape) matrices.</p>
+<a class="reference internal image-reference" href="_images/3d-example.png"><img alt="" class="align-center" src="_images/3d-example.png" style="width: 400px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>We can find many entries of these matrices are equal to zero. Therefore, in Dyssol, the multidimensional distribution is represented with a <strong>tree data structure</strong> instead. The parameters are analyzed level by level, if an element is zero, it will not be considered further (sparse data formats), as you can see in the example below.</p>
+<a class="reference internal image-reference" href="_images/tree-example.png"><img alt="" class="align-center" src="_images/tree-example.png" style="width: 600px;" /></a>
+<p>By using the tree data structure, the amount of data and the memory consumption can be reduced, leading to the improvement the computational efficiency.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">Skorych et al., Novel system for dynamic flowsheet simulation of solids processes, Powder Technology 314 (2017).</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="treatment-of-dependent-parameters">
+<h2>Treatment of dependent parameters<a class="headerlink" href="#treatment-of-dependent-parameters" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="transformation-matrices">
+<h3>Transformation matrices<a class="headerlink" href="#transformation-matrices" title="Permalink to this headline">¶</a></h3>
+<p>Let’s first see an example of a screening process with <strong>explicit calculation</strong>, which is illustrated in the figure below.</p>
+<a class="reference internal image-reference" href="_images/explicit.png"><img alt="" class="align-center" src="_images/explicit.png" style="width: 600px;" /></a>
+<p>In this example, large red and small blue particles are fed into the screen unit, which only considers partical size distribution. The two multidimensional parameters (color and size) are interconnected (only the combinations large/red and small/blue are allowed). If the secondary dependent parameter - color - was not explicitly considered, it would be lost or mixed (small/red and large/blue appear mistakenly).</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>To avoid such mistake, the <strong>transformation matrices (TM)</strong> is applied for calculation of unit outlets. TM describe laws of material transition between classes. Each entry of TM describes a fraction of material that passes from one class to another. The calculation of TM is based on different model functions.</p>
+<p>You can find another example for the screen unit showing the application of TM in Dyssol.</p>
 <a class="reference internal image-reference" href="_images/transMat.png"><img alt="approach with transformation matrices" class="align-center" src="_images/transMat.png" style="width: 800px;" /></a>
-<div class="section" id="time-points-management">
-<h2>Time points management<a class="headerlink" href="#time-points-management" title="Permalink to this headline">¶</a></h2>
+<p>You may applie TM to get distributions in holdups and unit outlets. All dependent parameters of solids are calculated automatically. Meanwhile, information about secondary distributions (in this example the moisture content) is kept.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ol class="last arabic simple">
+<li>Skorych et al., Novel system for dynamic flowsheet simulation of solids processes, Powder Technology 314 (2017).</li>
+<li>M.Dosta., Techn. Univ. Hamburg-Harburg, Diss., 2012.</li>
+</ol>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="application-of-transformation-matrices">
+<h3>Application of transformation matrices<a class="headerlink" href="#application-of-transformation-matrices" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="application-example">
+<h3>Application example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h3>
+<p>The particle size distribution of an outlet stream is calculated by</p>
+<div class="math notranslate nohighlight">
+\[Output = TM \otimes Input\]</div>
+<p>As an example, the calculation of the outlet stream from a <a class="reference internal" href="units.html#label-crusher"><span class="std std-ref">Crusher</span></a> is shown below.</p>
+</div>
 </div>
 </div>
 
@@ -60,7 +124,13 @@
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
 <li><a class="reference internal" href="#">Multidimentional distributed parameters of solids</a><ul>
-<li><a class="reference internal" href="#time-points-management">Time points management</a></li>
+<li><a class="reference internal" href="#tree-data-structures">Tree data structures</a></li>
+<li><a class="reference internal" href="#treatment-of-dependent-parameters">Treatment of dependent parameters</a><ul>
+<li><a class="reference internal" href="#transformation-matrices">Transformation matrices</a></li>
+<li><a class="reference internal" href="#application-of-transformation-matrices">Application of transformation matrices</a></li>
+<li><a class="reference internal" href="#application-example">Application example</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>

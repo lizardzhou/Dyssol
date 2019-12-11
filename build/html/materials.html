@@ -44,7 +44,145 @@
             
   <div class="section" id="material-database">
 <span id="label-materialdat"></span><h1>Material database<a class="headerlink" href="#material-database" title="Permalink to this headline">¶</a></h1>
-<p>Introduction to material database information used in this software…</p>
+<p>The material database in Dyssol stores physical properties and compound information.</p>
+<p>You can find the database structure in the figure below. The compound properties can be constant or T(temperature), P(pressure)-dependent. The dependent properties can be calculated using correlations.</p>
+<a class="reference internal image-reference" href="_images/structure.png"><img alt="screen" class="align-center" src="_images/structure.png" style="width: 700px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="dmdb-file">
+<h2>DMDB file<a class="headerlink" href="#dmdb-file" title="Permalink to this headline">¶</a></h2>
+<p>You can find the file <code class="docutils literal notranslate"><span class="pre">Materials.dmdb</span></code> in your installation folder, which stores global list of <strong>materials</strong> and their <strong>parameters</strong>. Typical examples are air, coal, sand, urea and water. You can extend this database freely by defining your own new materials.</p>
+<a class="reference internal image-reference" href="_images/path.png"><img alt="screen" class="align-center" src="_images/path.png" style="width: 200px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="constant-parameters">
+<h2>Constant parameters<a class="headerlink" href="#constant-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Not all properties have influence on internal calculations. State of aggregation can be used to define several aggregation states of the same material. These parameters can be accessed through units and material streams.</p>
+<p>Constant parameters in Dyssol consist of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Critical pressure</li>
+<li>Critical temperature</li>
+<li>Heat of fusion</li>
+<li>Heat of vaporization</li>
+<li>Molar mass: mandatory for simulation, since many parameters are calculated based on it</li>
+<li>Normal boiling point</li>
+<li>Normal freezing point</li>
+<li>Reactivity type</li>
+<li>Formation enthalpy</li>
+<li>State of aggregation: represented by different numbers. 0 for solid, 1 for liquid, 2 for gas, 3 for unknown</li>
+<li>User defined properties</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="dependent-parameters">
+<h2>Dependent parameters<a class="headerlink" href="#dependent-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Like constant parameters, temperature- and/or pressure-dependent (TPD) parameters can also be accessed through units and material streams.</p>
+<p>Dependent parameters in Dyssol consist of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Density: mandatory for simulation, since it participates in PSD transformations and T-equilibrium</li>
+<li>Enthalpy: mandatory for simulation, since it participates in T-equilibrium</li>
+<li>Thermal conductivity</li>
+<li>Viscosity</li>
+<li>Permittivity</li>
+<li>Use defined properties</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="correlation-search">
+<h3>Correlation search<a class="headerlink" href="#correlation-search" title="Permalink to this headline">¶</a></h3>
+<p>The algorithm for calculating TPD properties is shown as follows.</p>
+<a class="reference internal image-reference" href="_images/correlation.png"><img alt="screen" class="align-center" src="_images/correlation.png" style="width: 600px;" /></a>
+<p>It consists of 3 steps:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Find the first correlation with T &amp; P within</p>
+<blockquote>
+<div><p>Calculate value according to the function</p>
+</div></blockquote>
+</li>
+<li><p class="first">Find the first correlation with only T within</p>
+<blockquote>
+<div><p>Calculate value according to the function</p>
+</div></blockquote>
+</li>
+<li><p class="first">Find the nearest correlation, taking only T into account</p>
+<blockquote>
+<div><p>Perform nearest neighbour extrapolation</p>
+</div></blockquote>
+</li>
+</ol>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="correlation-functions">
+<h3>Correlation functions<a class="headerlink" href="#correlation-functions" title="Permalink to this headline">¶</a></h3>
+<p>The correlation functions <span class="math notranslate nohighlight">\(y = f(T,P)\)</span> in Dyssol are listed below. The letters <span class="math notranslate nohighlight">\(a ... f\)</span> are constants.</p>
+<ul>
+<li><p class="first">Constant:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = a\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Linear:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = aT + bP + c\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Exponential:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = a\,b^{c+dT+\frac{eT + f}{gT + h}} + i\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Power function</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = a\,T^b\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Polynomial:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = a + bT + cT^2 + dT^3 + eT^4 + fT^5 + gT^6 + hT^7\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Shomate heat capacity:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = a + bT + cT^2 + dT^3 + \frac{e}{T^2}\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Shomate standard enthalpy:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = aT + b\frac{T^2}{2} + c\frac{T^3}{3} + d\frac{T^4}{4} - \frac{e}{T} + f - g\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Shomate standard entropy:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = a + \ln T + bT + c\frac{T^2}{2} + d\frac{T^3}{3} - \frac{e}{2T^2} + f\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">List of T-values:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = \{T1:val1, T2:val2, T3:val3, ...\}\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">List of P-values:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(y = \{P1:val1, P2:val2, P3:val3, ...\}\)</span></p>
+</div></blockquote>
+</li>
+</ul>
+</div>
+</div>
 </div>
 
 
@@ -53,6 +191,20 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Material database</a><ul>
+<li><a class="reference internal" href="#dmdb-file">DMDB file</a></li>
+<li><a class="reference internal" href="#constant-parameters">Constant parameters</a></li>
+<li><a class="reference internal" href="#dependent-parameters">Dependent parameters</a><ul>
+<li><a class="reference internal" href="#correlation-search">Correlation search</a></li>
+<li><a class="reference internal" href="#correlation-functions">Correlation functions</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="data.html"
                         title="previous chapter">Data storage subsystem</a></p>

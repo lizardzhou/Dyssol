@@ -1,0 +1,262 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Theoretical background &#8212; Dyssol Help 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Unit developement" href="developer.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="developer.html" title="Unit developement"
+             accesskey="P">previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="theoretical-background">
+<h1>Theoretical background<a class="headerlink" href="#theoretical-background" title="Permalink to this headline">¶</a></h1>
+<p>Here you will find theory about process systems and numerical calculation, which helps you to understand the simulation principle applied in Dyssol.</p>
+<div class="section" id="process-systems">
+<h2>Process systems<a class="headerlink" href="#process-systems" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sequential-modular-approach">
+<span id="label-seqmodule"></span><h3>Sequential-modular approach<a class="headerlink" href="#sequential-modular-approach" title="Permalink to this headline">¶</a></h3>
+<p>The simulator of Dyssol applies sequential-modular approach, which processes the units in sequence. For each unit there are a equation system and the corresponding solver, as shown in the figure below.</p>
+<a class="reference internal image-reference" href="_images/seq-module.png"><img alt="screen" class="align-center" src="_images/seq-module.png" style="width: 500px;" /></a>
+<p>The advantages of this approach are listed as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Conceptual simplicity,</li>
+<li>Correspondence to the physical structure of processes,</li>
+<li>Higher flexibility,</li>
+<li>Possibility to use different numerical methods to calculate models.</li>
+</ul>
+</div></blockquote>
+<p>However, difficulties may occur when processing flowsheets with recycle streams.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ol class="last upperalpha simple" start="23">
+<li>Marquardt, Dynamic process simulation - recent progress and future challenges (1991)</li>
+</ol>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="equation-oriented-approach">
+<h3>Equation-oriented approach<a class="headerlink" href="#equation-oriented-approach" title="Permalink to this headline">¶</a></h3>
+<p>Unlike sequential-modular approach, the equation-oriented approach processes all units with a whole equation system and the same solver.</p>
+<a class="reference internal image-reference" href="_images/eq-module.png"><img alt="screen" class="align-center" src="_images/eq-module.png" style="width: 500px;" /></a>
+<p>It has the following advantages:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Equations are homogenized and calculated by a single solver,</li>
+<li>Better convergence rate, especially on complex flowsheets with recycles.</li>
+</ul>
+</div></blockquote>
+<p>However, difficulties may occur with simultaneous stimulation of fast and slow changed components, and the usage with heterogeneous models is complicated.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ol class="last upperalpha simple" start="23">
+<li>Marquardt, Dynamic process simulation - recent progress and future challenges (1991)</li>
+</ol>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="partitioning-and-tearing">
+<span id="label-partition"></span><h3>Partitioning and tearing<a class="headerlink" href="#partitioning-and-tearing" title="Permalink to this headline">¶</a></h3>
+<p>Dyssol converts the process structure into a suitable sequential form, initializes recycle streams (tear streams) with some values, combines units in recycle loops into partitions, and then solves an entire partition (a recycle system) iteratively over the whole simulation time and separately from other partitions.</p>
+<p>An example is shown in the following process flow sheet.</p>
+<a class="reference internal image-reference" href="_images/example-flowsheet.png"><img alt="screen" class="align-center" src="_images/example-flowsheet.png" style="width: 700px;" /></a>
+<p>For this flow sheet, the operation units and streams with 3 partitions are shown below schematically.</p>
+<a class="reference internal image-reference" href="_images/example-tear.png"><img alt="screen" class="align-center" src="_images/example-tear.png" style="width: 700px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Alternatively, single and multiple schemes can be applied.</p>
+<p>For a single scheme, the units and streams are rearranged as below.</p>
+<a class="reference internal image-reference" href="_images/singlepart.png"><img alt="screen" class="align-center" src="_images/singlepart.png" style="width: 900px;" /></a>
+<p>The partitions and corresponding streams are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Partition 1: U1 as normal stream</li>
+<li>Partition 2: U2 as normal stream</li>
+<li>Partition 3: U3, U4, U5, U6 as normal streams; S1 and S2 as tear streams</li>
+<li>Partition 4: U7, U8 as normal streams; S3 as tear streams</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<p>Furthermore, the bi-directional connection can be represented in Dyssol as two independent material streams. One of the streams will eventually be selected as a tear stream.</p>
+<p>An example is shown in the figure below.</p>
+<a class="reference internal image-reference" href="_images/bi-direct.png"><img alt="screen" class="align-center" src="_images/bi-direct.png" style="width: 500px;" /></a>
+<p>The corresponding calculation sequence is</p>
+<a class="reference internal image-reference" href="_images/bi-directSeq.png"><img alt="screen" class="align-center" src="_images/bi-directSeq.png" style="width: 650px;" /></a>
+<p>The partition and streams are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Partition 1: U1 as normal stream</li>
+<li>Partition 2: U2, U3, U4, U5, U6, U7 as normal stream; S1, S2, S3, S4, S5, S6, S7 as tear streams</li>
+<li>Partition 3: U8 as normal stream</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="numerical-methods">
+<h2>Numerical methods<a class="headerlink" href="#numerical-methods" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="waveform-relaxation-method">
+<span id="label-waverelax"></span><h3>Waveform relaxation method<a class="headerlink" href="#waveform-relaxation-method" title="Permalink to this headline">¶</a></h3>
+<p>The waveform relaxation method (WRM) is applied to calculate the tear streams. You can find the algorithm in the flow sheet below.</p>
+<a class="reference internal image-reference" href="_images/wrm1.png"><img alt="screen" class="align-center" src="_images/wrm1.png" style="width: 900px;" /></a>
+<p>Dyssol splits the whole simulation interval into smaller time windows, it calculates the entire partition on the time window iteratively until convergence occurs, and then initializes parameters of tear streams before calculation of each time window.</p>
+<p>Size of the time window varies depending on the convergence rate, and the convergence criterion is the difference between values on successive iterations.</p>
+<a class="reference internal image-reference" href="_images/wrm-diagram.png"><img alt="screen" class="align-center" src="_images/wrm-diagram.png" style="width: 500px;" /></a>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ol class="last upperalpha simple" start="5">
+<li>Lelarasmee, the waveform relaxation method for time domain analysis of large scale integrated circuits (1982)</li>
+</ol>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="data-extrapolation">
+<span id="label-extrapolation"></span><h3>Data extrapolation<a class="headerlink" href="#data-extrapolation" title="Permalink to this headline">¶</a></h3>
+<p>Dyssol initializes all parameters of tear streams within the time window before its calculation, and then uses extrapolated values from the previous time intervals as initial data. Prediction accuracy affects the number of iterations required to achieve convergence.</p>
+<a class="reference internal image-reference" href="_images/extrapolation.png"><img alt="screen" class="align-center" src="_images/extrapolation.png" style="width: 900px;" /></a>
+<p>The implemented methods for extrapolation include nearest-neighbor, linear and spline.</p>
+<a class="reference internal image-reference" href="_images/extrapolation-diagram.png"><img alt="screen" class="align-center" src="_images/extrapolation-diagram.png" style="width: 500px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="convergence-methods">
+<span id="label-convergence"></span><h3>Convergence methods<a class="headerlink" href="#convergence-methods" title="Permalink to this headline">¶</a></h3>
+<p>Dyssol uses different convergence methods to initialize parameters of tear streams before each iteration, performs calculations iteratively and stops iterative calculations when the convergence is reached. Between each value, different methods can be applied, as shown in the figure below.</p>
+<a class="reference internal image-reference" href="_images/convergence.png"><img alt="screen" class="align-center" src="_images/convergence.png" style="width: 600px;" /></a>
+<p>Three convergence methods are available in Dyssol:</p>
+<ul>
+<li><p class="first">Direct substitution:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(x_{k+1} = (1-\lambda)\,F(x_{k-1}) + \lambda F(x_k)\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Wegstein’s method:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(x_{k+1} = q x_k + (1-q) F(x_k)\)</span></p>
+</div></blockquote>
+</li>
+<li><p class="first">Steffensen’s method:</p>
+<blockquote>
+<div><p><span class="math notranslate nohighlight">\(x_{k+3} = x_k - \dfrac{(x_{k+1} - x_k)^2}{x_{k+2} - 2x_{k+1} + x_k}\)</span></p>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">a demostration file at <code class="docutils literal notranslate"><span class="pre">&lt;Help\Convergence.pdf&gt;</span></code>.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Theoretical background</a><ul>
+<li><a class="reference internal" href="#process-systems">Process systems</a><ul>
+<li><a class="reference internal" href="#sequential-modular-approach">Sequential-modular approach</a></li>
+<li><a class="reference internal" href="#equation-oriented-approach">Equation-oriented approach</a></li>
+<li><a class="reference internal" href="#partitioning-and-tearing">Partitioning and tearing</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#numerical-methods">Numerical methods</a><ul>
+<li><a class="reference internal" href="#waveform-relaxation-method">Waveform relaxation method</a></li>
+<li><a class="reference internal" href="#data-extrapolation">Data extrapolation</a></li>
+<li><a class="reference internal" href="#convergence-methods">Convergence methods</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  <h4>Previous topic</h4>
+  <p class="topless"><a href="developer.html"
+                        title="previous chapter">Unit developement</a></p>
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/theory.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="developer.html" title="Unit developement"
+             >previous</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2019, Xiye Zhou.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
+    </div>
+  </body>
+</html>
