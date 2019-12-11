@@ -43,6 +43,7 @@ This documentation helps you to get familiar with simulating solid processes usi
    multiDim
    time
    developer
+   theory
 
 |
 
@@ -58,7 +59,7 @@ In Dyssol, an approach with **transformation matrices** is used for correct hand
 Approaches and methods
 ----------------------
 
-The new system in Dyssol is based on the **sequential-modular approach**, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the :ref:`label-unitsLib` with new models. 
+The new system in Dyssol is based on the :ref:`label-seqModule`, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the :ref:`label-unitsLib` with new models. 
 
 To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.
 
@@ -70,7 +71,6 @@ To increase the computational efficiency, dynamic calculations of flowsheets wit
    :align: center
 
 |
-
 
 Software system architecture
 ----------------------------

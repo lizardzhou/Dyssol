@@ -1,7 +1,7 @@
 Get started
 ===========
 
-Here you will get an overview of first steps you need to use Dyssol, including installation, introduction to the graphical user interface (GUI)
+Here you will get an overview of first steps you need to use Dyssol, including installation, introduction to the graphical user interface (GUI).
 
 |
 
