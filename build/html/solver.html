@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Solver &#8212; Dyssol Help 0.0.1 documentation</title>
+    <title>Solver library &#8212; Dyssol Help 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -18,8 +18,8 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Multidimentional distributed parameters of solids" href="multiDim.html" />
-    <link rel="prev" title="Material database" href="materials.html" /> 
+    <link rel="next" title="For developers" href="developer.html" />
+    <link rel="prev" title="Time point management" href="time.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -28,10 +28,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="multiDim.html" title="Multidimentional distributed parameters of solids"
+          <a href="developer.html" title="For developers"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="materials.html" title="Material database"
+          <a href="time.html" title="Time point management"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
       </ul>
@@ -42,30 +42,138 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="solver">
-<span id="label-solver"></span><h1>Solver<a class="headerlink" href="#solver" title="Permalink to this headline">¶</a></h1>
-<p>Basic solver provides interfaces to the simulation system and to units. You can implement your own solver and add it to the solvers library. The solver can also be added to a unit as a parameter.</p>
+  <div class="section" id="solver-library">
+<span id="label-solver"></span><h1>Solver library<a class="headerlink" href="#solver-library" title="Permalink to this headline">¶</a></h1>
+<p>Basic solver provides interfaces to the simulation system and to units.</p>
+<p>You can implement your own solver and add it to the solver library. Please refer to <a class="reference internal" href="developer.html#label-solverdev"><span class="std std-ref">Solver development</span></a> for detailed information.</p>
+<p>The solver can also be added to a unit as a parameter.</p>
 <a class="reference internal image-reference" href="_images/solver-structure.png"><img alt="" class="align-center" src="_images/solver-structure.png" style="width: 600px;" /></a>
-<p>The <a class="reference internal" href="units.html#label-agg-solvers"><span class="std std-ref">Solvers</span></a> for agglomeration are currently available in Dyssol.</p>
+<p>Currently, the solver library for <a class="reference internal" href="units.html#label-agg"><span class="std std-ref">Agglomerator</span></a> is available in Dyssol.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="built-in-equation-solvers">
-<h2>Built-in equation solvers<a class="headerlink" href="#built-in-equation-solvers" title="Permalink to this headline">¶</a></h2>
-<p>Dyssol uses IDA and KINSOL solvers in <a class="reference external" href="https://computation.llnl.gov/projects/sundials">SUNDIALS package</a>.</p>
-<a class="reference internal image-reference" href="_images/solver.png"><img alt="" class="align-center" src="_images/solver.png" style="width: 400px;" /></a>
-<p><a class="reference external" href="https://computing.llnl.gov/projects/sundials/ida">IDA solver</a> is used for automatic calculation of DAE systems inside the units, which applies variable-order, variable-coefficient backward differentiation formulas, in fixed-leading-coefficient form.</p>
-<p><a class="reference external" href="https://computing.llnl.gov/projects/sundials/kinsol">KINSOL solver</a> is used for calculation of nonlinear algebraic systems, which applies a fixed-point iteration with Anderson acceleration.</p>
+<div class="section" id="agglomeration-solvers">
+<span id="label-agg-solvers"></span><h2>Agglomeration solvers<a class="headerlink" href="#agglomeration-solvers" title="Permalink to this headline">¶</a></h2>
+<p>Solvers are applied to calculate the birth and death rate of agglomerates according to different mathematical models. In Dyssol, 3 solver types are available:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Cell average</li>
+<li>Fast Fourier transformation (FFT)</li>
+<li>Fixed pivot</li>
+</ul>
+</div></blockquote>
+<p>The applied equations in all solvers are listed as follows.</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial n(v,t)}{\partial t} = B_{agg}(n,v,t) - D_{agg}(n,v,t)\]</div>
+<div class="math notranslate nohighlight">
+\[B_{agg}(n,v,t) = \frac{1}{2}\,\beta_0\,\textstyle \int\limits_{0}^{v} \beta(u,v - u)\,n(u,t)\,n(v-u,t)\,du\]</div>
+<div class="math notranslate nohighlight">
+\[D_{agg}(n,v,t) = \beta_0\,n(v,t)\, \textstyle \int\limits_{0}^{\infty}\,\beta(v,u)\,n(u,t)\,du\]</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Notations:</p>
+<p><span class="math notranslate nohighlight">\(v,u\)</span> – volumes of agglomerating particles</p>
+<p><span class="math notranslate nohighlight">\(n(v,t)\)</span> – number density function</p>
+<p><span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span>, <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> –  birth and death rates of particles with volume <span class="math notranslate nohighlight">\(v\)</span> caused due to agglomeration</p>
+<p><span class="math notranslate nohighlight">\(\beta_0\)</span> – agglomeration rate constant, dependent on operating conditions but independent from particle sizes</p>
+<p><span class="math notranslate nohighlight">\(\beta(v,u)\)</span> – the agglomeration kernel, see section <a class="reference internal" href="units.html#label-agg-kernels"><span class="std std-ref">Kernels</span></a>.</p>
+<p class="last"><span class="math notranslate nohighlight">\(t\)</span> – time</p>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="cell-average-solver">
+<h3>Cell average solver<a class="headerlink" href="#cell-average-solver" title="Permalink to this headline">¶</a></h3>
+<p>This solver calculates the birth rate <span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span> and death rate <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> using a cell average technique.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">solid phase and particle size distribution are required for the simulation. Equidistant volume grid for particle size distribution must be used.</p>
+</div>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
-<p class="last">Skorych et al., Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology, 30 (2019).</p>
+<p class="last">J.Kumar, M. Peglow, G. Warnecke, S. Heinrich, An efficient numerical technique for solving population balance equation involving aggregation, breakage, growth and nucleation, Powder Technology 182 (1) (2008), 81-104.</p>
 </div>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
-<div class="section" id="solver-development">
-<h2>Solver development<a class="headerlink" href="#solver-development" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="fft-solver">
+<h3>FFT solver<a class="headerlink" href="#fft-solver" title="Permalink to this headline">¶</a></h3>
+<p>This solver calculates the birth rate <span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span> and death rate <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> based on a separable approximation of the agglomeration kernel and a subsequent fast Fourier transformation.</p>
+<p>The agglomeration kernel <span class="math notranslate nohighlight">\(\beta (v,u)\)</span> is represented in a separable form with the separation rank <span class="math notranslate nohighlight">\(M\)</span> as:</p>
+<div class="math notranslate nohighlight">
+\[\beta (v,u) = \sum\limits_{i=1}^{M} a_i(v)\,b_i(u)\]</div>
+<p>Then birth and death rate terms are transformed to following equations with <span class="math notranslate nohighlight">\(\psi_i = a_i\,n\)</span> and <span class="math notranslate nohighlight">\(\varphi_i = b_i\,n\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[B_{agg}(n,v,t) = \frac{1}{2}\,\textstyle \int\limits_{0}^{v} \psi_i(v - u,t)\,\varphi_i(u,t)\,du\]</div>
+<div class="math notranslate nohighlight">
+\[D_{agg}(n,v,t) = \psi_i(v,t)\, \textstyle \int\limits_{0}^{\infty}\varphi_i(u,t)\,du\]</div>
+<p>The separation turns the birth rate agglomeration integral into a convolution form <span class="math notranslate nohighlight">\(\varphi_i * \psi_i\)</span>, which after piecewise constant discretization, is computed based on the convolution theorem</p>
+<div class="math notranslate nohighlight">
+\[\varphi_i * \psi_i = IFFT(FFT(\varphi_i) \odot FFT(\psi_i))\]</div>
+<p>applying the direct and inverse fast Fourier transformation (<span class="math notranslate nohighlight">\(FFT/IFFT\)</span>) and the elementwise product <span class="math notranslate nohighlight">\(\odot\)</span>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>List of kernels separation equations</p>
+<table border="1" class="last docutils">
+<colgroup>
+<col width="43%" />
+<col width="57%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Kernel</th>
+<th class="head">Separation equation</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Constant</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v) = \sum\limits_{i=1}^1 a_i(v)\,b_i(u),\)</span>
+<span class="math notranslate nohighlight">\(a_1 (v) = 1, b_1 (u) = 1\)</span></td>
+</tr>
+<tr class="row-odd"><td>Sum</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v) = \sum\limits_{i=1}^2 a_i(v)\,b_i(u),\)</span>
+<span class="math notranslate nohighlight">\(a_1 (v) = v, a_2 (v)= 1, b_1 (u) = 1, b_2 (u)= u\)</span></td>
+</tr>
+<tr class="row-even"><td>Brownian</td>
+<td><span class="math notranslate nohighlight">\(\beta(u,v) = \sum\limits_{i=1}^3 a_i(v)\,b_i(u),\)</span>
+<span class="math notranslate nohighlight">\(a_1 (v) = \sqrt{2}, a_2 (v) = v^{\frac{1}{3}}, a_3 (v)= v^{-\frac{1}{3}}\)</span>
+<span class="math notranslate nohighlight">\(b_1 (u) = \sqrt{2}, b_2 (u) = u^{-\frac{1}{3}}, b_3 (u)= u^{\frac{1}{3}}\)</span></td>
+</tr>
+<tr class="row-odd"><td>Product, Shear, Peglow, Coagulation, Gravitational, Kinetic energy, Thompson</td>
+<td>Approximated by a rank-M separable function
+<span class="math notranslate nohighlight">\(\beta (v,u) \approx \sum\limits_{i=1}^{M} a_i(v)\,b_i(u)\)</span>
+using adaptive cross approximation</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">solid phase and particle size distribution are required for the simulation. Equidistant volume grid for particle size distribution must be used. Grid for particle size distribution must start from 0.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<ol class="last arabic simple">
+<li>V.Skorych, M. Dosta, E.-U. Hartge, S. Heinrich, R. Ahrens, S. Le Borne, Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology 30 (3) (2019), 555-564.</li>
+<li>S.Le Borne, L. Shahmuradyan, K. Sundmacher, Fast evaluation of univariate aggregation integrals on equidistant grids. Computers and Chemical Engineering 74 (2015), 115-127.</li>
+</ol>
+</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="fixed-pivot-solver">
+<h3>Fixed pivot solver<a class="headerlink" href="#fixed-pivot-solver" title="Permalink to this headline">¶</a></h3>
+<p>This solver calculates the birth rate <span class="math notranslate nohighlight">\(B_{agg}(n,v,t)\)</span> and death rate <span class="math notranslate nohighlight">\(D_{agg}(n,v,t)\)</span> using a fixed pivot technique.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">solid phase and particle size distribution are required for the simulation.</p>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last">S.Kumar, D. Ramkrishna, On the solution of population balance equations by discretization – I. A fixed pivot technique. Chem. Eng. Sci. 51 (8) (1996), 1311-1332.</p>
+</div>
+</div>
 </div>
 </div>
 
@@ -77,19 +185,23 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Solver</a><ul>
-<li><a class="reference internal" href="#built-in-equation-solvers">Built-in equation solvers</a></li>
-<li><a class="reference internal" href="#solver-development">Solver development</a></li>
+<li><a class="reference internal" href="#">Solver library</a><ul>
+<li><a class="reference internal" href="#agglomeration-solvers">Agglomeration solvers</a><ul>
+<li><a class="reference internal" href="#cell-average-solver">Cell average solver</a></li>
+<li><a class="reference internal" href="#fft-solver">FFT solver</a></li>
+<li><a class="reference internal" href="#fixed-pivot-solver">Fixed pivot solver</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="materials.html"
-                        title="previous chapter">Material database</a></p>
+  <p class="topless"><a href="time.html"
+                        title="previous chapter">Time point management</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="multiDim.html"
-                        title="next chapter">Multidimentional distributed parameters of solids</a></p>
+  <p class="topless"><a href="developer.html"
+                        title="next chapter">For developers</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -120,16 +232,16 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="multiDim.html" title="Multidimentional distributed parameters of solids"
+          <a href="developer.html" title="For developers"
              >next</a> |</li>
         <li class="right" >
-          <a href="materials.html" title="Material database"
+          <a href="time.html" title="Time point management"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Xiye Zhou.
+        &#169; Copyright 2019-2020, Xiye Zhou.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

@@ -55,19 +55,21 @@
 <li>Providing standardized interfaces and templates for implementation of new units;</li>
 <li>High modularity and extensibility.</li>
 </ul>
-<p>This documentation helps you to get familiar with simulating solid processes using Dyssol. You can also find the introduction of the Dyssol system structure. Furthermore, as a developer, you will get useful information about how to customize your own operation units.</p>
+<p><a class="reference internal" href="developer.html#label-develop"><span class="std std-ref">For developers</span></a>, Dyssol provides information about how to customize your own operation units and solvers.</p>
+<p>This documentation helps you to get familiar with simulating solid processes using Dyssol. You can also find the introduction of the Dyssol system structure.</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">The structure of this help documentation includes:</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="first.html">Get started</a></li>
-<li class="toctree-l1"><a class="reference internal" href="units.html">Units library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="units.html">Unit library</a></li>
 <li class="toctree-l1"><a class="reference internal" href="simulation.html">Simulation core</a></li>
 <li class="toctree-l1"><a class="reference internal" href="data.html">Data storage subsystem</a></li>
 <li class="toctree-l1"><a class="reference internal" href="materials.html">Material database</a></li>
-<li class="toctree-l1"><a class="reference internal" href="solver.html">Solver</a></li>
 <li class="toctree-l1"><a class="reference internal" href="multiDim.html">Multidimentional distributed parameters of solids</a></li>
-<li class="toctree-l1"><a class="reference internal" href="time.html">Time points management</a></li>
-<li class="toctree-l1"><a class="reference internal" href="developer.html">Unit developement</a></li>
+<li class="toctree-l1"><a class="reference internal" href="time.html">Time point management</a></li>
+<li class="toctree-l1"><a class="reference internal" href="solver.html">Solver library</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer.html">For developers</a></li>
+<li class="toctree-l1"><a class="reference internal" href="class.html">Classes</a></li>
 <li class="toctree-l1"><a class="reference internal" href="theory.html">Theoretical background</a></li>
 </ul>
 </div>
@@ -77,15 +79,15 @@
 <div class="section" id="flowsheet-simulation-of-solids">
 <h2>Flowsheet simulation of solids<a class="headerlink" href="#flowsheet-simulation-of-solids" title="Permalink to this headline">¶</a></h2>
 <p>One of the main challenges in simulation of solids processes is associated with the dispersity of granular materials: the solid phase can be distributed along several interdependent parameters, such as size, shape, moisture content or density.</p>
-<p>In Dyssol, an approach with <strong>transformation matrices</strong> is used for correct handling of solids in this case. This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.</p>
+<p>In Dyssol, an approach with <a class="reference internal" href="multiDim.html#label-tm"><span class="std std-ref">Transformation matrices</span></a> is used for correct handling of solids in this case. This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
 <div class="section" id="approaches-and-methods">
 <h2>Approaches and methods<a class="headerlink" href="#approaches-and-methods" title="Permalink to this headline">¶</a></h2>
-<p>The new system in Dyssol is based on the <a class="reference internal" href="theory.html#label-seqmodule"><span class="std std-ref">Sequential-modular approach</span></a>, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the <a class="reference internal" href="units.html#label-unitslib"><span class="std std-ref">Units library</span></a> with new models.</p>
-<p>To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.</p>
+<p>The new system in Dyssol is based on the <a class="reference internal" href="theory.html#label-seqmodule"><span class="std std-ref">Sequential-modular approach</span></a>, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension of the unit library with new models.</p>
+<p>To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the <a class="reference internal" href="theory.html#label-waverelax"><span class="std std-ref">Waveform relaxation method</span></a>: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -93,10 +95,10 @@
 <div class="section" id="software-system-architecture">
 <h2>Software system architecture<a class="headerlink" href="#software-system-architecture" title="Permalink to this headline">¶</a></h2>
 <p>To implement the Dyssol system, the C++ programming language and the object oriented paradigm are applied.</p>
-<p>To maximize the modularity of the simulation environment, models of units and solvers are not directly integrated into the framework, but may be implemented as separate objects and then added to the <a class="reference internal" href="units.html#label-unitslib"><span class="std std-ref">Units library</span></a> using standardized interfaces and templates.</p>
 <p>You can get an overview of the Dyssol system structure in the figure below.</p>
 <a class="reference internal image-reference" href="_images/archi.png"><img alt="" class="align-center" src="_images/archi.png" style="width: 960px;" /></a>
-<p>For a detailed explanation about important elements in the structure, please refer to <a class="reference internal" href="solver.html#label-solver"><span class="std std-ref">Solver</span></a>, <a class="reference internal" href="simulation.html#label-simulation"><span class="std std-ref">Simulation core</span></a>, <a class="reference internal" href="materials.html#label-materialdat"><span class="std std-ref">Material database</span></a>, <a class="reference internal" href="data.html#label-datastor"><span class="std std-ref">Data storage subsystem</span></a> and <a class="reference internal" href="multiDim.html#label-multidim"><span class="std std-ref">Multidimentional distributed parameters of solids</span></a>.</p>
+<p>To maximize the modularity of the simulation environment, models of units and solvers are not directly integrated into the framework, but may be implemented as separate objects and then added to the units library using standardized interfaces and templates.</p>
+<p>For a detailed explanation about important elements in the structure, please refer to <a class="reference internal" href="solver.html#label-solver"><span class="std std-ref">Solver library</span></a>, <a class="reference internal" href="simulation.html#label-simulation"><span class="std std-ref">Simulation core</span></a>, <a class="reference internal" href="materials.html#label-materialdat"><span class="std std-ref">Material database</span></a>, <a class="reference internal" href="data.html#label-datastor"><span class="std std-ref">Data storage subsystem</span></a> and <a class="reference internal" href="multiDim.html#label-multidim"><span class="std std-ref">Multidimentional distributed parameters of solids</span></a>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -183,7 +185,7 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Xiye Zhou.
+        &#169; Copyright 2019-2020, Xiye Zhou.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

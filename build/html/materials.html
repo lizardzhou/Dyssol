@@ -18,7 +18,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Solver" href="solver.html" />
+    <link rel="next" title="Multidimentional distributed parameters of solids" href="multiDim.html" />
     <link rel="prev" title="Data storage subsystem" href="data.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -28,7 +28,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="solver.html" title="Solver"
+          <a href="multiDim.html" title="Multidimentional distributed parameters of solids"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="data.html" title="Data storage subsystem"
@@ -59,7 +59,7 @@
 </div>
 </div>
 <div class="section" id="constant-parameters">
-<h2>Constant parameters<a class="headerlink" href="#constant-parameters" title="Permalink to this headline">¶</a></h2>
+<span id="label-materialdatadetailed"></span><h2>Constant parameters<a class="headerlink" href="#constant-parameters" title="Permalink to this headline">¶</a></h2>
 <p>Not all properties have influence on internal calculations. State of aggregation can be used to define several aggregation states of the same material. These parameters can be accessed through units and material streams.</p>
 <p>Constant parameters in Dyssol consist of:</p>
 <blockquote>
@@ -87,7 +87,7 @@
 <p>Dependent parameters in Dyssol consist of:</p>
 <blockquote>
 <div><ul class="simple">
-<li>Density: mandatory for simulation, since it participates in PSD transformations and T-equilibrium</li>
+<li>Density: mandatory for simulation, since it participates in <abbr title="Particle size distribution">PSD</abbr> transformations and T-equilibrium</li>
 <li>Enthalpy: mandatory for simulation, since it participates in T-equilibrium</li>
 <li>Thermal conductivity</li>
 <li>Viscosity</li>
@@ -100,26 +100,14 @@
 </div>
 <div class="section" id="correlation-search">
 <h3>Correlation search<a class="headerlink" href="#correlation-search" title="Permalink to this headline">¶</a></h3>
-<p>The algorithm for calculating TPD properties is shown as follows.</p>
+<p>The algorithm for calculating <abbr title="Temperature- and/or pressure-dependent">TPD</abbr> properties is shown as follows.</p>
 <a class="reference internal image-reference" href="_images/correlation.png"><img alt="screen" class="align-center" src="_images/correlation.png" style="width: 600px;" /></a>
-<p>It consists of 3 steps:</p>
+<p>For each T or P range (given in the literature), it consists of 3 steps:</p>
 <blockquote>
-<div><ol class="arabic">
-<li><p class="first">Find the first correlation with T &amp; P within</p>
-<blockquote>
-<div><p>Calculate value according to the function</p>
-</div></blockquote>
-</li>
-<li><p class="first">Find the first correlation with only T within</p>
-<blockquote>
-<div><p>Calculate value according to the function</p>
-</div></blockquote>
-</li>
-<li><p class="first">Find the nearest correlation, taking only T into account</p>
-<blockquote>
-<div><p>Perform nearest neighbour extrapolation</p>
-</div></blockquote>
-</li>
+<div><ol class="arabic simple">
+<li>Find the correlation with T &amp; P within the first T or P-range. Calculate value according to the correlation function for this range.</li>
+<li>Find the correlation with only T within the first T or P-range. Calculate value according to the correlation function for this range.</li>
+<li>Find the nearest correlation, taking only T into account. Perform nearest neighbour extrapolation.</li>
 </ol>
 </div></blockquote>
 <div class="line-block">
@@ -128,7 +116,7 @@
 </div>
 <div class="section" id="correlation-functions">
 <h3>Correlation functions<a class="headerlink" href="#correlation-functions" title="Permalink to this headline">¶</a></h3>
-<p>The correlation functions <span class="math notranslate nohighlight">\(y = f(T,P)\)</span> in Dyssol are listed below. The letters <span class="math notranslate nohighlight">\(a ... f\)</span> are constants.</p>
+<p>The correlation functions <span class="math notranslate nohighlight">\(y = f(T,P)\)</span> in Dyssol are listed below. The letters <span class="math notranslate nohighlight">\(a ... f\)</span> are constants. For different temperatur and pressure ranges, different functions should be applied.</p>
 <ul>
 <li><p class="first">Constant:</p>
 <blockquote>
@@ -170,12 +158,12 @@
 <div><p><span class="math notranslate nohighlight">\(y = a + \ln T + bT + c\frac{T^2}{2} + d\frac{T^3}{3} - \frac{e}{2T^2} + f\)</span></p>
 </div></blockquote>
 </li>
-<li><p class="first">List of T-values:</p>
+<li><p class="first">List of T-values (user defined):</p>
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(y = \{T1:val1, T2:val2, T3:val3, ...\}\)</span></p>
 </div></blockquote>
 </li>
-<li><p class="first">List of P-values:</p>
+<li><p class="first">List of P-values (user defined):</p>
 <blockquote>
 <div><p><span class="math notranslate nohighlight">\(y = \{P1:val1, P2:val2, P3:val3, ...\}\)</span></p>
 </div></blockquote>
@@ -209,8 +197,8 @@
   <p class="topless"><a href="data.html"
                         title="previous chapter">Data storage subsystem</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="solver.html"
-                        title="next chapter">Solver</a></p>
+  <p class="topless"><a href="multiDim.html"
+                        title="next chapter">Multidimentional distributed parameters of solids</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -241,7 +229,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="solver.html" title="Solver"
+          <a href="multiDim.html" title="Multidimentional distributed parameters of solids"
              >next</a> |</li>
         <li class="right" >
           <a href="data.html" title="Data storage subsystem"
@@ -250,7 +238,7 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Xiye Zhou.
+        &#169; Copyright 2019-2020, Xiye Zhou.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Unit developement &#8212; Dyssol Help 0.0.1 documentation</title>
+    <title>For developers &#8212; Dyssol Help 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -14,10 +14,12 @@
     <script type="text/javascript" src="_static/jquery.js"></script>
     <script type="text/javascript" src="_static/underscore.js"></script>
     <script type="text/javascript" src="_static/doctools.js"></script>
+    <script async="async" type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Evaluation" href="evaluation.html" /> 
+    <link rel="next" title="Classes" href="class.html" />
+    <link rel="prev" title="Solver library" href="solver.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -26,7 +28,10 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="evaluation.html" title="Evaluation"
+          <a href="class.html" title="Classes"
+             accesskey="N">next</a> |</li>
+        <li class="right" >
+          <a href="solver.html" title="Solver library"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
       </ul>
@@ -37,20 +42,559 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="unit-developement">
-<h1>Unit developement<a class="headerlink" href="#unit-developement" title="Permalink to this headline">¶</a></h1>
-<p>Introduction to developer’s manual…</p>
-<div class="section" id="classes">
-<h2>Classes<a class="headerlink" href="#classes" title="Permalink to this headline">¶</a></h2>
-<p>Which classes are available in Dyssol…</p>
+  <div class="section" id="for-developers">
+<span id="label-develop"></span><h1>For developers<a class="headerlink" href="#for-developers" title="Permalink to this headline">¶</a></h1>
+<p>In Dyssol, you can develop and debug new steady-state or dynamic <strong>units</strong> as well as your own external modules (<strong>solvers</strong>).</p>
+<p>The installation package of Dyssol contains all necessary components for the development of such modules. It is provided with a pre-configured solution for IDE Microsoft Visual Studio 2015 (or its <a class="reference external" href="https://go.microsoft.com/fwlink/?LinkId=615448&amp;clcid=0x409">Community edition</a>).</p>
+<p>The development of modules for Dyssol can be done in three following steps:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Copy template project with necessary header files and libraries from Dyssol installation path to desired folder and configure project.</li>
+<li>Copy template of the necessary unit (dynamic or steady-state) or solver, rename it and add this module to the previously copied template project.</li>
+<li>Reimplement all necessary functions. In the case of dynamic units the internal DAE/NL solver can be used to solve DAE/NL systems automatically. For detailed information about implementation of units and solvers, please refer to <a class="reference internal" href="#label-unitdev"><span class="std std-ref">Unit development</span></a> and <a class="reference internal" href="#label-solverdev"><span class="std std-ref">Solver development</span></a>.</li>
+</ol>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
 </div>
-<div class="section" id="functions">
-<h2>Functions<a class="headerlink" href="#functions" title="Permalink to this headline">¶</a></h2>
-<p>Which functions are available in Dyssol…</p>
+<div class="section" id="configuration-of-visual-studio-project-template">
+<span id="label-vcconfig"></span><h2>Configuration of Visual Studio project template<a class="headerlink" href="#configuration-of-visual-studio-project-template" title="Permalink to this headline">¶</a></h2>
+<ol class="arabic">
+<li><p class="first">Open directory where Dyssol has been installed (usually <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Dyssol</span></code>) and copy folder <code class="docutils literal notranslate"><span class="pre">VCProject</span></code> to the desired location on your hard drive (further <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;</span></code>).</p>
+</li>
+<li><p class="first">Open the copied folder <code class="docutils literal notranslate"><span class="pre">VCProject</span></code> and run file <code class="docutils literal notranslate"><span class="pre">Dyssol.sln</span></code> to open solution in Microsoft Visual Studio, which should be previously installed.</p>
+</li>
+<li><p class="first">Select startup project:</p>
+<p>Select project <em>ModelsAPI</em> in <em>solution explorer</em>, then choose <em>Project → Set as StartUp Project</em>.</p>
+</li>
+<li><p class="first">Select paths to executable files:</p>
+<ul>
+<li><p class="first">Select project ModelsAPI in solution explorer, then choose <em>Project → Properties → Configuration Properties → Debugging</em></p>
+</li>
+<li><p class="first">Set combo box Configuration in the top of the window to position Debug, and provide the property Command with the path to debug version of executable, which is located at</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\ExecutableDebug\Dyssol.exe</span></code></p>
+</div></blockquote>
+</li>
+<li><p class="first">Set combo box <em>Configuration</em> in the top of the window to position <em>Release</em>, and provide the property <em>Command</em> with the path to release version of executable, which is located in the directory where Dyssol has been installed:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Dyssol\Dyssol.exe</span></code></p>
+</div></blockquote>
+</li>
+</ul>
+</li>
+<li><p class="first">Set combo box <em>Configuration</em> in the top of the window to position <em>Debug</em>. Press F7 (or <em>Build → Build project</em> in program menu) to build core project and wait until the solution is built.</p>
+</li>
+<li><p class="first">Press <kbd class="kbd docutils literal notranslate">F5</kbd> (or <em>Debug → Run debug</em> in program menu) to run program in debug mode. New window of Dyssol should now be opened.</p>
+</li>
+<li><p class="first">Close Dyssol window.</p>
+</li>
+</ol>
+<p>Visual Studio solution is now ready to create and debug your own modules.</p>
+<div class="line-block">
+<div class="line"><br /></div>
 </div>
-<div class="section" id="solvers">
-<h2>Solvers<a class="headerlink" href="#solvers" title="Permalink to this headline">¶</a></h2>
-<p>How to extend own solvers…</p>
+</div>
+<div class="section" id="unit-development">
+<span id="label-unitdev"></span><h2>Unit development<a class="headerlink" href="#unit-development" title="Permalink to this headline">¶</a></h2>
+<p>You must do the following in order to develop your new solver (plese refer to <a class="reference internal" href="#label-vcconfig"><span class="std std-ref">Configuration of Visual Studio project template</span></a>):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Install Microsoft Visual Studio 2015 (Community).</li>
+<li>Configure template project <code class="docutils literal notranslate"><span class="pre">VCProject</span></code>.</li>
+</ol>
+</div></blockquote>
+<p>There are 4 different pre-defined templates of units available:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">SteadyState</span></code>: performs steady-state calculation; current state of such unit does not depend on the previous state, but only on the input parameters.</li>
+<li><code class="docutils literal notranslate"><span class="pre">SteadyStateWithNLSolver</span></code>: steady-state unit with connected internal solver of non-linear equations.</li>
+<li><code class="docutils literal notranslate"><span class="pre">Dynamic</span></code>: performs dynamic calculation; current state of this unit depends not only on the input parameters as well as on the previous state of the unit.</li>
+<li><code class="docutils literal notranslate"><span class="pre">DynamicWithDAESolver</span></code>: dynamic unit with connected internal solver of differential-algebraic equations.</li>
+</ol>
+</div></blockquote>
+<p>Please also refer to <a class="reference internal" href="class.html#label-baseunit"><span class="std std-ref">Basic unit</span></a> for detailed informaiton on functions applied in unit development.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="add-new-unit-to-the-template-project">
+<h3>Add new unit to the template project<a class="headerlink" href="#add-new-unit-to-the-template-project" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Copy the desired template of the unit from <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\UnitsTemplates</span></code> to the folder <code class="docutils literal notranslate"><span class="pre">Units</span></code> in solution (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units</span></code>).</li>
+<li>Rename template’s folder according to the name of your new unit (further <code class="docutils literal notranslate"><span class="pre">&lt;MyUnitFolder&gt;</span></code>). The name can be chosen freely.</li>
+<li>Rename project files in template’s folder (<code class="docutils literal notranslate"><span class="pre">*.vcxproj</span></code>, <code class="docutils literal notranslate"><span class="pre">*.vcxproj.filters</span></code>) according to the name of the new unit.</li>
+<li>Run the solution file (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\Dyssol.sln</span></code>) to open it in Visual Studio.</li>
+<li>Add project with your new unit to the solution. To do this, select in Visual Studio <em>File → Add → Existing Project</em> and specify path to the project file (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\&lt;MyUnitFolder&gt;\&lt;*.vcxproj&gt;</span></code>).</li>
+<li>Rename added project in Visual Studio according to the name of your unit.</li>
+</ol>
+<p>Now you can implement functionality of your new unit. To build your solution press <kbd class="kbd docutils literal notranslate">F7</kbd>, to run it in debug mode press <kbd class="kbd docutils literal notranslate">F5</kbd>. Files with new units will be placed to <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Debug</span></code>.</p>
+<p>As debug versions of compiled and built units contain a lot of additional information, which is used by Visual Studio to perform debugging, their calculation efficiency can be dramatically low. Thus, for the simulation purposes, units should be built in <em>Release</em> mode.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="configure-dyssol-to-work-with-implemented-units">
+<h3>Configure Dyssol to work with implemented units<a class="headerlink" href="#configure-dyssol-to-work-with-implemented-units" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Build your units in <em>Release</em> mode. To do this, open your solution in Visual Studio (run file <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject.sln</span></code>), switch <em>Solution configuration</em> combo box from the toolbox of Visual Studio from <em>Debug</em> to <em>Release</em> and build the project (press <kbd class="kbd docutils literal notranslate">F7</kbd> or choose <em>Build → Build project</em> in program menu).</li>
+<li>Configure Dyssol by adding the path to new units: run Dyssol, choose <em>Tools → Models Manager</em> and add path to your models (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Release</span></code>).</li>
+</ol>
+<p>Now, all newly developed units will be available in Dyssol.</p>
+<p>In general, usual configuration of Models Manager should include following path for units:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&lt;InstallationPath&gt;\Units</span></code>: list of standard units;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\UnitsDebugLibs</span></code>: debug versions of standard units;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Debug</span></code>: debug versions of developed units;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Release</span></code>: release versions of developed units.</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="development-of-steady-state-units">
+<h3>Development of steady-state units<a class="headerlink" href="#development-of-steady-state-units" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Unit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Constructor</strong> of the unit: called only once when unit is added to the flowsheet. In this function a set of parameters should be specified:</p>
+<ol class="arabic">
+<li><p class="first">Basic info:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code>: Name of the unit that will be displayed in Dyssol.</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>: Unit’s author</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>: Unique identificator of the unit. Simulation environment distinguishes different units with the help of this identificator.</li>
+</ul>
+<p>You must ensure that ID of your unit is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</p>
+</li>
+<li><p class="first">Specify ports: add new, rename or delete existing.</p>
+</li>
+<li><p class="first">If unit has some additionally parameters, than specify them here.</p>
+</li>
+<li><p class="first">Additional internal material streams can be defined here.</p>
+</li>
+<li><p class="first">All other operations, which should take place only once during the unit’s creation.</p>
+</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::~</span><span class="n">Unit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Destructor</strong> of the unit: called only once when unit is removed from the flowsheet. Here all memory which has been previously allocated in the constructor should be freed.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. additional material streams, state variables or plots).</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Steady-state calculation</strong> for a specified time point. This function is called iteratively for all time points for which this unit should be calculated. All main calculations should be implemented here.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Unit‘s <strong>finalization</strong>. This function is called only once at the end of the simulation. Here one can perform closing and cleaning operations to prepare for the next possible simulation run. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="development-of-steady-state-units-with-internal-non-linear-solver">
+<h3>Development of steady-state units with internal non-linear solver<a class="headerlink" href="#development-of-steady-state-units-with-internal-non-linear-solver" title="Permalink to this headline">¶</a></h3>
+<p>You can solve nonlinear equation systems automatically in Dyssol system. In this case, the unit should contain one or several additional objects of <code class="docutils literal notranslate"><span class="pre">NLModel</span></code> class. This class is used to describe non-linear systems and can be automatically solved with <code class="docutils literal notranslate"><span class="pre">NLSolver</span></code> class.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Unit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Constructor</strong> of the unit: called only once when unit is added to the flowsheet. In this function a set of parameters should be specified:</p>
+<ol class="arabic simple">
+<li>Basic info:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code>: Name of the unit that will be displayed in Dyssol.</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>: Unit’s author</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>: Unique identificator of the unit. Simulation environment distinguishes different units with the help of this identificator. You must ensure that ID of your unit is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</li>
+</ul>
+</li>
+<li>Specify ports: add new, rename or delete existing.</li>
+<li>If unit has some additionally parameters, than specify them here.</li>
+<li>Additional material streams can be defined here.</li>
+<li>All other operations, which should take place only once during the unit’s creation.</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::~</span><span class="n">Unit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Destructor</strong> of the unit: called only once when unit is removed from the flowsheet. Here all memory which has been previously allocated in the constructor should be freed.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (for example holdups, material streams, state variables or plots).</p>
+<p>In this function, variables of all <code class="docutils literal notranslate"><span class="pre">NLModels</span></code> should be specified by using function <code class="docutils literal notranslate"><span class="pre">NLModel::AddNLVariable()</span></code>; connection between <code class="docutils literal notranslate"><span class="pre">NLModel</span></code> and <code class="docutils literal notranslate"><span class="pre">NLSolver</span></code> classes should be created by calling function <code class="docutils literal notranslate"><span class="pre">NLSolver::SetModel()</span></code>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Steady-state calculation</strong> for a specified time point. This function is called iteratively for all time points for which this unit should be calculated. All main calculations should be implemented here. Calculation of the defined NL-system can be run here by calling function <code class="docutils literal notranslate"><span class="pre">NLSolver::Calculate()</span></code>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">SaveState</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <code class="docutils literal notranslate"><span class="pre">AddStateVariable()</span></code> and <code class="docutils literal notranslate"><span class="pre">AddMaterialStream()</span></code> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">LoadState</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Load last state</strong> of the unit which has been saved with <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Unit‘s <strong>finalization</strong>. This function is called only once at the end of the simulation. Here one can perform closing and cleaning operations to prepare for the next possible simulation run. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NLModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Handling of results</strong>, which are returned from <code class="docutils literal notranslate"><span class="pre">NLSolver</span></code> on each time point. Called by solver every time when the solution in a new time point is ready.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NLModel</span><span class="o">::</span><span class="n">CalculateFunctions</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here the non-linear system should be <strong>specified</strong>. This function will be called by solver automatically.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="development-of-dynamic-units">
+<h3>Development of dynamic units<a class="headerlink" href="#development-of-dynamic-units" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Unit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Constructor</strong> of the unit: called only once when unit is added to the flowsheet. In this function a set of parameters should be specified:</p>
+<ol class="arabic simple">
+<li>Basic info:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code>: Name of the unit that will be displayed in Dyssol.</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>: Unit’s author</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>: Unique identificator of the unit. Simulation environment distinguishes different units with the help of this identificator. You must ensure that ID of your unit is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</li>
+</ul>
+</li>
+<li>Specify ports: add new, rename or delete existing.</li>
+<li>If unit has some additionally parameters, than specify them here.</li>
+<li>Internal holdups and additional material streams can be defined here.</li>
+<li>All other operations, which should take place only once during the unit’s creation.</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::~</span><span class="n">Unit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Destructor</strong> of the unit: called only once when unit is removed from the flowsheet. Here all memory which has been previously allocated in the constructor should be freed.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. holdups, material streams or state variables).</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Tstart</span><span class="p">,</span> <span class="n">Tend</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Dynamic calculation</strong> of the unit on a specified time interval. All logic of the unit’s model must be implemented here.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">SaveState</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <code class="docutils literal notranslate"><span class="pre">AddStateVariable()</span></code>, <code class="docutils literal notranslate"><span class="pre">AddMaterialStream()</span></code> or <code class="docutils literal notranslate"><span class="pre">AddHoldup()</span></code> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">LoadState</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Load last state</strong> of the unit which has been saved with the SaveState() function. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Unit‘s <strong>finalization</strong>. This function is called only once at the end of the simulation. Here one can perform closing and cleaning operations to prepare for the next possible simulation run. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="development-of-dynamic-units-with-internal-dae-solver">
+<h3>Development of dynamic units with internal DAE solver<a class="headerlink" href="#development-of-dynamic-units-with-internal-dae-solver" title="Permalink to this headline">¶</a></h3>
+<p>You can solve systems of differential-algebraic equations (DAE) automatically in Dyssol system. In this case, the unit should contain one or several additional objects of <code class="docutils literal notranslate"><span class="pre">DAEModel</span></code> class. This class is used to describe DAE systems and can be automatically solved with <code class="docutils literal notranslate"><span class="pre">DAESolver</span></code> class.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Unit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Constructor</strong> of the unit: called only once when unit is added to the flowsheet. In this function a set of parameters should be specified:</p>
+<ol class="arabic simple">
+<li>Basic info:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code>: Name of the unit that will be displayed in Dyssol.</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>: Unit’s author.</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>: Unique identificator of the unit. Simulation environment distinguishes different units with the help of this identificator. You must ensure that ID of your unit is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</li>
+</ul>
+</li>
+<li>Specify ports: add new, rename or delete existing.</li>
+<li>If unit has some additionally parameters, than specify them here.</li>
+<li>Internal holdups and additional material streams can be defined here.</li>
+<li>All other operations, which should take place only once during the unit’s creation.</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::~</span><span class="n">Unit</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Destructor</strong> of the unit: called only once when unit is removed from the flowsheet. Here all memory which has been previously allocated in the constructor should be freed.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. holdups, material streams or state variables).</p>
+<p>In this function, variables of all DAEModels should be specified by using function <code class="docutils literal notranslate"><span class="pre">DAEModel::AddDAEVariable()</span></code>; connection between <code class="docutils literal notranslate"><span class="pre">DAEModel</span></code> and <code class="docutils literal notranslate"><span class="pre">DAESolver</span></code> classes should be created by calling function <code class="docutils literal notranslate"><span class="pre">DAESolver::SetModel()</span></code>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Tstart</span><span class="p">,</span> <span class="n">Tend</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Dynamic calculation</strong> for a specified time interval. Is called for each time window on simulation interval. Calculation of the defined DAE-system can be run here by calling function <code class="docutils literal notranslate"><span class="pre">DAESolver::Calculate()</span></code>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">SaveState</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <code class="docutils literal notranslate"><span class="pre">AddStateVariable()</span></code>, <code class="docutils literal notranslate"><span class="pre">AddMaterialStream()</span></code> or <code class="docutils literal notranslate"><span class="pre">AddHoldup()</span></code> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">LoadState</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Load last state</strong> of the unit which has been saved with SaveState() function. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Unit‘s <strong>finalization</strong>. This function is called only once at the end of the simulation. Here one can perform closing and cleaning operations to prepare for the next possible simulation run. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">DAEModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Handling of results</strong>, which are returned from <code class="docutils literal notranslate"><span class="pre">DAESolver</span></code> on each time point. Called by solver every time when the solution in a new time point is ready.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">DAEModel</span><span class="o">::</span><span class="n">CalculateResiduals</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Here the DAE system should be <strong>specified in implicit form</strong>. This function will be called by solver automatically.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="configure-unit-to-work-with-matlab">
+<h3>Configure unit to work with MATLAB<a class="headerlink" href="#configure-unit-to-work-with-matlab" title="Permalink to this headline">¶</a></h3>
+<p>You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description refer to … and <a class="reference external" href="http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html">C Matrix API</a>.</p>
+<p>To enable interaction with MATLAB configure template project with your unit, do as follows:</p>
+<ol class="arabic">
+<li><p class="first">Add a new environment variable in Windows with the path to the MATLAB installation directory:</p>
+<p><em>Computer → Properties → Advanced system settings → Environment variables → System variables → New</em></p>
+<p>Variable Name: <code class="docutils literal notranslate"><span class="pre">MATLAB_PATH</span></code>.</p>
+<p>Variable value: path to installed 32-bit version of MATLAB (e.g. <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\MATLAB\R2014b</span></code>). It may require restarting the Visual Studio or computer to apply changes.</p>
+</li>
+<li><p class="first">Provide the main project of template solution with path to MATLAB libraries:</p>
+<p>Select project <code class="docutils literal notranslate"><span class="pre">ModelsAPI</span></code> in <em>solution explorer</em>, then choose <em>Project → Properties → Configuration Properties → Environment</em>, set combo box <em>Configuration</em> in the top of the window to position <em>All Configurations</em> and provide the <em>Environment</em> field with parameter <code class="docutils literal notranslate"><span class="pre">PATH=$(MATLAB_PATH)\bin\win32</span></code>.</p>
+</li>
+<li><p class="first">Provide unit’s project with the path to MATLAB libraries:</p>
+<p>Select project with your unit in <em>solution explorer</em>, then choose <em>Project → Properties → Configuration Properties → Environment</em>, set combo box <em>Configuration</em> in the top of the window to position <em>All Configurations</em> and provide the <em>Environment</em> field with parameter <code class="docutils literal notranslate"><span class="pre">PATH=$(MATLAB_PATH)\bin\win32</span></code>.</p>
+</li>
+<li><p class="first">Add MATLAB libraries to the unit’s project:</p>
+<p>Select project with your unit in solution explorer, then choose <em>Project → Properties → Configuration Properties → Linker → Input → Additional Dependencies</em>, set combo box <em>Configuration</em> in the top of the window to position <em>All Configurations</em> and add following four libraries at the beginning of the input field: <code class="docutils literal notranslate"><span class="pre">libmx.lib</span></code>, <code class="docutils literal notranslate"><span class="pre">libmat.lib</span></code>, <code class="docutils literal notranslate"><span class="pre">libeng.lib</span></code>, <code class="docutils literal notranslate"><span class="pre">libmex.lib</span></code>.</p>
+</li>
+<li><p class="first">Insert MATLAB’s header in <code class="docutils literal notranslate"><span class="pre">Unit.h</span></code>: add the line <code class="docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;engine.h&quot;</span></code> to the include section at the top of your <code class="docutils literal notranslate"><span class="pre">Unit.h</span></code> file.</p>
+</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+</div>
+<div class="section" id="solver-development">
+<span id="label-solverdev"></span><h2>Solver development<a class="headerlink" href="#solver-development" title="Permalink to this headline">¶</a></h2>
+<p>You must do the following in order to develop your new solver (plese refer to <a class="reference internal" href="#label-vcconfig"><span class="std std-ref">Configuration of Visual Studio project template</span></a>):</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Install Microsoft Visual Studio 2015 (Community).</li>
+<li>Configure template project <code class="docutils literal notranslate"><span class="pre">VCProject</span></code>.</li>
+</ol>
+</div></blockquote>
+<p>After builiding your own new solvers, the functionality of them can be applied in all units by adding them as unit parameters ((link to “baseUnit”)).</p>
+<p>In the current version of Dyssol, only one type of solver is available: <a class="reference internal" href="solver.html#label-agg-solvers"><span class="std std-ref">Agglomeration solvers</span></a>.</p>
+<p>Basically, all solvers have a set of constant functions and parameters, which are available in each new solver <code class="docutils literal notranslate"><span class="pre">link</span> <span class="pre">to</span> <span class="pre">&quot;external</span> <span class="pre">solver&quot;</span></code>. and a set of specific ones, which depend on the solver’s type. New types of solvers can be added upon request and will include a set of parameters and functions that are needed to solve a specific problem.</p>
+<p>You can implement several solvers of one type (e.g. with different models) and then choose a specific one to use it in unit by user interface, <code class="docutils literal notranslate"><span class="pre">section</span> <span class="pre">‘Unit</span> <span class="pre">parameters’</span></code>.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="add-new-solver-to-the-template-project">
+<h3>Add new solver to the template project<a class="headerlink" href="#add-new-solver-to-the-template-project" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Copy the desired template of the unit from <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\SolversTemplates</span></code> to the folder <code class="docutils literal notranslate"><span class="pre">Solvers</span></code> in solution (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Solvers</span></code>).</li>
+<li>Rename template’s folder according to the name of your new solver (further <code class="docutils literal notranslate"><span class="pre">&lt;MySolverFolder&gt;</span></code>). The name can be chosen freely.</li>
+<li>Rename project files in template’s folder (<code class="docutils literal notranslate"><span class="pre">*.vcxproj</span></code>, <code class="docutils literal notranslate"><span class="pre">*.vcxproj.filters</span></code>) according to the name of the new solver.</li>
+<li>Run the solution file (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\Dyssol.sln</span></code>) to open it in Visual Studio.</li>
+<li>Add project with your new solver to the solution. To do this, select in Visual Studio <em>File → Add → Existing Project</em> and specify path to the project file: <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Solvers\&lt;MySolverFolder&gt;\&lt;*.vcxproj&gt;</span></code>.</li>
+<li>Rename added project in Visual Studio according to the name of your solver.</li>
+</ol>
+<p>Now you can implement functionality of your new solver. The list of available functions depends on type of selected solver.</p>
+<p>To build your solution press <kbd class="kbd docutils literal notranslate">F7</kbd>, to run it in debug mode press <kbd class="kbd docutils literal notranslate">F5</kbd>. Files with new solvers will be placed to <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Debug</span></code>.</p>
+<p>As debug versions of compiled and built solvers contain a lot of additional information, which is used by Visual Studio to perform debugging, their calculation efficiency can be dramatically low. Thus, for the simulation purposes, solvers should be built in <em>Release</em> mode.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="configure-dyssol-to-work-with-implemented-solvers">
+<h3>Configure Dyssol to work with implemented solvers<a class="headerlink" href="#configure-dyssol-to-work-with-implemented-solvers" title="Permalink to this headline">¶</a></h3>
+<ol class="arabic simple">
+<li>Build your solvers in <em>Release</em> mode. To do this, open your solution in Visual Studio (run file <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject.sln</span></code>), switch <em>Solution</em> configuration combo box from the toolbox of Visual Studio from <em>Debug</em> to <em>Release</em> and build the project (press F7 or choose <em>Build → Build project</em> in program menu).</li>
+<li>Configure Dyssol by adding the path to new solvers: run Dyssol, choose <em>Tools → Options → Model manager</em> and add path to your solvers (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Release</span></code>).</li>
+</ol>
+<p>Now all new developed units will be available in Dyssol.</p>
+<p>In general, usual configuration of <em>Model manager</em> should include following path for solvers:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">&lt;InstallationPath&gt;\Solvers</span></code>: list of standard solvers;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\SolversDebugLibs</span></code>: debug versions of standard solvers;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Debug</span></code>: debug versions of developed solvers;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Release</span></code>: release versions of developed solvers.</li>
+</ul>
+</div></blockquote>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="development-of-agglomeration-solver">
+<h3>Development of agglomeration solver<a class="headerlink" href="#development-of-agglomeration-solver" title="Permalink to this headline">¶</a></h3>
+<p>Please refer to the background information <a class="reference internal" href="units.html#label-agg"><span class="std std-ref">Agglomerator</span></a> and <a class="reference internal" href="solver.html#label-agg-solvers"><span class="std std-ref">Agglomeration solvers</span></a> when necessary.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Solver</span><span class="o">::</span><span class="n">Solver</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Constructor</strong> of the solver: called only once when solver is added to the unit. In this function, a set of parameters should be specified:</p>
+<ol class="arabic simple">
+<li>Basic info:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">m_solverName</span></code>: Name of the solver that will be displayed in Dyssol.</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_authorName</span></code>: Solver’s author.</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_solverUniqueKey</span></code>: Unique identificator of the solver. Simulation environment distinguishes different solvers with the help of this identificator. You must ensure that ID of your solver is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</li>
+</ul>
+</li>
+<li>All operations, which should take place only once during the solver’s creation.</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Solver</span><span class="o">::~</span><span class="n">Solver</span><span class="p">()</span>
+</pre></div>
+</div>
+<p><strong>Destructor</strong> of the solver: called only once when solver is removed from the unit. Here all memory which has been previously allocated in the constructor should be freed.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Solver</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">grid</span><span class="p">,</span> <span class="kt">double</span> <span class="n">betta0</span><span class="p">,</span> <span class="n">EKernels</span> <span class="n">kernel</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">rank</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">params</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Solver‘s <strong>initialization</strong>. This function is called only once for each simulation during the initialization of unit. All operations, which should take place only once after the solver’s creation should be implemented here. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Solver</span><span class="o">::</span><span class="n">Calculate</span><span class="p">(</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">N</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">BRate</span><span class="p">,</span> <span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">DRate</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><strong>Calculation</strong> of birth and death rates depending on particle size distribution. All logic of the solver must be implemented here.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Solver</span><span class="o">::</span><span class="n">Finalize</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Solver‘s <strong>finalization</strong>. This function is called only once for each simulation during the finalization of unti. Here one can perform closing and cleaning operations to prepare for the next possible simulation run. Implementation of this function is not obligatory and can be skipped.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="configure-solver-to-work-with-matlab">
+<h3>Configure solver to work with MATLAB<a class="headerlink" href="#configure-solver-to-work-with-matlab" title="Permalink to this headline">¶</a></h3>
+<p>You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description refer to … and <a class="reference external" href="http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html">C Matrix API</a>.</p>
+<p>To enable interaction with MATLAB configure template project with your solver, do as follows:</p>
+<blockquote>
+<div><ol class="arabic">
+<li><p class="first">Add a new environment variable in Windows with the path to the MATLAB installation directory:</p>
+<p><em>Computer → Properties → Advanced system settings → Environment variables → System variables → New</em></p>
+<p>Variable Name: <code class="docutils literal notranslate"><span class="pre">MATLAB_PATH</span></code>.</p>
+<p>Variable value: path to installed 32-bit version of MATLAB (e.g. <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\MATLAB\R2014b</span></code>). It may require restarting the Visual Studio or computer to apply changes.</p>
+</li>
+<li><p class="first">Provide the main project of template solution with path to MATLAB libraries:</p>
+<p>Select project <code class="docutils literal notranslate"><span class="pre">ModelsAPI</span></code> in <em>solution explorer</em>, then choose <em>Project → Properties → Configuration Properties → Environment</em>, set combo box <em>Configuration</em> in the top of the window to position <em>All Configurations</em> and provide the <em>Environment</em> field with parameter <code class="docutils literal notranslate"><span class="pre">PATH=$(MATLAB_PATH)\bin\win32</span></code>.</p>
+</li>
+<li><p class="first">Provide solver’s project with the path to MATLAB libraries:</p>
+<p>Select project with your solver in <em>solution explorer</em>, then choose <em>Project → Properties → Configuration Properties → Environment</em>, set combo box <em>Configuration</em> in the top of the window to position <em>All Configurations</em> and provide the <em>Environment</em> field with parameter <code class="docutils literal notranslate"><span class="pre">PATH=$(MATLAB_PATH)\bin\win32</span></code>.</p>
+</li>
+<li><p class="first">Add MATLAB libraries to the solver’s project:</p>
+<p>Select project with your solver in <em>solution explorer</em>, then choose <em>Project → Properties → Configuration Properties → Linker → Input → Additional Dependencies</em>, set combo box <em>Configuration</em> in the top of the window to position <em>All Configurations</em> and add following four libraries at the beginning of the input field: <code class="docutils literal notranslate"><span class="pre">libmx.lib</span></code>, <code class="docutils literal notranslate"><span class="pre">libmat.lib</span></code>, <code class="docutils literal notranslate"><span class="pre">libeng.lib</span></code>, <code class="docutils literal notranslate"><span class="pre">libmex.lib</span></code>.</p>
+</li>
+<li><p class="first">Insert MATLAB’s header in <code class="docutils literal notranslate"><span class="pre">Solver.h</span></code>: add the line <code class="code docutils literal notranslate"><span class="pre">#include</span> <span class="pre">&quot;engine.h&quot;</span></code> to the include section at the top of your <code class="docutils literal notranslate"><span class="pre">Solver.h</span></code> file.</p>
+</li>
+</ol>
+</div></blockquote>
+</div>
 </div>
 </div>
 
@@ -62,17 +606,35 @@
         <div class="sphinxsidebarwrapper">
   <h3><a href="index.html">Table of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Unit developement</a><ul>
-<li><a class="reference internal" href="#classes">Classes</a></li>
-<li><a class="reference internal" href="#functions">Functions</a></li>
-<li><a class="reference internal" href="#solvers">Solvers</a></li>
+<li><a class="reference internal" href="#">For developers</a><ul>
+<li><a class="reference internal" href="#configuration-of-visual-studio-project-template">Configuration of Visual Studio project template</a></li>
+<li><a class="reference internal" href="#unit-development">Unit development</a><ul>
+<li><a class="reference internal" href="#add-new-unit-to-the-template-project">Add new unit to the template project</a></li>
+<li><a class="reference internal" href="#configure-dyssol-to-work-with-implemented-units">Configure Dyssol to work with implemented units</a></li>
+<li><a class="reference internal" href="#development-of-steady-state-units">Development of steady-state units</a></li>
+<li><a class="reference internal" href="#development-of-steady-state-units-with-internal-non-linear-solver">Development of steady-state units with internal non-linear solver</a></li>
+<li><a class="reference internal" href="#development-of-dynamic-units">Development of dynamic units</a></li>
+<li><a class="reference internal" href="#development-of-dynamic-units-with-internal-dae-solver">Development of dynamic units with internal DAE solver</a></li>
+<li><a class="reference internal" href="#configure-unit-to-work-with-matlab">Configure unit to work with MATLAB</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#solver-development">Solver development</a><ul>
+<li><a class="reference internal" href="#add-new-solver-to-the-template-project">Add new solver to the template project</a></li>
+<li><a class="reference internal" href="#configure-dyssol-to-work-with-implemented-solvers">Configure Dyssol to work with implemented solvers</a></li>
+<li><a class="reference internal" href="#development-of-agglomeration-solver">Development of agglomeration solver</a></li>
+<li><a class="reference internal" href="#configure-solver-to-work-with-matlab">Configure solver to work with MATLAB</a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="evaluation.html"
-                        title="previous chapter">Evaluation</a></p>
+  <p class="topless"><a href="solver.html"
+                        title="previous chapter">Solver library</a></p>
+  <h4>Next topic</h4>
+  <p class="topless"><a href="class.html"
+                        title="next chapter">Classes</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -103,13 +665,16 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="evaluation.html" title="Evaluation"
+          <a href="class.html" title="Classes"
+             >next</a> |</li>
+        <li class="right" >
+          <a href="solver.html" title="Solver library"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Xiye Zhou.
+        &#169; Copyright 2019-2020, Xiye Zhou.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

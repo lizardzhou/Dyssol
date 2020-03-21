@@ -6,7 +6,7 @@
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>Time points management &#8212; Dyssol Help 0.0.1 documentation</title>
+    <title>Time point management &#8212; Dyssol Help 0.0.1 documentation</title>
     <link rel="stylesheet" href="_static/classic.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     
@@ -18,7 +18,7 @@
     
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="Unit developement" href="developer.html" />
+    <link rel="next" title="Solver library" href="solver.html" />
     <link rel="prev" title="Multidimentional distributed parameters of solids" href="multiDim.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
@@ -28,7 +28,7 @@
           <a href="genindex.html" title="General Index"
              accesskey="I">index</a></li>
         <li class="right" >
-          <a href="developer.html" title="Unit developement"
+          <a href="solver.html" title="Solver library"
              accesskey="N">next</a> |</li>
         <li class="right" >
           <a href="multiDim.html" title="Multidimentional distributed parameters of solids"
@@ -42,8 +42,93 @@
         <div class="bodywrapper">
           <div class="body" role="main">
             
-  <div class="section" id="time-points-management">
-<h1>Time points management<a class="headerlink" href="#time-points-management" title="Permalink to this headline">¶</a></h1>
+  <div class="section" id="time-point-management">
+<h1>Time point management<a class="headerlink" href="#time-point-management" title="Permalink to this headline">¶</a></h1>
+<p>In Dyssol, stream inlets, dynamic units and unit parameters are time-dependent and have unique combination of time points. As simulation process goes, new time points are generated.</p>
+<a class="reference internal image-reference" href="_images/timePoint.png"><img alt="" class="align-center" src="_images/timePoint.png" style="width: 500px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="section" id="data-interpolation">
+<h2>Data interpolation<a class="headerlink" href="#data-interpolation" title="Permalink to this headline">¶</a></h2>
+<p>Linear interpolation is applied between existing time points. Nearest-neighbor extrapolation is applied outside of existing interval. If only one time point is defined, it is assumed to be constant on the whole interval.</p>
+<p>As an example, the mass flow at different time points are illustrated in the diagram below.</p>
+<a class="reference internal image-reference" href="_images/data.png"><img alt="" class="align-center" src="_images/data.png" style="width: 400px;" /></a>
+<p>The values <span class="math notranslate nohighlight">\(\dot{m}(t_1) = \dot{m}_1\)</span>, <span class="math notranslate nohighlight">\(\dot{m}(t_2)  = \dot{m}_2\)</span> and <span class="math notranslate nohighlight">\(\dot{m}(t_3)  = \dot{m}_3\)</span> are given. Therefore, the mass flow at time points <span class="math notranslate nohighlight">\(t_A\)</span>, <span class="math notranslate nohighlight">\(t_B\)</span> and <span class="math notranslate nohighlight">\(t_C\)</span> are calculated using the methods mentioned above.</p>
+<div class="math notranslate nohighlight">
+\[\dot{m}(t_A) = \dot{m}(t_1) = \dot{m}_1\]</div>
+<div class="math notranslate nohighlight">
+\[\dot{m}(t_B) = \dot{m}_2 + \frac{\dot{m}_3 - \dot{m}_2}{t_3 - t_2}\,(t_B - t_2)\]</div>
+<div class="math notranslate nohighlight">
+\[\dot{m}(t_C) = \dot{m}(t_3) = \dot{m}_3\]</div>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="interpolation-of-distributed-parameters">
+<h2>Interpolation of distributed parameters<a class="headerlink" href="#interpolation-of-distributed-parameters" title="Permalink to this headline">¶</a></h2>
+<p>Distributed parameters are represented as a set of classes. For each class, interpolation (linear interpolation and nearest-neighbor extrapolation
+) is applied.</p>
+<p>Let’s take the particle size distribution <span class="math notranslate nohighlight">\(q_3\)</span> as an example. Interpolation is applied for each class.</p>
+<div class="math notranslate nohighlight">
+\[PSD_i = Interpol(PSD_{i-1}, PSD_{i+1})\]</div>
+<p>The <abbr title="Particle size distribution">PSD</abbr> changes during 10 seconds; the states at <span class="math notranslate nohighlight">\(t = 0\,s\)</span> and <span class="math notranslate nohighlight">\(t = 10\,s\)</span> are given. For different cases, the PSD at <span class="math notranslate nohighlight">\(t = 5\,s\)</span> can be interpolated, as the diagrams shown below.</p>
+<a class="reference internal image-reference" href="_images/PSD1.png"><img alt="" class="align-center" src="_images/PSD1.png" style="width: 400px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/PSD2.png"><img alt="" class="align-center" src="_images/PSD2.png" style="width: 400px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="steady-state-units">
+<h2>Steady state units<a class="headerlink" href="#steady-state-units" title="Permalink to this headline">¶</a></h2>
+<p>In Dyssol, steady state unit is calculated on a union of time points from all its inlets. This unit does not produce new time points, and data extrapolation is used to obtain values from time points which are not given.</p>
+<a class="reference internal image-reference" href="_images/ss.png"><img alt="" class="align-center" src="_images/ss.png" style="width: 500px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
+<div class="section" id="dynamic-units-with-recycle">
+<h2>Dynamic units with recycle<a class="headerlink" href="#dynamic-units-with-recycle" title="Permalink to this headline">¶</a></h2>
+<p>In case of simulation with recycled streams for 5 seconds, the following example is analyzed. This process consists of several material streams and 2 dynamic operation units U1 and U2. The recycle stream is identified and the process is splitted into 3 partitions.</p>
+<a class="reference internal image-reference" href="_images/example.png"><img alt="" class="align-center" src="_images/example.png" style="width: 700px;" /></a>
+<p>First, partition 1 is simulated on the whole time interval (from 0 to 5 s), as shown in the pseudo-code below. The red numbers shows the simulation steps.</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Inlet</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/simu1.png"><img alt="" class="align-center" src="_images/simu1.png" style="width: 700px;" /></a>
+<p>Then, for partition 2, the <a class="reference internal" href="theory.html#label-waverelax"><span class="std std-ref">Waveform relaxation method</span></a> is applied and an intermediate time point is calculated as 3 s. Therefore, the whole time interval is divided into 0 - 3 s and 3 - 5 s.</p>
+<a class="reference internal image-reference" href="_images/simu2.png"><img alt="" class="align-center" src="_images/simu2.png" style="width: 700px;" /></a>
+<p>The simulation of partition 2 is first implemented on the time interval from 0 to 3 s. Based on the values obtained in partitioin 1, more inter mediate points after U1 are calculated by interpolation. This calculation continues for the streams after U2 based on the data points for U1, gaining more data points for U2.</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Dynamic1</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+
+<span class="n">Dynamic2</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This repeats until convergence takes place. Afterwards, partition 2 is simulated on the time interval from 3 to 5 s.</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Dynamic1</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+
+<span class="n">Dynamic2</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>This repeats until convergence takes place.</p>
+<a class="reference internal image-reference" href="_images/simu3.png"><img alt="" class="align-center" src="_images/simu3.png" style="width: 700px;" /></a>
+<p>Finally, partition 3 is simulated on the whole time interval from 0 to 5 s.</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Outlet</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div></blockquote>
+<a class="reference internal image-reference" href="_images/simu4.png"><img alt="" class="align-center" src="_images/simu4.png" style="width: 700px;" /></a>
+</div>
 </div>
 
 
@@ -52,12 +137,23 @@
       </div>
       <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
         <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">Time point management</a><ul>
+<li><a class="reference internal" href="#data-interpolation">Data interpolation</a></li>
+<li><a class="reference internal" href="#interpolation-of-distributed-parameters">Interpolation of distributed parameters</a></li>
+<li><a class="reference internal" href="#steady-state-units">Steady state units</a></li>
+<li><a class="reference internal" href="#dynamic-units-with-recycle">Dynamic units with recycle</a></li>
+</ul>
+</li>
+</ul>
+
   <h4>Previous topic</h4>
   <p class="topless"><a href="multiDim.html"
                         title="previous chapter">Multidimentional distributed parameters of solids</a></p>
   <h4>Next topic</h4>
-  <p class="topless"><a href="developer.html"
-                        title="next chapter">Unit developement</a></p>
+  <p class="topless"><a href="solver.html"
+                        title="next chapter">Solver library</a></p>
   <div role="note" aria-label="source link">
     <h3>This Page</h3>
     <ul class="this-page-menu">
@@ -88,7 +184,7 @@
           <a href="genindex.html" title="General Index"
              >index</a></li>
         <li class="right" >
-          <a href="developer.html" title="Unit developement"
+          <a href="solver.html" title="Solver library"
              >next</a> |</li>
         <li class="right" >
           <a href="multiDim.html" title="Multidimentional distributed parameters of solids"
@@ -97,7 +193,7 @@
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Xiye Zhou.
+        &#169; Copyright 2019-2020, Xiye Zhou.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>

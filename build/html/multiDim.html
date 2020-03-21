@@ -19,7 +19,7 @@
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Time points management" href="time.html" />
-    <link rel="prev" title="Solver" href="solver.html" /> 
+    <link rel="prev" title="Material database" href="materials.html" /> 
   </head><body>
     <div class="related" role="navigation" aria-label="related navigation">
       <h3>Navigation</h3>
@@ -31,7 +31,7 @@
           <a href="time.html" title="Time points management"
              accesskey="N">next</a> |</li>
         <li class="right" >
-          <a href="solver.html" title="Solver"
+          <a href="materials.html" title="Material database"
              accesskey="P">previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
       </ul>
@@ -77,17 +77,17 @@
 <div class="section" id="treatment-of-dependent-parameters">
 <h2>Treatment of dependent parameters<a class="headerlink" href="#treatment-of-dependent-parameters" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="transformation-matrices">
-<h3>Transformation matrices<a class="headerlink" href="#transformation-matrices" title="Permalink to this headline">¶</a></h3>
+<span id="label-tm"></span><h3>Transformation matrices<a class="headerlink" href="#transformation-matrices" title="Permalink to this headline">¶</a></h3>
 <p>Let’s first see an example of a screening process with <strong>explicit calculation</strong>, which is illustrated in the figure below.</p>
 <a class="reference internal image-reference" href="_images/explicit.png"><img alt="" class="align-center" src="_images/explicit.png" style="width: 600px;" /></a>
 <p>In this example, large red and small blue particles are fed into the screen unit, which only considers partical size distribution. The two multidimensional parameters (color and size) are interconnected (only the combinations large/red and small/blue are allowed). If the secondary dependent parameter - color - was not explicitly considered, it would be lost or mixed (small/red and large/blue appear mistakenly).</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<p>To avoid such mistake, the <strong>transformation matrices (TM)</strong> is applied for calculation of unit outlets. TM describe laws of material transition between classes. Each entry of TM describes a fraction of material that passes from one class to another. The calculation of TM is based on different model functions.</p>
+<p>To avoid such mistake, the <strong>transformation matrices (TM)</strong> is applied for calculation of unit outlets. TM describe laws of material transition between classes. Each entry of TM describes a fraction of material that passes from one operation unit to another. The calculation of TM is based on different model functions.</p>
 <p>You can find another example for the screen unit showing the application of TM in Dyssol.</p>
 <a class="reference internal image-reference" href="_images/transMat.png"><img alt="approach with transformation matrices" class="align-center" src="_images/transMat.png" style="width: 800px;" /></a>
-<p>You may applie TM to get distributions in holdups and unit outlets. All dependent parameters of solids are calculated automatically. Meanwhile, information about secondary distributions (in this example the moisture content) is kept.</p>
+<p>You may applie TM to get distributions in holdups (material storage) and unit outlets. All dependent parameters of solids are calculated automatically. Meanwhile, information about secondary distributions (in this example the moisture content) is kept.</p>
 <div class="admonition seealso">
 <p class="first admonition-title">See also</p>
 <ol class="last arabic simple">
@@ -98,19 +98,43 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-</div>
 <div class="section" id="application-of-transformation-matrices">
-<h3>Application of transformation matrices<a class="headerlink" href="#application-of-transformation-matrices" title="Permalink to this headline">¶</a></h3>
+<h4>Application of transformation matrices<a class="headerlink" href="#application-of-transformation-matrices" title="Permalink to this headline">¶</a></h4>
+<p>The output is calculated by the tensor product of input and <abbr title="Transformation matrix">TM</abbr>.</p>
+<div class="math notranslate nohighlight">
+\[Output = TM \otimes Input\]</div>
+<p>Transformation matrix is written in tree structure form. …</p>
+<a class="reference internal image-reference" href="_images/transMat-apply.png"><img alt="approach with transformation matrices" class="align-center" src="_images/transMat-apply.png" style="width: 800px;" /></a>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 </div>
 <div class="section" id="application-example">
-<h3>Application example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h3>
-<p>The particle size distribution of an outlet stream is calculated by</p>
+<h4>Application example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h4>
+<p>As an example, the calculation of the particle size distribution in outlet stream from a <a class="reference internal" href="units.html#label-crusher"><span class="std std-ref">Crusher</span></a> is shown below.</p>
+<p>The input stream information - particle size and form factor distribution - is listed in the table below. The form factor and size values are reprensented by indices from 1 to 5 and 1 to 6, respectively.</p>
+<a class="reference internal image-reference" href="_images/exampleInput.png"><img alt="approach with transformation matrices" class="align-center" src="_images/exampleInput.png" style="width: 300px;" /></a>
+<p>Form factor is not influenced during the crush process. Only the particle size disstribution is considered. The transformation matrix below shows the size reduction. For example, a size reduction fractinon from index 1 to 1 is 1.00 means all size-1-particles remains the same; the size reduction fraction from index 2 to 1 is 0.50, indicating half of size-2-particles will be crushed in to size 1, and the other half remains the same.</p>
+<a class="reference internal image-reference" href="_images/exampleTM.png"><img alt="approach with transformation matrices" class="align-center" src="_images/exampleTM.png" style="width: 300px;" /></a>
+<p>The output result are listed in the same way as input, i.e. by the form factor and particle size indices.</p>
+<p>For example, in the input stream, 5% of all particles has a form factor of 3 and a size of 3. During the crushing process, the size reduction to 3 are:</p>
+<blockquote>
+<div><ul class="simple">
+<li>50% of size-3-particles remains the same;</li>
+<li>25% of size-4-particles are comminuted to size 3;</li>
+<li>25% of size-5-particles are comminuted to size 3;</li>
+<li>there are no particles of sizes 1, 2 or 6 reduced to size 3.</li>
+</ul>
+</div></blockquote>
+<p>The corresponding result considers all particles of size 3 after crushing, meanwhile with the same form factor 3. In another way it is written as:</p>
 <div class="math notranslate nohighlight">
-\[Output = TM \otimes Input\]</div>
-<p>As an example, the calculation of the outlet stream from a <a class="reference internal" href="units.html#label-crusher"><span class="std std-ref">Crusher</span></a> is shown below.</p>
+\[ \begin{align}\begin{aligned}output(size\,3, form\,factor\,3) = input(size\,1, form\,factor\,3) \times TM(1\,to\,3) +\\                                                                input(size\,2, form\,factor\,3) \times TM(2\,to\,3) +\\                                                                ... +\\                                                                input(size\,6, form\,factor\,3) \times TM(6\,to\,3)\end{aligned}\end{align} \]</div>
+<a class="reference internal image-reference" href="_images/exampleCalc3.png"><img alt="approach with transformation matrices" class="align-center" src="_images/exampleCalc3.png" style="width: 500px;" /></a>
+<p>In the similar way, we can calculate the output result for <span class="math notranslate nohighlight">\(input(size\,1, form\,factor\,1)\)</span> and <span class="math notranslate nohighlight">\(input(size\,1, form\,factor\,2)\)</span>:</p>
+<a class="reference internal image-reference" href="_images/exampleCalc12.png"><img alt="approach with transformation matrices" class="align-center" src="_images/exampleCalc12.png" style="width: 500px;" /></a>
+<p>The overall output result is shown below.</p>
+<a class="reference internal image-reference" href="_images/exampleOutput.png"><img alt="approach with transformation matrices" class="align-center" src="_images/exampleOutput.png" style="width: 300px;" /></a>
+</div>
 </div>
 </div>
 </div>
@@ -126,7 +150,7 @@
 <li><a class="reference internal" href="#">Multidimentional distributed parameters of solids</a><ul>
 <li><a class="reference internal" href="#tree-data-structures">Tree data structures</a></li>
 <li><a class="reference internal" href="#treatment-of-dependent-parameters">Treatment of dependent parameters</a><ul>
-<li><a class="reference internal" href="#transformation-matrices">Transformation matrices</a></li>
+<li><a class="reference internal" href="#transformation-matrices">Transformation matrices</a><ul>
 <li><a class="reference internal" href="#application-of-transformation-matrices">Application of transformation matrices</a></li>
 <li><a class="reference internal" href="#application-example">Application example</a></li>
 </ul>
@@ -134,10 +158,12 @@
 </ul>
 </li>
 </ul>
+</li>
+</ul>
 
   <h4>Previous topic</h4>
-  <p class="topless"><a href="solver.html"
-                        title="previous chapter">Solver</a></p>
+  <p class="topless"><a href="materials.html"
+                        title="previous chapter">Material database</a></p>
   <h4>Next topic</h4>
   <p class="topless"><a href="time.html"
                         title="next chapter">Time points management</a></p>
@@ -174,13 +200,13 @@
           <a href="time.html" title="Time points management"
              >next</a> |</li>
         <li class="right" >
-          <a href="solver.html" title="Solver"
+          <a href="materials.html" title="Material database"
              >previous</a> |</li>
         <li class="nav-item nav-item-0"><a href="index.html">Dyssol Help 0.0.1 documentation</a> &#187;</li> 
       </ul>
     </div>
     <div class="footer" role="contentinfo">
-        &#169; Copyright 2019, Xiye Zhou.
+        &#169; Copyright 2019-2020, Xiye Zhou.
       Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.8.2.
     </div>
   </body>
