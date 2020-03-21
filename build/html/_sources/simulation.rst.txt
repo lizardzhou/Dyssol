@@ -7,14 +7,8 @@ Simulation core
 
 In simulation core, all data are processed discretely on the time scale. Different material streams and operation units are combined into the flowsheet, which is then simulated in the simulator.
 
-
-Discretization
---------------
-
-A continuous processes is discretized using time points, and each time point is a snapshot of the process state, as shown below.
-
-.. image:: ./pics/discrete.png
-   :width: 900px
+.. image:: ./pics/simulator.png
+   :width: 400px
    :alt: screen
    :align: center
 
@@ -40,11 +34,25 @@ The structure of material streams is illustrated in the figure below. The inform
 
 |
 
-.. seealso:: 
+.. seealso::
 
-	a demostration file at ``<Help\Program interfaces\Stream.pdf>``.
+	:ref:`label-stream` for program interface of material streams.
 
+|
 
+Units
+-----
+
+A basic unit provides interfaces to the simulation system. It contains program interfaces to material streams, equation solvers and material database. 
+
+Moreover, you can develope your own units using the template for creating custom units and then add them to the :ref:`label-unitsLib`. Please refer to :ref:`label-unitDev` for more information.
+
+.. image:: ./pics/units/structure.png
+   :width: 400px
+   :alt: 
+   :align: center 
+
+|
 
 Simulator
 ---------
@@ -56,6 +64,7 @@ In this section, you can find the information about the main calculation algorit
    :alt: screen
    :align: center
 
+|
 
 Main method and approaches
 """"""""""""""""""""""""""
@@ -72,10 +81,27 @@ Following methods are applied in Dyssol for simulation. Click the corresponding 
 
 - :ref:`label-convergence` to initialize each iteration of WRM.
 
-.. seealso:: V. Skorych et al., Novel system for dynamic flowsheet simulation of solids processes, 2017
+.. seealso:: V. Skorych et al., Novel system for dynamic flowsheet simulation of solids processes, 2017.
 
+|
 
+Built-in equation solvers
+"""""""""""""""""""""""""
 
+Dyssol uses IDA and KINSOL solvers in `SUNDIALS package <https://computation.llnl.gov/projects/sundials>`_.
+
+.. image:: ./pics/solver.png
+   :width: 400px
+   :alt: 
+   :align: center 
+
+`IDA solver <https://computing.llnl.gov/projects/sundials/ida>`_ is used for automatic calculation of DAE systems inside the units, which applies variable-order, variable-coefficient backward differentiation formulas, in fixed-leading-coefficient form.
+
+`KINSOL solver <https://computing.llnl.gov/projects/sundials/kinsol>`_ is used for calculation of nonlinear algebraic systems, which applies a fixed-point iteration with Anderson acceleration.
+
+.. seealso:: Skorych et al., Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology, 30 (2019).
+
+|
 
 
 

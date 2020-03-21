@@ -28,7 +28,9 @@ And distinctive features including:
 
 * High modularity and extensibility.
 
-This documentation helps you to get familiar with simulating solid processes using Dyssol. You can also find the introduction of the Dyssol system structure. Furthermore, as a developer, you will get useful information about how to customize your own operation units.
+:ref:`label-develop`, Dyssol provides information about how to customize your own operation units and solvers.
+
+This documentation helps you to get familiar with simulating solid processes using Dyssol. You can also find the introduction of the Dyssol system structure. 
 
 .. toctree::
    :maxdepth: 1
@@ -39,10 +41,11 @@ This documentation helps you to get familiar with simulating solid processes usi
    simulation
    data
    materials
-   solver
    multiDim
    time
+   solver
    developer
+   class
    theory
 
 |
@@ -51,7 +54,7 @@ Flowsheet simulation of solids
 ------------------------------
 One of the main challenges in simulation of solids processes is associated with the dispersity of granular materials: the solid phase can be distributed along several interdependent parameters, such as size, shape, moisture content or density. 
 
-In Dyssol, an approach with **transformation matrices** is used for correct handling of solids in this case. This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.
+In Dyssol, an approach with :ref:`label-TM` is used for correct handling of solids in this case. This concept allows preserving information about all parameters, even those which are not considered or not changed in a particular apparatus.
 
 |
 
@@ -59,16 +62,9 @@ In Dyssol, an approach with **transformation matrices** is used for correct hand
 Approaches and methods
 ----------------------
 
-The new system in Dyssol is based on the :ref:`label-seqModule`, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension the :ref:`label-unitsLib` with new models. 
+The new system in Dyssol is based on the :ref:`label-seqModule`, where each model is calculated separately. This allows the simultaneous use of multiple specialized solvers for the calculation of a flowsheet and simplifies extension of the unit library with new models. 
 
-To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the waveform relaxation method: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.
-
-.. An example flowsheet of a granulation process is shown in the figure below.
-
-.. .. image:: ./pics/egFlowsheet.png
-   :width: 650px
-   :alt: example flowsheet of a granulation process
-   :align: center
+To increase the computational efficiency, dynamic calculations of flowsheets with recycle streams are based on the :ref:`label-waveRelax`: the total simulation time is divided into smaller intervals, and models are solved separately on them, using some initial guess for the solution.
 
 |
 
@@ -77,7 +73,6 @@ Software system architecture
 
 To implement the Dyssol system, the C++ programming language and the object oriented paradigm are applied. 
 
-To maximize the modularity of the simulation environment, models of units and solvers are not directly integrated into the framework, but may be implemented as separate objects and then added to the :ref:`label-unitsLib` using standardized interfaces and templates.
 
 You can get an overview of the Dyssol system structure in the figure below.
 
@@ -85,6 +80,8 @@ You can get an overview of the Dyssol system structure in the figure below.
    :width: 960px
    :alt: 
    :align: center
+
+To maximize the modularity of the simulation environment, models of units and solvers are not directly integrated into the framework, but may be implemented as separate objects and then added to the units library using standardized interfaces and templates.
 
 For a detailed explanation about important elements in the structure, please refer to :ref:`label-solver`, :ref:`label-simulation`, :ref:`label-materialDat`, :ref:`label-dataStor` and :ref:`label-multiDim`.
 

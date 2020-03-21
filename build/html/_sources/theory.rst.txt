@@ -5,6 +5,19 @@ Theoretical background
 
 Here you will find theory about process systems and numerical calculation, which helps you to understand the simulation principle applied in Dyssol.
 
+|
+
+Discretization
+--------------
+
+A continuous processes is discretized using time points, and each time point is a snapshot of the process state, as shown below.
+
+.. image:: ./pics/discrete.png
+   :width: 900px
+   :alt: screen
+   :align: center
+
+|
 
 Process systems
 ---------------
@@ -35,7 +48,7 @@ However, difficulties may occur when processing flowsheets with recycle streams.
 
 .. seealso::
 
-	W. Marquardt, Dynamic process simulation - recent progress and future challenges (1991)
+	W. Marquardt, Dynamic process simulation - recent progress and future challenges (1991).
 
 |
 
@@ -59,7 +72,7 @@ However, difficulties may occur with simultaneous stimulation of fast and slow c
 
 .. seealso::
 
-	W. Marquardt, Dynamic process simulation - recent progress and future challenges (1991)
+	W. Marquardt, Dynamic process simulation - recent progress and future challenges (1991).
 
 |
 
@@ -141,7 +154,7 @@ Numerical methods
 Waveform relaxation method
 """"""""""""""""""""""""""
 
-The waveform relaxation method (WRM) is applied to calculate the tear streams. You can find the algorithm in the flow sheet below.
+The waveform relaxation method (WRM) is applied to calculate the tear streams. You can find the algorithm in the flowsheet below.
 
 .. image:: ./pics/theory/wrm1.png
    :width: 900px
@@ -160,7 +173,7 @@ Size of the time window varies depending on the convergence rate, and the conver
 
 .. seealso::
 
-	E. Lelarasmee, the waveform relaxation method for time domain analysis of large scale integrated circuits (1982)
+	E. Lelarasmee, the waveform relaxation method for time domain analysis of large scale integrated circuits (1982).
 
 |
 
@@ -196,23 +209,55 @@ Dyssol uses different convergence methods to initialize parameters of tear strea
    :width: 600px
    :alt: screen
    :align: center
+   
+The convergence here is the minimization of residual between calculated and previously estimated values of tear streams.
 
-Three convergence methods are available in Dyssol:
+.. math::
+
+	|Y_{calc} - Y_{est}| > |Y_{calc}| \cdot R_{tol} + A_{tol}
+	
+	
+.. note:: Notations:
+
+	:math:`Y_{calc}` – calculated values 
+	
+	:math:`Y_{est}` - estimated values
+	
+	:math:`R_{tol}` - relative tolerance
+	
+	:math:`A_{tol}` - absolute tolerance
+
+Estimation algorithm significantly affects the convergence rate and thereby the performance of the whole simulation system.		
+
+Three convergence methods are available in Dyssol. The direct substitution method is the least computationally intensive, but has slow convergence rate. On the contrary, Wegstein's and Steffensen's method are more computationally intensive but can provide faster convergence.
 
 - Direct substitution: 
 
-	:math:`x_{k+1} = (1-\lambda)\,F(x_{k-1}) + \lambda F(x_k)`
+	Direct substitution is the simplest method among three methods, which uses values calculated on the previous iteration as the initial data for the next iteration.
+
+		:math:`x_{k+1} = F(x_k)`
+		
+	To increase the convergence rate, results of the several previous iterations should be used for data estimation. It could be done by providing direct substitution method with the relaxation parameter :math:`\lambda`:
+
+		:math:`x_{k+1} = (1-\lambda)\,F(x_{k-1}) + \lambda F(x_k)`
+		
+	If :math:`\lambda = 1`, it transforms to the direct substitution method.	
 	
 - Wegstein's method: 
-
-	:math:`x_{k+1} = q x_k + (1-q) F(x_k)`
+	
+		:math:`x_{k+1} = q x_k + (1-q) F(x_k)`, where :math:`q` is an acceleration parameter, which is defined as follows.
+		
+		:math:`q = \frac{s}{s-1}`
+		
+		:math:`s = \frac{F(x_k) - F(x_{k-1})}{X_k - X_{k-1}}`
+		
+		Convergence is possible if the parameter :math:`q` is in range [-5, 1] and accelerates with a decreasing of its value. Therefore, for a greater control over the convergence process, the acceleration parameter can be additionally bounded on a smaller range.
 
 - Steffensen's method: 
 
-	:math:`x_{k+3} = x_k - \dfrac{(x_{k+1} - x_k)^2}{x_{k+2} - 2x_{k+1} + x_k}`
+		This method uses current and two previous iterations.
+
+		:math:`x_{k+3} = x_k - \dfrac{(x_{k+1} - x_k)^2}{x_{k+2} - 2x_{k+1} + x_k}`
 
 
-.. seealso:: 
-
-	a demostration file at ``<Help\Convergence.pdf>``.
 
