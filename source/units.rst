@@ -1,9 +1,9 @@
 
 .. _label-unitsLib:
 
-=============
-Units library
-=============
+============
+Unit library
+============
 
 An operation unit performs one of the following tasks:
 
@@ -13,14 +13,7 @@ An operation unit performs one of the following tasks:
 
 - Dynamic simulation: examples are Granulator, Agglomerator and Bunker.
 
-A basic unit provides interfaces to the simulation system. It contains program interfaces to material streams, equation solvers and material database. Moreover, you can develope your own units using the template for creating custom units and then add them to the units library.
-
-.. image:: ./pics/units/structure.png
-   :width: 400px
-   :alt: 
-   :align: center 
-
-For more information, please refer to the help document under ``Dyssol\Help\Units`` and ``Dyssol\Help\Units development.pdf``.
+You can also develope your own operation unit and refer to :ref:`label-unitDev` for more information.
 
 |
 
@@ -36,7 +29,7 @@ This unit allows defining the parameters of the input material, showing in the f
    :alt: mixer example
    :align: center  
 
-
+|
 
 Outlet flow
 ===========
@@ -48,6 +41,7 @@ This unit serves to connect the output material flows, as shown in the figure be
    :alt: mixer example
    :align: center
 
+|
 
 Mixer
 =====
@@ -91,7 +85,7 @@ All secondary attributes of output stream, such as phase fractions, compounds fr
 
 .. seealso:: 
 
-	a demostration file at ``<Example Flowsheets/Units/Mixer.dlfw>``.
+	a demostration file at ``Example Flowsheets/Units/Mixer.dlfw``.
 	
 
 .. REMOVED CONTENTS ..
@@ -123,7 +117,6 @@ All secondary attributes of output stream, such as phase fractions, compounds fr
    :align: center   
    
 |
-
 
 Splitter
 ========
@@ -164,7 +157,7 @@ You can specify the splitting factor :math:`K_{splitt}`, which is defined in fol
 
 .. seealso:: 
 
-	a demostration file at ``<Example Flowsheets/Units/Splitter.dlfw>``.
+	a demostration file at ``Example Flowsheets/Units/Splitter.dlfw``.
 	
 |
 
@@ -232,12 +225,12 @@ This model is described using the following equation:
 
 .. seealso:: 
 
-	a demostration file at ``<Example Flowsheets/Units/Screen Plitt.dlfw>``.
+	a demostration file at ``Example Flowsheets/Units/Screen Plitt.dlfw``.
 
 
 .. seealso::
 
-	Plitt, L.R.: The analysis of solid–solid separations in classifiers. CIM Bulletin 64 (708), p. 42–47, 1971
+	Plitt, L.R.: The analysis of solid–solid separations in classifiers. CIM Bulletin 64 (708), p. 42–47, 1971.
 	
 |
 
@@ -274,12 +267,12 @@ This model is described using the following equation:
 
 .. seealso::
 	
-	a demostration file at ``<Example Flowsheets/Units/Screen Molerus-Hoffmann.dlfw>``.
+	a demostration file at ``Example Flowsheets/Units/Screen Molerus-Hoffmann.dlfw``.
 
 
 .. seealso::
 
-	Molerus, O.; Hoffmann, H.: Darstellung von Windsichtertrennkurven durch ein stochastisches Modell, Chemie Ingenieur Technik, 41 (5+6), 1969, pp. 340-344
+	Molerus, O.; Hoffmann, H.: Darstellung von Windsichtertrennkurven durch ein stochastisches Modell, Chemie Ingenieur Technik, 41 (5+6), 1969, pp. 340-344.
 	
 |
 
@@ -319,11 +312,11 @@ This model is described using the following equation:
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Screen Probability.dlfw>``.
+	a demostration file at ``Example Flowsheets/Units/Screen Probability.dlfw``.
 
 
 .. seealso::
-	Radichkov, R.; Müller, T.; Kienle, A.; Heinrich, S.; Peglow, M.; Mörl, L.: A numerical bifurcation analysis of continuous fluidized bed spray granulation with external product classification, Chemical Engineering and Processing 45, 2006, pp. 826–837
+	Radichkov, R.; Müller, T.; Kienle, A.; Heinrich, S.; Peglow, M.; Mörl, L.: A numerical bifurcation analysis of continuous fluidized bed spray granulation with external product classification, Chemical Engineering and Processing 45, 2006, pp. 826–837.
 	
 |
 
@@ -368,12 +361,12 @@ This model is described using the following equation:
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Screen Teipel-Hennig.dlfw>``.
+	a demostration file at ``Example Flowsheets/Units/Screen Teipel-Hennig.dlfw``.
 
 
 .. seealso::
 
-	Hennig, M. and Teipel, U. (2016), Stationäre Siebklassierung. Chemie Ingenieur Technik, 88: 911–918
+	Hennig, M. and Teipel, U. (2016), Stationäre Siebklassierung. Chemie Ingenieur Technik, 88: 911–918.
 	
 |
 
@@ -414,7 +407,6 @@ This model is used to perform milling of the input stream. The crushing is perfo
 	
 	q_3(x) = \frac{1}{\sigma\sqrt{2\pi}}\,e^{-\dfrac{(x-\mu)^2}{2\sigma^2}}
 
-	
 
 
 .. note:: Notations applied in this model:
@@ -454,16 +446,16 @@ This model is used to perform milling of the input stream. The crushing is perfo
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Crusher Bond.dlfw>``.	
+	a demostration file at ``Example Flowsheets/Units/Crusher Bond.dlfw``.	
 	
 
 .. seealso::
 
-	F.C. Bond, Crushing and grinding calculation – Part I, British Chemical Engineering 6 (6) (1961) 378-385.
+	1. F.C. Bond, Crushing and grinding calculation – Part I, British Chemical Engineering 6 (6) (1961) 378-385.
 	
-	F.C. Bond, Crushing and grinding calculation – Part II, British Chemical Engineering 6 (8), (1961) 543-548.
+	2. F.C. Bond, Crushing and grinding calculation – Part II, British Chemical Engineering 6 (8), (1961) 543-548.
 	
-	Denver Sala Basic: Selection Guide for Process Equipment, 1993.
+	3. Denver Sala Basic: Selection Guide for Process Equipment, 1993.
 	
 |
 
@@ -625,14 +617,14 @@ The model is described below as
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Crusher Cone.dlfw>``.	
+	a demostration file at ``Example Flowsheets/Units/Crusher Cone.dlfw``.	
 	
 
 .. seealso::
 	
-	King, R. P., Modeling and simulation of mineral processing systems, Butterworth & Heinemann, Oxford, 2001.
+	1. King, R. P., Modeling and simulation of mineral processing systems, Butterworth & Heinemann, Oxford, 2001.
 	
-	Vogel, L., Peukert, W., Modelling of Grinding in an Air Classifier Mill Based on A Fundamental Material Function, KONA, 21, 2003, 109-120.
+	2. Vogel, L., Peukert, W., Modelling of Grinding in an Air Classifier Mill Based on A Fundamental Material Function, KONA, 21, 2003, 109-120.
 
 
 |
@@ -672,7 +664,7 @@ This model sets a normal distribution with the specified constant parameters to 
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Crusher Const.dlfw>``.	
+	a demostration file at ``Example Flowsheets/Units/Crusher Const.dlfw``.	
 	
 |
 
@@ -701,7 +693,7 @@ Bunker unit performs accumulation of the solid part of the input material with i
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Bunker.dlfw>``.	
+	a demostration file at ``Example Flowsheets/Units/Bunker.dlfw``.	
 
 |
 
@@ -814,13 +806,15 @@ The model does not take into account attrition of particles inside the apparatus
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Granulator.dlfw>``.	
+	a demostration file at ``Example Flowsheets/Units/Granulator.dlfw``.	
 	
 
 .. seealso:: 
 	S.Heinrich, M. Peglow, M. Ihlow, M. Henneberg, L. Mörl, Analysis of the start-up process in continuous fluidized bed spray granulation by population balance modelling, Chem. Eng. Sci. 57 (2002) 4369-4390.
 
 |
+
+.. _label-agg:
 
 Agglomerator
 ============
@@ -899,7 +893,7 @@ The method of calculating :math:`B_{agg}(n,v,t)` and :math:`D_{agg}(n,v,t)` is d
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Agglomerator.dlfw>``.	
+	a demostration file at ``Example Flowsheets/Units/Agglomerator.dlfw``.	
 	
 
 .. seealso:: 
@@ -941,122 +935,10 @@ The agglomeration kernels are applied to describe the agglomeration frequency be
 
 |
 
-.. _label-agg-solvers:
-
 Solvers
 ^^^^^^^
 
-Solvers are applied to calculate the birth and death rate of agglomerates according to different mathematical models. In Dyssol, 3 solver types are available:
-
-	- Cell average
-	- Fast Fourier transformation (FFT)
-	- Fixed pivot
-
-
-The applied equations in all solvers are listed as follows. For notation in the equations, please refer to the ``Notations`` above.
-
-.. math::
-
-	\frac{\partial n(v,t)}{\partial t} = B_{agg}(n,v,t) - D_{agg}(n,v,t)
-
-.. math::
-
-	B_{agg}(n,v,t) = \frac{1}{2}\,\beta_0\,\textstyle \int\limits_{0}^{v} \beta(u,v - u)\,n(u,t)\,n(v-u,t)\,du
-
-.. math::
-	
-	D_{agg}(n,v,t) = \beta_0\,n(v,t)\, \textstyle \int\limits_{0}^{\infty}\,\beta(v,u)\,n(u,t)\,du
-
-
-
-|
-
-Cell average solver
-"""""""""""""""""""
-
-This solver calculates the birth rate :math:`B_{agg}(n,v,t)` and death rate :math:`D_{agg}(n,v,t)` using a cell average technique. 
-
-
-.. note:: solid phase and particle size distribution are required for the simulation. Equidistant volume grid for particle size distribution must be used.
-
-
-.. seealso:: J.Kumar, M. Peglow, G. Warnecke, S. Heinrich, An efficient numerical technique for solving population balance equation involving aggregation, breakage, growth and nucleation, Powder Technology 182 (1) (2008), 81-104.
-
-|
-
-FFT solver
-""""""""""
-
-This solver calculates the birth rate :math:`B_{agg}(n,v,t)` and death rate :math:`D_{agg}(n,v,t)` based on a separable approximation of the agglomeration kernel and a subsequent fast Fourier transformation.
-
-The agglomeration kernel :math:`\beta (v,u)` is represented in a separable form with the separation rank :math:`M` as:
-
-.. math::
-	
-	\beta (v,u) = \sum\limits_{i=1}^{M} a_i(v)\,b_i(u)
-	
-Then birth and death rate terms are transformed to following equations with :math:`\psi_i = a_i\,n` and :math:`\varphi_i = b_i\,n`.
-
-.. math::
-
-	B_{agg}(n,v,t) = \frac{1}{2}\,\textstyle \int\limits_{0}^{v} \psi_i(v - u,t)\,\varphi_i(u,t)\,du
-
-.. math::
-	
-	D_{agg}(n,v,t) = \psi_i(v,t)\, \textstyle \int\limits_{0}^{\infty}\varphi_i(u,t)\,du	
-
-The separation turns the birth rate agglomeration integral into a convolution form :math:`\varphi_i * \psi_i`, which after piecewise constant discretization, is computed based on the convolution theorem
-
-.. math::
-	
-	\varphi_i * \psi_i = IFFT(FFT(\varphi_i) \odot FFT(\psi_i))
-
-applying the direct and inverse fast Fourier transformation (:math:`FFT/IFFT`) and the elementwise product :math:`\odot`.
-
-
-.. note:: List of kernels separation equations
-	
-	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-	| Kernel                                                                       | Separation equation                                                                                   |
-	+==============================================================================+=======================================================================================================+
-	| Constant                                                                     | :math:`\beta(u,v) = \sum\limits_{i=1}^1 a_i(v)\,b_i(u),`                                              |
-	|                                                                              | :math:`a_1 (v) = 1, b_1 (u) = 1`                                                                      |
-	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-	| Sum                                                                          | :math:`\beta(u,v) = \sum\limits_{i=1}^2 a_i(v)\,b_i(u),`                                              |
-	|                                                                              | :math:`a_1 (v) = v, a_2 (v)= 1, b_1 (u) = 1, b_2 (u)= u`                                              |
-	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-	| Brownian                                                                     | :math:`\beta(u,v) = \sum\limits_{i=1}^3 a_i(v)\,b_i(u),`                                              |
-	|                                                                              | :math:`a_1 (v) = \sqrt{2}, a_2 (v) = v^{\frac{1}{3}}, a_3 (v)= v^{-\frac{1}{3}}`                      |
-	|                                                                              | :math:`b_1 (u) = \sqrt{2}, b_2 (u) = u^{-\frac{1}{3}}, b_3 (u)= u^{\frac{1}{3}}`                      |
-	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-	| Product, Shear, Peglow, Coagulation, Gravitational, Kinetic energy, Thompson | Approximated by a rank-M separable function                                                           |
-	|                                                                              | :math:`\beta (v,u) \approx \sum\limits_{i=1}^{M} a_i(v)\,b_i(u)`                                      |
-	|                                                                              | using adaptive cross approximation                                                                    |
-	+------------------------------------------------------------------------------+-------------------------------------------------------------------------------------------------------+
-
-
-
-.. note:: solid phase and particle size distribution are required for the simulation. Equidistant volume grid for particle size distribution must be used. Grid for particle size distribution must start from 0.
-
-
-.. seealso:: 
-
-	V.Skorych, M. Dosta, E.-U. Hartge, S. Heinrich, R. Ahrens, S. Le Borne, Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology 30 (3) (2019), 555-564. 
-
-	S.Le Borne, L. Shahmuradyan, K. Sundmacher, Fast evaluation of univariate aggregation integrals on equidistant grids. Computers and Chemical Engineering 74 (2015), 115-127.
-	
-|
-
-Fixed pivot solver
-""""""""""""""""""
-
-This solver calculates the birth rate :math:`B_{agg}(n,v,t)` and death rate :math:`D_{agg}(n,v,t)` using a fixed pivot technique. 
-
-
-.. note:: solid phase and particle size distribution are required for the simulation. 
-
-
-.. seealso:: S.Kumar, D. Ramkrishna, On the solution of population balance equations by discretization – I. A fixed pivot technique. Chem. Eng. Sci. 51 (8) (1996), 1311-1332.
+Currenly, several :ref:`label-agg-solvers` are available in Dyssol. Please refer to :ref:`label-solver` for more information about the solvers.
 
 |
 
@@ -1085,7 +967,7 @@ The scheme is shown in the figure below.
 
 .. seealso::
 	
-	a demostration file in install path ``<Example Flowsheets/Units/Time Delay.dlfw>``.	
+	a demostration file at ``Example Flowsheets/Units/Time Delay.dlfw``.	
 
 
 

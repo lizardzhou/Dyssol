@@ -29,6 +29,8 @@ You can find the file ``Materials.dmdb`` in your installation folder, which stor
 
 |
 
+.. _label-materialDataDetailed:
+
 Constant parameters
 -------------------
 
@@ -68,7 +70,7 @@ Like constant parameters, temperature- and/or pressure-dependent (TPD) parameter
 
 Dependent parameters in Dyssol consist of:
 
-	- Density: mandatory for simulation, since it participates in PSD transformations and T-equilibrium
+	- Density: mandatory for simulation, since it participates in :abbr:`PSD (Particle size distribution)` transformations and T-equilibrium
 		
 	- Enthalpy: mandatory for simulation, since it participates in T-equilibrium
 	
@@ -85,35 +87,27 @@ Dependent parameters in Dyssol consist of:
 Correlation search
 """"""""""""""""""
 
-The algorithm for calculating TPD properties is shown as follows.
+The algorithm for calculating :abbr:`TPD (Temperature- and/or pressure-dependent)` properties is shown as follows.
 
 .. image:: ./pics/material/correlation.png
    :width: 600px
    :alt: screen
    :align: center
 
-It consists of 3 steps:
+For each T or P range (given in the literature), it consists of 3 steps:
 
-	1. Find the first correlation with T & P within
+	1. Find the correlation with T & P within the first T or P-range. Calculate value according to the correlation function for this range.
 
-		Calculate value according to the function
+	2. Find the correlation with only T within the first T or P-range. Calculate value according to the correlation function for this range.
 
-	2. Find the first correlation with only T within
-
-		Calculate value according to the function
-
-	3. Find the nearest correlation, taking only T into account
-
-		Perform nearest neighbour extrapolation
-
-
+	3. Find the nearest correlation, taking only T into account. Perform nearest neighbour extrapolation.
 
 |
 
 Correlation functions
 """""""""""""""""""""
 
-The correlation functions :math:`y = f(T,P)` in Dyssol are listed below. The letters :math:`a ... f` are constants.
+The correlation functions :math:`y = f(T,P)` in Dyssol are listed below. The letters :math:`a ... f` are constants. For different temperatur and pressure ranges, different functions should be applied.
 
 - Constant:
 	
@@ -147,10 +141,10 @@ The correlation functions :math:`y = f(T,P)` in Dyssol are listed below. The let
 	
 	:math:`y = a + \ln T + bT + c\frac{T^2}{2} + d\frac{T^3}{3} - \frac{e}{2T^2} + f` 
 	
-- List of T-values:	
+- List of T-values (user defined): 	
 	
 	:math:`y = \{T1:val1, T2:val2, T3:val3, ...\}` 
 
-- List of P-values:
+- List of P-values (user defined):
 
 	:math:`y = \{P1:val1, P2:val2, P3:val3, ...\}` 

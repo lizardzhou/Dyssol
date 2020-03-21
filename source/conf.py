@@ -20,7 +20,7 @@
 # -- Project information -----------------------------------------------------
 
 project = 'Dyssol Help'
-copyright = '2019, Xiye Zhou'
+copyright = '2019-2020, Xiye Zhou'
 author = 'Xiye Zhou'
 
 # The short X.Y version
@@ -86,7 +86,7 @@ html_theme = 'classic'
 html_theme_options = {
 	"stickysidebar": "true",
 	"sidebarwidth": "300px",
-	"body_max_width": "1000px"
+	"body_max_width": "1300px"
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,

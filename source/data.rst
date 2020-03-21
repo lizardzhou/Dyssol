@@ -10,7 +10,7 @@ The data storage subsystem is responsible for file input, output and background 
 |
 
 HDF5 data format
-----------------
+================
 
 HDF5 is a hierarchical data format, library and data model for storing and organizing of large amounts of numerical data. External programs can access saved data via HDF5 interfaces.
 
@@ -28,7 +28,7 @@ HDF5 is a hierarchical data format, library and data model for storing and organ
 |
 
 Data caching
-------------
+============
 
 Only several time points of material stream are kept in memory at every moment, the rest are temporary on disk. This reduces memory consumption and slightly increases computation time (at default settings).
 
@@ -39,4 +39,4 @@ Only several time points of material stream are kept in memory at every moment, 
 
 .. seealso::
 
-	V. Skorych et al. Novel system for dynamic flowsheet simulation of solids processes (2017)
+	V. Skorych et al. Novel system for dynamic flowsheet simulation of solids processes (2017).

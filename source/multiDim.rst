@@ -6,7 +6,7 @@ Multidimentional distributed parameters of solids
 =================================================
 
 Tree data structures
---------------------
+====================
 
 Normally, solid phase is described with a set of **distributed parameters**, which can be **interdependent** (more parameters depend on each other). All interdependent distributed parameters form a multidimensional matrix and each entry of the matrix describes mass fractions of the solid material with the specified combination of parameters.
 
@@ -47,12 +47,12 @@ By using the tree data structure, the amount of data and the memory consumption 
 |
 
 Treatment of dependent parameters
----------------------------------
+=================================
 
-
+.. _label-TM:
 
 Transformation matrices
-"""""""""""""""""""""""
+-----------------------
 
 Let's first see an example of a screening process with **explicit calculation**, which is illustrated in the figure below. 
 
@@ -65,7 +65,7 @@ In this example, large red and small blue particles are fed into the screen unit
 
 |
 
-To avoid such mistake, the **transformation matrices (TM)** is applied for calculation of unit outlets. TM describe laws of material transition between classes. Each entry of TM describes a fraction of material that passes from one class to another. The calculation of TM is based on different model functions. 
+To avoid such mistake, the **transformation matrices (TM)** is applied for calculation of unit outlets. TM describe laws of material transition between classes. Each entry of TM describes a fraction of material that passes from one operation unit to another. The calculation of TM is based on different model functions. 
 
 You can find another example for the screen unit showing the application of TM in Dyssol. 
 
@@ -74,7 +74,7 @@ You can find another example for the screen unit showing the application of TM i
    :alt: approach with transformation matrices
    :align: center
  
-You may applie TM to get distributions in holdups and unit outlets. All dependent parameters of solids are calculated automatically. Meanwhile, information about secondary distributions (in this example the moisture content) is kept.
+You may applie TM to get distributions in holdups (material storage) and unit outlets. All dependent parameters of solids are calculated automatically. Meanwhile, information about secondary distributions (in this example the moisture content) is kept.
  
 
 .. seealso::
@@ -90,21 +90,80 @@ You may applie TM to get distributions in holdups and unit outlets. All dependen
 Application of transformation matrices
 """"""""""""""""""""""""""""""""""""""
 
+The output is calculated by the tensor product of input and :abbr:`TM (Transformation matrix)`.
 
+.. math::
+
+	Output = TM \otimes Input
+	
+Transformation matrix is written in tree structure form. ...	
+
+.. image:: ./pics/mult/transMat-apply.png
+   :width: 800px
+   :alt: approach with transformation matrices
+   :align: center
 
 |
 
 Application example
 """""""""""""""""""
 
-The particle size distribution of an outlet stream is calculated by
+As an example, the calculation of the particle size distribution in outlet stream from a :ref:`label-crusher` is shown below. 
+
+The input stream information - particle size and form factor distribution - is listed in the table below. The form factor and size values are reprensented by indices from 1 to 5 and 1 to 6, respectively.
+
+.. image:: ./pics/mult/exampleInput.png
+   :width: 300px
+   :alt: approach with transformation matrices
+   :align: center
+
+Form factor is not influenced during the crush process. Only the particle size disstribution is considered. The transformation matrix below shows the size reduction. For example, a size reduction fractinon from index 1 to 1 is 1.00 means all size-1-particles remains the same; the size reduction fraction from index 2 to 1 is 0.50, indicating half of size-2-particles will be crushed in to size 1, and the other half remains the same.
+
+.. image:: ./pics/mult/exampleTM.png
+   :width: 300px
+   :alt: approach with transformation matrices
+   :align: center
+
+The output result are listed in the same way as input, i.e. by the form factor and particle size indices. 
+
+For example, in the input stream, 5% of all particles has a form factor of 3 and a size of 3. During the crushing process, the size reduction to 3 are:
+
+	- 50% of size-3-particles remains the same;
+	
+	- 25% of size-4-particles are comminuted to size 3;
+	
+	- 25% of size-5-particles are comminuted to size 3;
+	
+	- there are no particles of sizes 1, 2 or 6 reduced to size 3.
+
+The corresponding result considers all particles of size 3 after crushing, meanwhile with the same form factor 3. In another way it is written as:
 
 .. math::
 
-	Output = TM \otimes Input
+	output(size\,3, form\,factor\,3) = input(size\,1, form\,factor\,3) \times TM(1\,to\,3) + 
+	
+									input(size\,2, form\,factor\,3) \times TM(2\,to\,3) + 
+									
+									... + 
+									
+									input(size\,6, form\,factor\,3) \times TM(6\,to\,3)
 
-As an example, the calculation of the outlet stream from a :ref:`label-crusher` is shown below.
+.. image:: ./pics/mult/exampleCalc3.png
+   :width: 500px
+   :alt: approach with transformation matrices
+   :align: center
 
+In the similar way, we can calculate the output result for :math:`input(size\,1, form\,factor\,1)` and :math:`input(size\,1, form\,factor\,2)`:
 
+.. image:: ./pics/mult/exampleCalc12.png
+   :width: 500px
+   :alt: approach with transformation matrices
+   :align: center
 
+The overall output result is shown below.
+
+.. image:: ./pics/mult/exampleOutput.png
+   :width: 300px
+   :alt: approach with transformation matrices
+   :align: center
 
