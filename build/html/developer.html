@@ -60,7 +60,7 @@
 <div class="section" id="configuration-of-visual-studio-project-template">
 <span id="label-vcconfig"></span><h2>Configuration of Visual Studio project template<a class="headerlink" href="#configuration-of-visual-studio-project-template" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p class="first">Open directory where Dyssol has been installed (usually <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Dyssol</span></code>) and copy folder <code class="docutils literal notranslate"><span class="pre">VCProject</span></code> to the desired location on your hard drive (further <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;</span></code>).</p>
+<li><p class="first">Open directory where Dyssol has been installed (usually <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Dyssol</span></code>) and copy folder <code class="docutils literal notranslate"><span class="pre">VCProject</span></code> to the desired location on your hard drive (further as <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;</span></code>).</p>
 </li>
 <li><p class="first">Open the copied folder <code class="docutils literal notranslate"><span class="pre">VCProject</span></code> and run file <code class="docutils literal notranslate"><span class="pre">Dyssol.sln</span></code> to open solution in Microsoft Visual Studio, which should be previously installed.</p>
 </li>
@@ -140,7 +140,7 @@
 <li>Configure Dyssol by adding the path to new units: run Dyssol, choose <em>Tools → Models Manager</em> and add path to your models (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Release</span></code>).</li>
 </ol>
 <p>Now, all newly developed units will be available in Dyssol.</p>
-<p>In general, usual configuration of Models Manager should include following path for units:</p>
+<p>In general, usual configuration of <em>Models Manager</em> should include following path for units:</p>
 <blockquote>
 <div><ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">&lt;InstallationPath&gt;\Units</span></code>: list of standard units;</li>
@@ -155,7 +155,7 @@
 </div>
 <div class="section" id="development-of-steady-state-units">
 <h3>Development of steady-state units<a class="headerlink" href="#development-of-steady-state-units" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Unit</span><span class="p">()</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">CUnit</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><strong>Constructor</strong> of the unit: called only once when unit is added to the flowsheet. In this function a set of parameters should be specified:</p>
@@ -180,28 +180,28 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::~</span><span class="n">Unit</span><span class="p">()</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::~</span><span class="n">CUnit</span><span class="p">()</span>
 </pre></div>
 </div>
 <p><strong>Destructor</strong> of the unit: called only once when unit is removed from the flowsheet. Here all memory which has been previously allocated in the constructor should be freed.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. additional material streams, state variables or plots).</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Steady-state calculation</strong> for a specified time point. This function is called iteratively for all time points for which this unit should be calculated. All main calculations should be implemented here.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Finalize</span><span class="p">()</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Finalize</span><span class="p">()</span>
 </pre></div>
 </div>
 <p>Unit‘s <strong>finalization</strong>. This function is called only once at the end of the simulation. Here one can perform closing and cleaning operations to prepare for the next possible simulation run. Implementation of this function is not obligatory and can be skipped.</p>
@@ -441,7 +441,7 @@
 </div>
 <div class="section" id="configure-unit-to-work-with-matlab">
 <h3>Configure unit to work with MATLAB<a class="headerlink" href="#configure-unit-to-work-with-matlab" title="Permalink to this headline">¶</a></h3>
-<p>You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description refer to … and <a class="reference external" href="http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html">C Matrix API</a>.</p>
+<p>You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description please refer to <a class="reference external" href="http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html">C Matrix API</a>.</p>
 <p>To enable interaction with MATLAB configure template project with your unit, do as follows:</p>
 <ol class="arabic">
 <li><p class="first">Add a new environment variable in Windows with the path to the MATLAB installation directory:</p>
@@ -475,10 +475,11 @@
 <li>Configure template project <code class="docutils literal notranslate"><span class="pre">VCProject</span></code>.</li>
 </ol>
 </div></blockquote>
-<p>After builiding your own new solvers, the functionality of them can be applied in all units by adding them as unit parameters ((link to “baseUnit”)).</p>
-<p>In the current version of Dyssol, only one type of solver is available: <a class="reference internal" href="solver.html#label-agg-solvers"><span class="std std-ref">Agglomeration solvers</span></a>.</p>
-<p>Basically, all solvers have a set of constant functions and parameters, which are available in each new solver <code class="docutils literal notranslate"><span class="pre">link</span> <span class="pre">to</span> <span class="pre">&quot;external</span> <span class="pre">solver&quot;</span></code>. and a set of specific ones, which depend on the solver’s type. New types of solvers can be added upon request and will include a set of parameters and functions that are needed to solve a specific problem.</p>
-<p>You can implement several solvers of one type (e.g. with different models) and then choose a specific one to use it in unit by user interface, <code class="docutils literal notranslate"><span class="pre">section</span> <span class="pre">‘Unit</span> <span class="pre">parameters’</span></code>.</p>
+<p>After builiding your own new solvers, the functionality of them can be applied in all units by adding them as <a class="reference internal" href="class.html#label-unitparameters"><span class="std std-ref">unit parameters</span></a>.</p>
+<p>Basically, all solvers have a set of constant functions and parameters, which are available in each new solver (<a class="reference internal" href="class.html#label-externalsolver"><span class="std std-ref">External solver</span></a>). and a set of specific ones, which depend on the solver’s type. New types of solvers can be added upon request and will include a set of parameters and functions that are needed to solve a specific problem.</p>
+<p>You can implement several solvers of one type (e.g. with different models) and then choose a specific one to use it in unit by user interface, please refer to section <a class="reference internal" href="class.html#label-unitparameters"><span class="std std-ref">Unit parameters</span></a> in <a class="reference internal" href="class.html#label-class"><span class="std std-ref">Classes</span></a>.</p>
+<p>There is also detailed information about <a class="reference internal" href="class.html#label-dae"><span class="std std-ref">DAE Systems</span></a>, with which you can solve systems of differential-algebraic equations automatically.</p>
+<p>Please notice that in the current version of Dyssol, only <a class="reference internal" href="solver.html#label-agg-solvers"><span class="std std-ref">Agglomeration solvers</span></a> is available for solver development. The <a class="reference internal" href="class.html#label-externalsolver"><span class="std std-ref">External solver</span></a> and <a class="reference internal" href="class.html#label-daesolver"><span class="std std-ref">DAE solver</span></a> are implemented by means of internet resources connected to Dyssol and thus cannot be developed all by yourself.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -572,7 +573,7 @@
 </div>
 <div class="section" id="configure-solver-to-work-with-matlab">
 <h3>Configure solver to work with MATLAB<a class="headerlink" href="#configure-solver-to-work-with-matlab" title="Permalink to this headline">¶</a></h3>
-<p>You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description refer to … and <a class="reference external" href="http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html">C Matrix API</a>.</p>
+<p>You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description please refer to <a class="reference external" href="http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html">C Matrix API</a>.</p>
 <p>To enable interaction with MATLAB configure template project with your solver, do as follows:</p>
 <blockquote>
 <div><ol class="arabic">

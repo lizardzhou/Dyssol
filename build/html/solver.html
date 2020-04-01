@@ -45,16 +45,15 @@
   <div class="section" id="solver-library">
 <span id="label-solver"></span><h1>Solver library<a class="headerlink" href="#solver-library" title="Permalink to this headline">¶</a></h1>
 <p>Basic solver provides interfaces to the simulation system and to units.</p>
-<p>You can implement your own solver and add it to the solver library. Please refer to <a class="reference internal" href="developer.html#label-solverdev"><span class="std std-ref">Solver development</span></a> for detailed information.</p>
+<p>Currently in Dyssol, you can develop your own <a class="reference internal" href="units.html#label-agg"><span class="std std-ref">agglomeration</span></a> solver and add it to the solver library. Please refer to <a class="reference internal" href="developer.html#label-solverdev"><span class="std std-ref">Solver development</span></a> for detailed information.</p>
 <p>The solver can also be added to a unit as a parameter.</p>
 <a class="reference internal image-reference" href="_images/solver-structure.png"><img alt="" class="align-center" src="_images/solver-structure.png" style="width: 600px;" /></a>
-<p>Currently, the solver library for <a class="reference internal" href="units.html#label-agg"><span class="std std-ref">Agglomerator</span></a> is available in Dyssol.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="section" id="agglomeration-solvers">
 <span id="label-agg-solvers"></span><h2>Agglomeration solvers<a class="headerlink" href="#agglomeration-solvers" title="Permalink to this headline">¶</a></h2>
-<p>Solvers are applied to calculate the birth and death rate of agglomerates according to different mathematical models. In Dyssol, 3 solver types are available:</p>
+<p>Solvers are applied to calculate the birth and death rate of agglomerates according to different mathematical models. In Dyssol, 3 types of solver are available:</p>
 <blockquote>
 <div><ul class="simple">
 <li>Cell average</li>
