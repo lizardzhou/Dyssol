@@ -24,7 +24,7 @@ The development of modules for Dyssol can be done in three following steps:
 Configuration of Visual Studio project template
 ===============================================
 
-1.	Open directory where Dyssol has been installed (usually ``C:\Program Files (x86)\Dyssol``) and copy folder ``VCProject`` to the desired location on your hard drive (further ``<PathToSolution>``).
+1.	Open directory where Dyssol has been installed (usually ``C:\Program Files (x86)\Dyssol``) and copy folder ``VCProject`` to the desired location on your hard drive (further as ``<PathToSolution>``).
 
 2.	Open the copied folder ``VCProject`` and run file ``Dyssol.sln`` to open solution in Microsoft Visual Studio, which should be previously installed. 
 
@@ -110,7 +110,7 @@ Configure Dyssol to work with implemented units
 
 Now, all newly developed units will be available in Dyssol.
 
-In general, usual configuration of Models Manager should include following path for units:
+In general, usual configuration of *Models Manager* should include following path for units:
 
 	-	``<InstallationPath>\Units``: list of standard units;
 
@@ -127,7 +127,7 @@ Development of steady-state units
 
 .. code-block:: cpp
 
-	Unit::Unit() 
+	Unit::CUnit() 
 	
 **Constructor** of the unit: called only once when unit is added to the flowsheet. In this function a set of parameters should be specified:
 
@@ -153,7 +153,7 @@ Development of steady-state units
 	
 .. code-block:: cpp
 
-	Unit::~Unit()
+	Unit::~CUnit()
 	
 **Destructor** of the unit: called only once when unit is removed from the flowsheet. Here all memory which has been previously allocated in the constructor should be freed.
 
@@ -161,7 +161,7 @@ Development of steady-state units
 
 .. code-block:: cpp
 
-	Unit::Initialize(Time)
+	void CUnit::Initialize(Time)
 	
 Unit‘s **initialization**. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. additional material streams, state variables or plots).
 
@@ -169,7 +169,7 @@ Unit‘s **initialization**. This function is called only once at the start of t
 
 .. code-block:: cpp
 
-	Unit::Simulate(Time) 
+	void CUnit::Simulate(Time) 
 	
 **Steady-state calculation** for a specified time point. This function is called iteratively for all time points for which this unit should be calculated. All main calculations should be implemented here.
 
@@ -177,7 +177,7 @@ Unit‘s **initialization**. This function is called only once at the start of t
 
 .. code-block:: cpp
 
-	Unit::Finalize()
+	void CUnit::Finalize()
 	
 Unit‘s **finalization**. This function is called only once at the end of the simulation. Here one can perform closing and cleaning operations to prepare for the next possible simulation run. Implementation of this function is not obligatory and can be skipped.
 
@@ -456,7 +456,7 @@ Here the DAE system should be **specified in implicit form**. This function will
 Configure unit to work with MATLAB
 ----------------------------------
 
-You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description refer to ... and `C Matrix API <http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html>`_.
+You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description please refer to `C Matrix API <http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html>`_.
 
 To enable interaction with MATLAB configure template project with your unit, do as follows:
 
@@ -496,13 +496,15 @@ You must do the following in order to develop your new solver (plese refer to :r
 	
 	2.	Configure template project ``VCProject``.
 
-After builiding your own new solvers, the functionality of them can be applied in all units by adding them as unit parameters ((link to "baseUnit")). 
+After builiding your own new solvers, the functionality of them can be applied in all units by adding them as :ref:`unit parameters <label-unitParameters>`. 
 
-In the current version of Dyssol, only one type of solver is available: :ref:`label-agg-solvers`. 
+Basically, all solvers have a set of constant functions and parameters, which are available in each new solver (:ref:`label-externalSolver`). and a set of specific ones, which depend on the solver’s type. New types of solvers can be added upon request and will include a set of parameters and functions that are needed to solve a specific problem.
 
-Basically, all solvers have a set of constant functions and parameters, which are available in each new solver ``link to "external solver"``. and a set of specific ones, which depend on the solver’s type. New types of solvers can be added upon request and will include a set of parameters and functions that are needed to solve a specific problem.
+You can implement several solvers of one type (e.g. with different models) and then choose a specific one to use it in unit by user interface, please refer to section :ref:`label-unitParameters` in :ref:`label-class`.
 
-You can implement several solvers of one type (e.g. with different models) and then choose a specific one to use it in unit by user interface, ``section ‘Unit parameters’``.
+There is also detailed information about :ref:`label-DAE`, with which you can solve systems of differential-algebraic equations automatically.
+
+Please notice that in the current version of Dyssol, only :ref:`label-agg-solvers` is available for solver development. The :ref:`label-externalSolver` and :ref:`label-DAEsolver` are implemented by means of internet resources connected to Dyssol and thus cannot be developed all by yourself.
 
 |
 
@@ -610,7 +612,7 @@ Solver‘s **finalization**. This function is called only once for each simulati
 Configure solver to work with MATLAB
 ------------------------------------
 
-You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description refer to ... and `C Matrix API <http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html>`_.
+You can use MATLAB Engine API in Dyssol during the development of solvers. It requires an installed 32-bit version of MATLAB. For API description please refer to `C Matrix API <http://de.mathworks.com/help/matlab/cc-mx-matrix-library.html>`_.
 
 
 To enable interaction with MATLAB configure template project with your solver, do as follows:

@@ -60,6 +60,7 @@ Constant parameters in Dyssol consist of:
 	
 	- User defined properties
 
+For more information, please refer to :ref:`definition of constant properties <label-defConstProp>`.
 
 |
 
@@ -81,6 +82,8 @@ Dependent parameters in Dyssol consist of:
 	- Permittivity
 	
 	- Use defined properties
+
+For more information, please refer to :ref:`definition of temperature-dependent properties <label-defDepProp>`.
 
 |
 

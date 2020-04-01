@@ -5,11 +5,11 @@
 Classes
 =======
 
-Here you can get necessary information about how the elements in Dyssol (like unit, solver, :abbr:`PSD (Particle size distribution)` function, matrices) look like on a programming point of view. This is especially important if you want to develope new units and solvers. 
+Here you can get necessary information about how the elements in Dyssol (like unit, solver, :abbr:`PSD (Particle size distribution)` function, matrices and external solvers) look like on a programming point of view. This is especially important if you want to develope new units and solvers. 
 
 All elements mentioned above are defined as classes, which consists of member variables (data fields) and associated functions (methods). Every new independent instance generated under a class is called an object.
 
-For more information on object-oriented programming appied in Dyssol, please refer to various internet resources about C++.
+For more information on object-oriented programming applied in Dyssol, please refer to internet sources about C++.
 
 |
 
@@ -72,7 +72,7 @@ Ports
 
 	unsigned AddPort(std::string PortName, unsigned PortType)
 
-Adds port with ``PortType`` (``INPUT_PORT`` or ``OUTPUT_PORT``) to the unit. Returns index of the port. Should be used in unit’s constructor only. ``PortName`` should be unique within the unit.
+Adds port with ``PortType`` (``INPUT_PORT``, ``OUTPUT_PORT`` or ``UNDEFINED_PORT``) to the unit. Returns index of the port. Should be used in unit’s constructor only. ``PortName`` should be unique within the unit.
 
 |
 
@@ -284,6 +284,8 @@ Returns all time points for specified time interval on which ``Stream``-s are de
 
 |
 
+.. _label-unitParameters:
+
 Unit parameters
 ---------------
 
@@ -422,7 +424,9 @@ State variables
 
 	unsigned AddStateVariable(std::string Name, double InitValue, bool SaveHistory = false)
 	
-Adds new state variable and initializes it with ``InitValue``. Name must be unique within the unit’s state variables. Parameter ``SaveHistory`` specifies if the history of all changes of variable should be saved during calculation for further post-processing. To save history, function ``SaveStateVariables()`` should be called. All variables which are added with this function will be automatically saved and restored during the simulation. Should be used in ``Initialize()`` function of the unit. Returns index of added variable.
+Adds new state variable and initializes it with ``InitValue``. Name must be unique within the unit’s state variables. Parameter ``SaveHistory`` specifies if the history of all changes of variable should be saved during calculation for further post-processing. To save history, function ``SaveStateVariables()`` should be called. All variables which are added with this function will be automatically saved and restored during the simulation. Should be used in ``Initialize`` function of the unit. 
+
+Returns index of added variable.
 
 |
 
@@ -529,6 +533,8 @@ Returns value of constant physical property for specified compound. These proper
 	
 	-	``CONST_PROP_USER_DEFINED_XX``
 
+.. _label-defConstProp:
+
 .. Note:: Definition of constant properties:
 
 	+----------------------------------------------------+------------------------------------------------+----------+
@@ -580,8 +586,10 @@ Returns value of temperature/pressure-dependent physical properties stored in th
 	-	``PERMITTIVITY``
 
 	-	``TP_PROP_USER_DEFINED_XX``
+
+.. _label-defDepProp:
 	
-.. Note:: Definition of emperature-dependent properties:
+.. Note:: Definition of temperature-dependent properties:
 
 	+-----------------------------+------------------------+--------------------+
 	| Define                      |   Name                 |   Units            |
@@ -723,21 +731,25 @@ Returns number of defined liquid phases.
 Solid distributed properties
 ----------------------------
 
+.. _label-EDistrTypes:
+
 .. code-block:: cpp
 
 	std::vector<EDistrTypes> GetDistributionsTypes()
 
 Returns list of types of solid distributions, which have been defined in the flowsheet. Possible types are:
 
-	-	``DISTR_COMPOUNDS``
+	-	``DISTR_COMPOUNDS``: distribution by compounds.
 	
-	-	``DISTR_SIZE``
+	-	``DISTR_SIZE``: distribution by particle size.
 	
-	-	``DISTR_PART_POROSITY``
+	-	``DISTR_PART_POROSITY``: distribution by partcle porosity.
 	
-	-	``DISTR_FORM_FACTOR``
+	-	``DISTR_FORM_FACTOR``: distribution by particle form factor.
 	
-	-	``DISTR_COLOR``
+	-	``DISTR_COLOR``: distribution by particle color.
+	
+	-	``DISTR_USER_DEFINED_01`` to ``DISTR_USER_DEFINED_10``: user defined distribution.
 
 |
 
@@ -770,6 +782,8 @@ Returns grid’s type, which was defined for specified solid distribution ``dist
 	-	``GRID_UNDEFINED``
 
 |
+
+.. _label-getNumericGrid: 
 
 .. code-block:: cpp
 
@@ -1017,9 +1031,11 @@ Calculates unit for specified time interval for **dynamic units**. Is called by 
 
 	void Initialize(double Time)
 	
-Initializes unit at the time point Time. Is called by the simulator only once at the start of the simulation. Here some additionaly objects can be initialized (for example holdups, material streams or state variables).
+Initializes unit at the time point ``Time``. Is called by the simulator only once at the start of the simulation. Here some additionaly objects can be initialized (for example holdups, material streams or state variables).
 
 |
+
+.. _label-SaveState:
 
 .. code-block:: cpp
 
@@ -1030,6 +1046,8 @@ Saves current state of the unit. All time dependent variables which weren’t ad
 For flowsheets containing **recycled streams**, this function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation.
 
 |
+
+.. _label-LoadState:
 
 .. code-block:: cpp
 
@@ -1200,9 +1218,9 @@ Sets mass flow of the material stream at the time point ``Time``. Negative value
 
 ``Basis`` is a basis of results (``BASIS_MASS`` in [kg/s] or ``BASIS_MOLL`` in [mol/s]):
 
-``BASIS_MASS``: :math:`\dot{m} =` ``Value`` in [kg/s], total mass flow of the material stream.
+``BASIS_MASS``: in this case you directly have your input ``Value`` as mass flow: :math:`\dot{m} =` ``Value`` in [kg/s]
 
-``BASIS_MOLL``: :math:`\dot{n} =` ``Value`` :math:`\cdot \sum\limits_i M_i \cdot w_i` in [mol/s], with :math:`w_i` mass fraction of the phase :math:`i`, and :math:`M_i` molar mass of the phase :math:`i`.
+``BASIS_MOLL``: in this case you have ``Value`` as mole flow and this should be converted to mass flow. :math:`\dot{m} =` ``Value`` :math:`\cdot \sum\limits_i M_i \cdot w_i` in [mol/s], with :math:`w_i` mass fraction of the phase :math:`i`, and :math:`M_i` molar mass of the phase :math:`i`.
 
 |
 
@@ -1218,9 +1236,9 @@ Sets mass of the holdup at the time point ``Time``. Previously set negative valu
 
 ``Basis`` is a basis of results (``BASIS_MASS`` in [kg] or ``BASIS_MOLL`` in [mol]):
 
-``BASIS_MASS``: :math:`m =` ``Value`` in [kg], total mass of the holdup.
+``BASIS_MASS``: in this case you directly have your input ``Value`` as mass value: :math:`m =` ``Value`` in [kg].
 
-``BASIS_MOLL``: :math:`n =` ``Value`` :math:`\cdot \sum\limits_i M_i \cdot w_i` in [mol], with :math:`w_i` mass fraction of the phase :math:`i`, and :math:`M_i` molar mass of the phase :math:`i`.
+``BASIS_MOLL``: in this case you have ``Value`` as mole amount and this should be converted to mass. :math:`m =` ``Value`` :math:`\cdot \sum\limits_i M_i \cdot w_i` in [mol], with :math:`w_i` mass fraction of the phase :math:`i`, and :math:`M_i` molar mass of the phase :math:`i`.
 
 |
 
@@ -1395,9 +1413,9 @@ Returns total fraction of the compound with key ``CompoundKey`` at the time poin
 
 Basis can be ``BASIS_MASS`` or ``BASIS_MOLL``.
 
-``BASIS_MASS``: :math:`f_c = \sum \limits_i w_i \cdot f_{i,c}`, with :math:`f_i` the mass fraction of compound :math:`i`, and :math:`w_i` the mass fraction of phase :math:`i`.
+``BASIS_MASS``: :math:`f_i = \sum \limits_i w_i \cdot f_{i}`, with :math:`f_i` the mass fraction of compound :math:`i`, and :math:`w_i` the mass fraction of phase :math:`i`.
 
-``BASIS_MOLL``: :math:`f_c^{mol} = \sum \limits_i w_i \dfrac{f_{i,c}}{M_c \cdot \sum\limits_j \frac{f_{i,j}}{M_j}}`, with :math:`f_i^{mol}` the mole fraction of compound :math:`i`, :math:`f_{i,j}` the mass fraction of compound :math:`j` in phase :math:`i`, and :math:`M_j` the molar mass of compound :math:`j`.
+``BASIS_MOLL``: :math:`f_i^{mol} = \sum \limits_i w_i \dfrac{f_i}{M_i \cdot \sum\limits_j \frac{f_{i,j}}{M_j}}`, with :math:`f_i^{mol}` the mole fraction of compound :math:`i`, :math:`f_{i,j}` the mass fraction of compound :math:`j` in phase :math:`i`, and :math:`M_j` the molar mass of compound :math:`j`.
 
 |
 
@@ -1413,7 +1431,7 @@ Basis can be ``BASIS_MASS`` or ``BASIS_MOLL``.
 
 ``BASIS_MASS``: :math:`f_{i,j}`, mass fraction of compound :math:`j` in phase :math:`i`.
 
-``BASIS_MOLL``: :math:`f_{i,c}^{mol} = \sum \limits_i w_i \dfrac{f_{i,c}}{M_c \cdot \sum\limits_j \frac{f_{i,j}}{M_j}}`, with :math:`f_{i,c}^{mol}` the mole fraction of compound :math:`j` in phase :math:`i`, and :math:`M_j` the molar mass of compound :math:`j`.
+``BASIS_MOLL``: :math:`f_{i,j}^{mol} = \sum \limits_i w_i \dfrac{f_{i,j}}{M_i \cdot \sum\limits_j \frac{f_{i,j}}{M_j}}`, with :math:`f_{i,j}^{mol}` the mole fraction of compound :math:`j` in phase :math:`i`, and :math:`M_j` the molar mass of compound :math:`j`.
 
 |
 
@@ -1427,9 +1445,9 @@ Sets fraction of the compound with key ``CompoundKey`` in phase ``Phase`` (``SOA
 
 Basis can be ``BASIS_MASS`` or ``BASIS_MOLL``.
 
-``BASIS_MASS``: :math:`f_{i,j} = Fraction`, mass fraction of compound :math:`j` in phase :math:`i`.
+``BASIS_MASS``: in this case you have your input ``Fraction`` directly as mass fraction of compound :math:`j` in phase :math:`i`: :math:`f_{i,j} =` ``Fraction``.
 
-``BASIS_MOLL``: :math:`f_{i,c} = \dfrac{Fraction \cdot M_c}{\sum\limits_j \frac{f_{i,j}}{M_j}}`, with :math:`f_{i,c}^{mol}` the mole fraction of compound :math:`j` in phase :math:`i`, and :math:`M_j` the molar mass of compound :math:`j`.
+``BASIS_MOLL``: :math:`f_{i,j} =` ``Fraction`` :math:`\cdot \dfrac{M_i}{\sum\limits_j \frac{f_{i,j}}{M_j}}`, with :math:`f_{i,j}^{mol}` the mole fraction of compound :math:`j` in phase :math:`i`, and :math:`M_j` the molar mass of compound :math:`j`.
 
 |
 
@@ -1439,13 +1457,13 @@ Basis can be ``BASIS_MASS`` or ``BASIS_MOLL``.
 
 Specific function for ``CMaterialStream``. 
 
-Returns mass flow of the compound with key CompoundKey in phase Phase (SOA_SOLID, SOA_LIQUID, SOA_VAPOR) for the time point ``Time``. If such time point has not been defined, interpolation of data will be done. 
+Returns mass flow of the compound with key CompoundKey in phase Phase (``SOA_SOLID``, ``SOA_LIQUID``, ``SOA_VAPOR``) for the time point ``Time``. If such time point has not been defined, interpolation of data will be done. 
 
 Basis is a basis of value (``BASIS_MASS`` in [kg/s] or ``BASIS_MOLL`` in [mol/s]).
 
-``BASIS_MASS``: :math:`\dot{m}_{i,j} = w_i \cdot f_{i,j} \cdot \dot{m}`, with :math:`m_{i,j}` the mass flow of compound :math:`j` in phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, and :math:`f_{i,j}` the mass fraction of compound :math:`j` in phase :math:`i`.
+``BASIS_MASS``: :math:`\dot{m}_{i,j} = w_i \cdot f_{i,j} \cdot \dot{m}`, with :math:`\dot m_{i,j}` the mass flow of compound :math:`j` in phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, and :math:`f_{i,j}` the mass fraction of compound :math:`j` in phase :math:`i`.
 
-``BASIS_MOLL``: :math:`\dot{m}_{i,j} = w_i \cdot f_{i,j} \cdot \sum\limits_k \frac{\dot{m} \cdot w_k}{M_k}`, with :math:`m` the total mass flow of the material stream, and :math:`M_k` the molar mass of phase :math:`k`.
+``BASIS_MOLL``: :math:`\dot{m}_{i,j} = w_i \cdot f_{i,j} \cdot \sum\limits_k \dfrac{\dot{m} \cdot w_k}{M_k}`, with :math:`\dot m` the total mass flow of the material stream, and :math:`M_k` the molar mass of phase :math:`k`.
 
 |
 
@@ -1455,13 +1473,13 @@ Basis is a basis of value (``BASIS_MASS`` in [kg/s] or ``BASIS_MOLL`` in [mol/s]
 
 Specific function for ``CHoldup``. 
 
-Returns mass of the compound with key CompoundKey in phase Phase (SOA_SOLID, SOA_LIQUID, SOA_VAPOR) for the time point ``Time``. If such time point has not been defined, interpolation of data will be done. 
+Returns mass of the compound with key CompoundKey in phase Phase (``SOA_SOLID``, ``SOA_LIQUID``, ``SOA_VAPOR``) for the time point ``Time``. If such time point has not been defined, interpolation of data will be done. 
 
 Basis is a basis of value (``BASIS_MASS`` in [kg] or ``BASIS_MOLL`` in [mol]).
 
 ``BASIS_MASS``: :math:`m_{i,j} = w_i \cdot f_{i,j} \cdot m`, with :math:`m_{i,j}` the mass of compound :math:`j` in phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, and :math:`f_{i,j}` the mass fraction of compound :math:`j` in phase :math:`i`.
 
-``BASIS_MOLL``: :math:`m_{i,j} = w_i \cdot f_{i,j} \cdot \sum\limits_k \frac{m \cdot w_k}{M_k}`, with :math:`m` the total mass of the holdup, and :math:`M_k` the molar mass of phase :math:`k`.
+``BASIS_MOLL``: :math:`m_{i,j} = w_i \cdot f_{i,j} \cdot \sum\limits_k \dfrac{m \cdot w_k}{M_k}`, with :math:`m` the total mass of the holdup, and :math:`M_k` the molar mass of phase :math:`k`.
 
 |
 
@@ -1646,6 +1664,8 @@ Returns the value of the interaction property ``Property`` for the selected comp
 	|   ``INT_PROP_USER_DEFINED_XX`` |   User defined property |   [-]   |
 	+--------------------------------+-------------------------+---------+	
 
+|
+
 .. code-block:: cpp
 
 	double GetCompoundInteractionProp(double Time, std::string CompoundKey1, std::string CompoundKey2, unsigned Property)
@@ -1685,7 +1705,7 @@ Basis is a basis of value (``BASIS_MASS`` in [kg/s] or ``BASIS_MOLL`` in [mol/s]
 
 ``BASIS_MASS``: :math:`\dot{m}_i = \dot{m} \cdot w_i`, with :math:`\dot{m}_i` the mass flow of phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, and :math:`\dot{m}` the total mass flow of the material stream.
 
-``BASIS_MOLL``: :math:`\dot{n}_i = \frac{\dot{m} \cdot w_i}{M_i}`, with :math:`\dot{n}_i` the mole flow of phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, :math:`\dot{m}` the total mass flow of the material stream, and :math:`M_i` the molar mass of phase :math:`i`.
+``BASIS_MOLL``: :math:`\dot{n}_i = \dfrac{\dot{m} \cdot w_i}{M_i}`, with :math:`\dot{n}_i` the mole flow of phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, :math:`\dot{m}` the total mass flow of the material stream, and :math:`M_i` the molar mass of phase :math:`i`.
 
 |
 
@@ -1717,13 +1737,11 @@ Sets mass flow of the specified phase ``Phase`` (``SOA_SOLID``, ``SOA_LIQUID``, 
 
 Is performed by calculation and setting of a new total mass flow of the material stream and new phase fractions (according to the new mass flow of the specified phase). Negative values before setting will be converted to ``0``. If there is no specified time point or phase in the material stream, the value will not be set. 
 
-Basis is a basis of value (``BASIS_MASS`` [kg/s] or ``BASIS_MOLL`` [mol/s]).
+Basis is a basis of value (``BASIS_MASS`` in [kg/s] or ``BASIS_MOLL`` in [mol/s]).
 
-``BASIS_MASS``: for each defined phase. :math:`\dot{m} = \dot{m} + (` ``Value`` :math:` - \dot{m}_i)`, :math:`m_i =` ``Value``, :math:`w_i = m_i / m`. With :math:`\dot{m}_i` the mass flow of phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, and :math:`\dot{m}` the total mass flow of the material stream.
+``BASIS_MASS``: in this case you have your input ``Value`` as mass flow of one defined phase: :math:`\dot m_i =` ``Value`` and :math:`w_i = \dot m_i / \dot m`. Meanwhile, the total mass flow :math:`\dot m` changes due to assignment for :math:`\dot m_i`: :math:`\dot m = \dot m_{old} + (` ``Value`` :math:`- \dot{m}_{i,old})`. Here :math:`\dot{m}_i` stands for the mass flow of phase :math:`i`, :math:`w_i` for the mass fraction of phase :math:`i`, and :math:`\dot{m}` for the total mass flow of the material stream.
 
-``BASIS_MOLL``: for each defined phase. :math:`\dot{n} = \dot{n} + (` ``Value`` :math:`\cdot M_i - \dot{m}_i)`, :math:`m_i = M_i \cdot` ``Value``, :math:`w_i = m_i / m`. With :math:`\dot{n}_i` the mole flow of phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, :math:`\dot{m}` the total mass flow of the material stream, and :math:`M_i` the molar mass of phase :math:`i`.
-
-
+``BASIS_MOLL``: in this case you have your input ``Value`` as mole flow of one defined phase: :math:`\dot m_i =` ``Value`` :math:`\cdot M_i ` and :math:`w_i = \dot m_i / \dot m`. Meanwhile, the total mass flow :math:`\dot m` changes due to assignment for :math:`\dot m_i`: :math:`\dot m = \dot m_{old} + (` ``Value`` :math:`\cdot M_i - \dot{m}_{i,old})`. Here :math:`w_i` stands for the mass fraction of phase :math:`i`, :math:`\dot{m}` for the total mass flow of the material stream, and :math:`M_i` for the molar mass of phase :math:`i`.
 
 |
 
@@ -1739,11 +1757,11 @@ Sets mass of the specified phase ``Phase`` (``SOA_SOLID``, ``SOA_LIQUID``, ``SOA
 
 Is performed by calculation and setting of a new total mass flow of the holdup and new phase fractions (according to the new mass of the specified phase). Negative values before setting will be converted to ``0``. If there is no specified time point or phase in the holdup, the value will not be set. 
 
-Basis is a basis of value (``BASIS_MASS`` [kg] or ``BASIS_MOLL`` [mol]).
+Basis is a basis of value (``BASIS_MASS`` in [kg] or ``BASIS_MOLL`` in [mol]).
 
-``BASIS_MASS``: for each defined phase. :math:`m = m + (` ``Value`` :math:`- m_i)`, :math:`m_i =` ``Value``, :math:`w_i = m_i / m`. With :math:`m_i` the mass of phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, and :math:`m` the total mass flow of the material stream.
+``BASIS_MASS``: in this case you have your input ``Value`` as the mass of one defined phase: :math:`m_i =` ``Value`` and :math:`w_i = m_i / m`. Meanwhile, the total mass :math:`m` changes due to assignment for :math:`m_i`: :math:`\dot m = \dot m_{old} + (` ``Value`` :math:`- \dot{m}_{i,old})`. Here :math:`m_i` stands for the mass of phase :math:`i`, :math:`w_i` for the mass fraction of phase :math:`i`, and :math:`m` for the total mass of the holdup. 
 
-``BASIS_MOLL``: for each defined phase. :math:`n = n + (` ``Value`` :math:`\cdot M_i - m_i)`, :math:`m_i = M_i \cdot` ``Value``, :math:`w_i = m_i / m`. With :math:`n_i` the mole of phase :math:`i`, :math:`w_i` the mass fraction of phase :math:`i`, :math:`m` the total mass flow of the material stream, and :math:`M_i` the molar mass of phase :math:`i`.
+``BASIS_MOLL``: in this case you have your input ``Value`` as mole flow of one defined phase: :math:`m_i = ` ``Value`` :math:`\cdot M_i` , :math:`w_i = m_i / m`. Meanwhile, the total mass :math:`m` changes due to assignment for :math:`m_i`: :math:`m = m_{old} + (` ``Value`` :math:`\cdot M_i - m_{i,old})`. Here :math:`m_i` stands for the mass of phase :math:`i`, :math:`w_i` for the mass fraction of phase :math:`i`, :math:`m` for the total mass of the holdup, and :math:`M_i` for the molar mass of phase :math:`i`.
 
 |
 
@@ -2158,23 +2176,2248 @@ Normalizes data in solid distribution matrix in all defined time points.
 Praticle size distribution
 --------------------------
 
+All functions in this section are for both ``CMaterialStream`` and ``CHoldup``.
+
+.. _label-getPSD:
+
+.. code-block:: cpp
+
+	std::vector<double> GetPSD(double Time, EPSDType PSDType, EPSDGridType PSDGridType)
+	
+Returns particle size distribution of the total mixture of the solid phase at the time point ``Time``. 
+
+``PSDGridType`` defines grid units if needed: ``EPSDGridType::DIAMETER`` for diameter in [m]; or ``EPSDGridType::VOLUME`` for volume in [m :math:`^3`]. 
+
+``PSDType`` is a type of distribution. Available types are: ``PSD_q0``, ``PSD_Q0``, ``PSD_q2``, ``PSD_Q2``, ``PSD_q3``, ``PSD_Q3``, ``PSD_MassFrac``, ``PSD_Number``. 
+
+PSD data is originally stored in a form of mass fractions and all transformations are performed by the following equations:
+
+- ``PSD_q0``: number-related distribution of particles: :math:`q_{0,i} = \dfrac{N_i}{N_{tot} \cdot \Delta d_i}`;
+
+- ``PSD_Q0``: :math:`Q_{0,i} = Q_{0,i-1} + q_{0,i} \cdot \Delta d_i`
+
+- ``PSD_q2``: surface-area-related distribution of particles: :math:`q_{2,i} = \dfrac{Q_{2,i} - Q_{2,i-1}}{\Delta d_i}`
+
+- ``PSD_Q2``: :math:`Q_{3,i} = \dfrac{\sum\limits_{j=0}^i N_j\,\pi\,d_j^2}{\sum\limits_j N_j \,\pi d_j^2}`
+
+- ``PSD_q3``: :math:`q_{3,i} = w_i / \Delta d_i`
+
+- ``PSD_Q3``: :math:`Q_{3,0} = w_0`, :math:`Q_{3,i} = Q_{3,i-1} + w_i`
+
+- ``PSD_MassFrac``: returns the size distribution in the form of mass fractions with the total sum of 1.
+
+- ``PSD_Number``: obtains number-related distribution of particles depends on several conditions. Three cases of calculation can be distinguished:
+
+	1. If only one compound is specified: :math:`N_i = \dfrac{m_i}{\rho \, \frac{\pi}{6}\, d_i^3}`.
+	
+	2. For several compounds: :math:`N_i = \sum\limits_j \dfrac{M_{tot} \cdot w_{i,j}}{\frac{\pi \cdot d_i^3}{6} \cdot \rho_j}`.
+	
+	3. If distribution by particle porosity has been defined: :math:`N_i = \sum\limits_j N_{i,j}`, with 
+	:math:`N_{i,j} = \sum\limits_k \dfrac{M_{tot} \cdot w_{i,j,k}}{\frac{\pi \cdot d_i^3}{6} \cdot \rho_j \cdot (1 - \varepsilon_k)}`.
+
+.. Note:: Notations:
+
+	:math:`i` – index of size classes
+
+	:math:`j` – index of compounds
+
+	:math:`k` – index of porosities
+
+	:math:`d_i` – particle diameter of class :math:`i`
+
+	:math:`\Delta d_i` – size of the class :math:`i`
+
+	:math:`m_i` – mass of particles of class :math:`i`
+
+	:math:`M_{tot}` – total mass of particles
+
+	:math:`N_i` – number of particles of class :math:`i`
+
+	:math:`N_{i,j}` – number of particles of compound :math:`j` with size class :math:`i`
+
+	:math:`N_{tot}` – total number of particles
+
+	:math:`w_i` – mass fraction of particles of class :math:`i`
+
+	:math:`w_{i,j}` – mass fraction of particles of compound :math:`j` with size class :math:`i`
+
+	:math:`w_{i,j,k}` – mass fraction of particles of compound :math:`j` with size class :math:`i` and porosity :math:`k`
+
+	:math:`\rho_j` – density of compound :math:`j`
+
+	:math:`\varepsilon_k` – porosity of class :math:`k`
+
+	:math:`q_0` – number-related density distribution
+
+	:math:`Q_0` – number-related cumulative distribution
+
+	:math:`q_2` – surface-area-related density distribution
+
+	:math:`Q_2` – surface-area-related cumulative distribution
+
+	:math:`q_3` – mass-related density distribution
+
+	:math:`Q_3` – mass-related cumulative distribution
+
+|
+
+.. code-block:: cpp
+
+	std::vector<double> GetPSD(double Time, EPSDType PSDType, std::string Compound, EPSDGridType PSDGridType)
+	
+Returns particle size distribution of compound ``Compound`` of the solid phase of the material stream / holdup at the time point ``Time``. 
+
+``PSDType`` is a type of distribution, please refer to function :ref:`getPSD(Time, PSDType, PSDGridType) <label-getPSD>` for detailed information.
+
+``PSDGridType`` defines grid units if needed: ``EPSDGridType::DIAMETER`` for diameter in [m]; or ``EPSDGridType::VOLUME`` for volume in [m :math:`^3`]. 
+
+|
+
+.. code-block:: cpp
+
+	void SetPSD(double Time, EPSDType PSDType, std::vector<double> PSD, EPSDGridType PSDGridType)
+	
+Sets particle size distribution with type ··PSDType·· to the solid phase of the material stream / holdup for time point ``Time``. 
+
+Direct setting of :abbr:`PSD (Particle size distribution)` to the material stream / holdup leads to a change of all dependent distributions. Approach with transformation matrix should be used to avoid this. 
+
+Available ``PSDType`` are: ``PSD_q0``, ``PSD_Q0``, ``PSD_q2``, ``PSD_Q2``, ``PSD_q3``, ``PSD_Q3``, ``PSD_MassFrac``, ``PSD_Number``. 
+
+Please note that when using ``PSD_Number``, if the total mass of the particles given in the number distribution differs from the material stream / holdup’s total particle mass, the number will be normalized to match the material stream / holdup’s particle mass. 
+
+As mass fractions are used to store data, :abbr:`PSD (Particle size distribution)` will be converted using functions ``Convertq0ToMassFractions()``, ``ConvertQ0ToMassFractions()``, ``Convertq3ToMassFractions()``, ``ConvertQ3ToMassFractions()``, ``ConvertNumbersToMassFractions()``, please refer to section :ref:`label-PSD` for detailed explanation about those functions.
+
+``PSDGridType`` defines grid units if needed: ``EPSDGridType::DIAMETER`` for diameter in [m]; or ``EPSDGridType::VOLUME`` for volume in [m :math:`^3`]. 
+
+|
+
+.. code-block:: cpp
+
+	void SetPSD(double Time, EPSDType PSDType, std::string Compound, std::vector<double> PSD, EPSDGridType PSDGridType)
+	
+Sets :abbr:`PSD (Particle size distribution)` with type ``PSDType`` for the specific compound ``Compound`` to the solid phase of the material stream / holdup for time point Time. 
+
+Direct setting of :abbr:`PSD (Particle size distribution)` to the material stream / holdup leads to a change of all dependent distributions. Approach with transformation matrix should be used to avoid this. 
+
+Available ``PSDType`` are: ``PSD_q0``, ``PSD_Q0``, ``PSD_q2``, ``PSD_Q2``, ``PSD_q3``, ``PSD_Q3``, ``PSD_MassFrac``, ``PSD_Number``. 
+
+Please note that when using PSD_Number, If the total mass of the particles given in the number distribution differs from the material stream / holdup’s total particle mass, the number will be normalized to match the material stream/holdup’s particle mass. 
+
+As mass fractions are used to store data, :abbr:`PSD (Particle size distribution)` will be converted using functions ``Convertq0ToMassFractions()``, ``ConvertQ0ToMassFractions()``, ``Convertq3ToMassFractions()``, ``ConvertQ3ToMassFractions()``, ``ConvertNumbersToMassFractions()``, please refer to section :ref:`label-PSD` for detailed explanation about those functions.
+
+``PSDGridType`` defines grid units if needed: ``EPSDGridType::DIAMETER`` for diameter in [m]; or ``EPSDGridType::VOLUME`` for volume in [m :math:`^3`]. 
+
+|
+
+Lookup tables
+-------------
+
+All functions in this section are for both ``CMaterialStream`` and ``CHoldup``.
+
+.. code-block:: cpp
+
+	CLookupTable* GetLookupTable(ECompoundTPProperties Property, EDependencyTypes DependencyType, double Time)
+	
+Creates (if not yet exists), fills with compounds fractions and returns a corresponding lookup table for the specified ``Property`` (see table at the end of this section), ``DependencyType`` (``DEPENDENCE_TEMP`` or ``DEPENDENCE_PRES``) and ``Time``. 
+
+For more information, please refer to section :ref:`label-thermo`.
+
+|
+
+.. code-block:: cpp
+
+	double CalcTemperatureFromProperty(ECompoundTPProperties Property, double Time, double Value)
+	
+Reads the temperature from the corresponding lookup table for a specific ``Value`` of the selected ``Property`` (see table at the end of this section)  at the corresponding time point ``Time``. 
+
+For more information, please refer to section :ref:`label-thermo`.
+
+|
+
+.. code-block:: cpp
+
+	double CalcPressureFromProperty(ECompoundTPProperties Property, double Time, double Value)
+	
+Reads the pressure from the corresponding lookup table for a specific ``Value`` of the selected ``Property`` (see table at the end of this section) at the corresponding time point ``Time``. 
+
+For more information, please refer to section :ref:`label-thermo`.
+
+|
+
+.. code-block:: cpp
+
+	double CalcPropertyFromTemperature(ECompoundTPProperties Property, double Time, double T)
+	
+Reads the value of the specified ``Property`` (see table at the end of this section) at ``Time`` from the corresponding lookup table for the given temperature ``T``. 
+
+For more information, please refer to section :ref:`label-thermo`.
+
+|
+
+.. code-block:: cpp
+
+	double CalcPropertyFromPressure(ECompoundTPProperties Property, double Time, double P)
+	
+Reads the value of the specified ``Property`` (see table at the end of this section) at ``Time`` from the corresponding lookup table for the given pressure ``P``.
+
+For more information, please refer to section :ref:`label-thermo`.
+
+|
+
+.. Note:: Definition of temperature-dependent compound properties:
+
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+	|   Define                      |   Name                      |   Unit                                                                    |
+	+===============================+=============================+===========================================================================+
+	|   ``DENSITY``                 |   Density                   |   [kg/m :math:`^3`]                                                       |
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+	|   ``HEAT_CAPACITY_CP``        |   Heat capacity :math:`C_p` |   [J/(kg·K)]                                                              |
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+	|   ``VAPOR_PRESSURE``          |   Vapor pressure            |   [Pa]                                                                    |
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+	|   ``VISCOSITY``               |   Viscosity                 |   [Pa·s]                                                                  |
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+	|   ``THERMAL_CONDUCTIVITY``    |   Thermal conductivity      |   [W/(m·K)]                                                               |
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+	|   ``PERMITTIVITY``            |   Permittivity              |   [F/m]                                                                   |
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+	|   ``ENTHALPY``                |   Enthalpy                  |   [J/kg/s] or [J/mol/s] for material stream, [J/kg] or [J/mol] for holdup |
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+	|   ``TP_PROP_USER_DEFINED_XX`` |   User defined property     |  [-]                                                                      |
+	+-------------------------------+-----------------------------+---------------------------------------------------------------------------+
+
+|
+
+Other streams
+-------------
+
+Following functions are for class ``CMaterialStream``.
+
+.. code-block:: cpp
+
+	void CopyFromStream(CMaterialStream *SrcStream, double Time, bool DeleteDataAfter = true)
+	
+Copies all stream data from ``SrcStream`` for specified time point ``Time`` to the current material stream. 
+
+If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination stream will be removed before being copied.
+
+|
+
+.. code-block:: cpp
+
+	void CopyFromStream(CMaterialStream *SrcStream, double Start, double End, bool DeleteDataAfter = true)
+
+Copies all stream data from ``SrcStream`` on the certain time interval to the current material stream. Boundary points ``Start`` and ``End`` are included into this interval. 
+
+If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination stream will be removed before being copied.
+
+|
+
+.. code-block:: cpp
+
+	void CopyFromStream(double TimeDst, CMaterialStream *SrcStream, double TimeSrc, bool DeleteDataAfter = true)
+
+Copies all stream data from time point ``TimeSrc`` of material stream ``SrcStream`` to the time point ``TimeDst`` of this material stream. 
+
+If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination stream will be removed before being copied.
+
+|
+
+.. code-block:: cpp
+
+	void CopyFromHoldup(CHoldup *SrcHoldup, double Time, double MassFlow, bool DeleteDataAfter = true)
+
+Copies all data from ``SrcHoldup`` for the specified time point to the current material stream and sets mass flow ``MassFlow``. 
+
+If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination stream will be removed before being copied.
+
+|
+
+.. code-block:: cpp
+
+	void CopyFromHoldup(double TimeDst, CHoldup *SrcHoldup, double TimeSrc, double MassFlow, bool DeleteDataAfter = true)
+
+Copies all stream data from time point ``TimeSrc`` of holdup ``SrcHoldup`` to the time point ``TimeDst`` of this material stream with setting of new mass flow ``MassFlow``. 
+
+If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination stream will be removed before being copied.
+
+|
+
+.. code-block:: cpp
+
+	void AddStream (CMaterialStream *Stream, double Time)
+
+Performs a mixing of this material stream with material stream ``Stream`` for the specified time point ``Time``.
+
+|
+
+.. code-block:: cpp
+
+	void AddStream (CMaterialStream *Stream, double Start, double End, unsigned TPType = BOTH_TP)
+	
+Performs a mixing of this material stream with material stream ``Stream`` for the specified time interval. Boundary points ``Start`` and ``End`` are included into this interval. 
+
+Parameter ``TPType`` specifies which time points will be present in the resulting stream: combining points from two streams (``BOTH_TP``), only from the first stream (``DST_TP``), or only from the second stream (``SRC_TP``). 
+
+Data for non-existent points are obtained by linear interpolation. 
+
+|
+
+Following functions are for class ``CHoldup``.
+
+.. code-block:: cpp
+
+	void CopyFromHoldup(CHoldup *SrcHoldup, double Time, bool DeleteDataAfter)
+	
+Copies all holdup data from ``SrcHoldup`` for the specified time point ``Time`` to the current holdup. 
+
+If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination holdup will be removed before being copied.
+
+|
+
+.. code-block:: cpp
+
+	void CopyFromHoldup(CHoldup *SrcHoldup, double Start, double End, bool DeleteDataAfter)
+	
+Copies all holdup data from ``SrcHoldup`` on the certain time interval to the current holdup. Boundary points ``Start`` and ``End`` are included into this interval. 
+
+If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination holdup will be removed before being copied.
 
 
+|
+
+.. code-block:: cpp
+
+	void CopyFromHoldup(double TimeDst, CHoldup *SrcHoldup, double TimeSrc, bool DeleteDataAfter)
+	
+Copies all holdup data from time point ``TimeSrc`` of holdup ``SrcHoldup`` to the time point ``TimeDst`` of this holdup. 
+
+If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination holdup will be removed before being copied.
+
+|
+
+.. code-block:: cpp
+
+	void AddHoldup(CHoldup *Holdup, double Time)
+	
+Performs a mixing of this holdup with holdup ``Holdup`` for the specified time point ``Time``.
+
+|
+
+.. code-block:: cpp
+
+	void AddHoldup(CHoldup *Holdup, double Start, double End, unsigned TPType)
+	
+Performs a mixing of this holdup with ``Holdup`` for the specified time interval. Boundary points ``Start`` and ``End`` are included into this interval. 
+
+Parameter ``TPType`` specifies which time points will be present in the resulting holdup: combining points from two holdups (``BOTH_TP``), only from the first holdup (``DST_TP``), or only from the second holdup (``SRC_TP``). 
+
+Data for non-existent points are obtained by linear approximation. 
+
+|
+
+.. code-block:: cpp
+
+	void AddStream(CMaterialStream *Stream, double Start, double End)
+	
+Performs a mixing of this holdup with material stream ``Stream`` for the specified time interval. Boundary points ``Start`` and ``End`` are included into this interval. 
+
+Data for non-existent points are obtained by linear interpolation. 
+
+|
 
 
+.. _label-PSD:
 
+Particle size distribution
+==========================
 
+Several global functions are defined to work with particle size distributions. These functions can be called from any place of the code.
+
+All functions receive grid (``Grid``) as the input parameter. The grid can be previously obtained with the help of the function ``GetNumericGrid``, for more information please refer to :ref:`getNumericGrid <label-getNumericGrid>` in section :ref:`label-baseUnit`. 
+
+.. Note:: Notations:
+
+	:math:`d_i` – diameter of particle in class :math:`i`
+	
+	:math:`\Delta d_i` – size of the class :math:`i`
+	
+	:math:`M_k` – :math:`k`-moment 
+	
+	:math:`q` – density distribution
+	
+	:math:`q_0` – number related density distribution
+	
+	:math:`Q_0` – number related cumulative distribution
+	
+	:math:`q_2` – surface-area-related density distribution
+	
+	:math:`Q_2` – surface-area-related cumulative distribution
+	
+	:math:`q_3` – mass-related density distribution
+	
+	:math:`Q_3` – mass-related cumulative distribution
+	
+	:math:`w_i` – mass fraction of particles of class :math:`i`
+	
+	:math:`N_i` – number of particles of class :math:`i`
+	
+	:math:`N_{tot}` – total number of particles
+	
+|
+
+.. code-block:: cpp
+
+	double GetMMoment(Moment, Grid, InDistr)
+
+Calculates moment of the density distribution by :math:`M_k = \sum\limits_i d_i^k \, q_i \, \Delta d_i`.
+
+|
+
+.. _label-convb0s0: 
+
+.. b for big (capital letters), s for small (lower letters)
+
+.. code-block:: cpp
+
+	vector<double> ConvertQ0Toq0(Grid, InDistr)
+
+Performs conversion from :math:`Q_0` to :math:`q_0` distributions using information about the size grid: :math:`q_{0,0} = \dfrac{Q_{0,0}}{\Delta d_i}` and :math:`q_{0,i} = \dfrac{Q_{0,i} - Q_{0,i-1}}{\Delta d_i}`.
+
+|
+
+.. _label-convs0b0:
+
+.. code-block:: cpp
+
+	vector<double> Convertq0ToQ0(Grid, InDistr)
+
+Performs conversion from :math:`q_0` to :math:`Q_0` distributions using information about the size grid: :math:`Q_{0,i} = \sum\limits_i q_{0,i} \, \Delta d_i = Q_{0,i-1} + q_{0,i} \, \Delta d_i`.
+
+|
+
+.. _label-convb2s2:
+
+.. code-block:: cpp
+
+	vector<double> ConvertQ2Toq2(Grid, InDistr)
+
+Performs conversion from :math:`Q_2` to :math:`q_2` distributions using information about the size grid: :math:`q_{2,0} = \dfrac{Q_{2,0}}{\Delta d_i}` and :math:`q_{2,i} = \dfrac{Q_{2,i} - Q_{2,i-1}}{\Delta d_i}`.
+
+|
+
+.. _label-convs2b2:
+
+.. code-block:: cpp
+
+	vector<double> Convertq2ToQ2(Grid, InDistr)
+	
+Performs conversion from :math:`q_2` to :math:`Q_2` distributions using information about the size grid: :math:`Q_{2,i} = \sum\limits_i q_{2,i} \, \Delta d_i = Q_{2,i-1} + q_{2,i} \, \Delta d_i`.
+	
+|
+
+.. _label-convb3s3:
+
+.. code-block:: cpp
+
+	vector<double> ConvertQ3Toq3(Grid, InDistr)
+
+Performs conversion from :math:`Q_3` to :math:`q_3` distributions using information about the size grid: :math:`q_{3,0} = \dfrac{Q_{3,0}}{\Delta d_i}` and :math:`q_{3,i} = \dfrac{Q_{3,i} - Q_{3,i-1}}{\Delta d_i}`.
+
+|
+
+.. _label-convs3b3:
+
+.. code-block:: cpp
+
+	vector<double> Convertq3ToQ3(Grid, InDistr)
+
+Performs conversion from :math:`q_3` to :math:`Q_3` distributions using information about the size grid: :math:`Q_{3,i} = \sum\limits_i q_{3,i} \, \Delta d_i = Q_{3,i-1} + q_{3,i} \, \Delta d_i`.
+
+|
+
+.. _label-convs0s2:
+
+.. code-block:: cpp
+
+	vector<double> Convertq0Toq2(Grid, InDistr)
+
+Performs conversion from :math:`q_0` to :math:`q_2` distributions using information about the size grid by :math:`q_{2,i} = \dfrac{d_i^2 \, q_{0,i}}{M_2(q_0)}`.
+
+|
+
+.. _label-convs0s3:
+
+.. code-block:: cpp
+
+	vector<double> Convertq0Toq3(Grid, InDistr)
+
+Performs conversion from :math:`q_0` to :math:`q_3` distributions using information about the size grid by :math:`q_{3,i} = \dfrac{d_i^3 \, q_{0,i}}{M_3(q_0)}`.
+
+|
+
+.. _label-convs2s0:
+
+.. code-block:: cpp
+	
+	vector<double> Convertq2Toq0(Grid, InDistr)
+
+Performs conversion from :math:`q_2` to :math:`q_0` distributions using information about the size grid by :math:`q_{0,i} = \dfrac{d_i^{-2} \, q_{2,i}}{M_{-2}(q_2)}`.
+
+|
+
+.. _label-convs2s3:
+
+.. code-block:: cpp
+	
+	vector<double> Convertq2Toq3(Grid, InDistr)
+
+Performs conversion from :math:`q_2` to :math:`q_3` distributions using information about the size grid by :math:`q_{3,i} = \dfrac{d_i \, q_{2,i}}{M_1(q_2)}`.
+
+|
+
+.. _label-convs3s0:
+
+.. code-block:: cpp
+
+	vector<double> Convertq3Toq0(Grid, InDistr)
+
+Performs conversion from :math:`q_3` to :math:`q_0` distributions using information about the size grid by :math:`q_{0,i} = \dfrac{d_i^{-3} \, q_{3,i}}{M_{-3}(q_3)}`.
+
+|
+
+.. _label-convs3s2:
+
+.. code-block:: cpp
+
+	vector<double> Convertq3Toq2(Grid, InDistr)
+
+Performs conversion from :math:`q_3` to :math:`q_2` distributions using information about the size grid by :math:`q_{2,i} = \dfrac{d_i^{-1} \, q_{3,i}}{M_{-1}(q_3)}`.
+
+|
+
+.. _label-convms3:
+
+.. code-block:: cpp
+
+	vector<double> ConvertMassFractionsToq3(Grid, InDistr)
+
+Calculates :math:`q_3` distribution using the size grid and the distribution of mass fractions by :math:`q_3 = w_i / \Delta d_i`.
+
+|
+
+.. _label-convmb3:
+
+.. code-block:: cpp
+
+	vector<double> ConvertMassFractionsToQ3(InDistr)
+
+Calculates :math:`Q_3` distribution using the distribution of mass fractions: :math:`Q_{3,0} = w_i` and :math:`Q_{3,i} = Q_{3,i-1} + w_i`.
+
+|
+
+.. _label-convms0:
+
+.. code-block:: cpp
+
+	vector<double> ConvertMassFractionsToq0(Grid, InDistr)
+
+Calculates :math:`q_0` distribution using the functions :ref:`ConvertMassFractionsToq3 <label-convms3>` and :ref:`Convertq3Toq0 <label-convs3s0>`.
+
+|
+
+.. _label-convmb0:
+
+.. code-block:: cpp
+
+	vector<double> ConvertMassFractionsToQ0(Grid, InDistr)
+	
+Calculates :math:`Q_0` distribution using the functions :ref:`ConvertMassFractionsToq0 <label-convms0>` and :ref:`Convertq0ToQ0 <label-convs0b0>`.
+
+|
+
+.. _label-convms2:
+
+.. code-block:: cpp
+	
+	vector<double> ConvertMassFractionsToq2(Grid, InDistr)
+
+Calculates :math:`q_0` distribution using the functions :ref:`ConvertMassFractionsToq3 <label-convms3>` and :ref:`Convertq3Toq2 <label-convs3s2>`.
+
+|
+
+.. _label-convmb2:
+
+.. code-block:: cpp
+
+	vector<double> ConvertMassFractionsToQ2(Grid, InDistr)
+
+Calculates :math:`Q_0` distribution using the functions :ref:`ConvertMassFractionsToq2 <label-convms2>` and :ref:`Convertq2ToQ2 <label-convs2b2>`.
+
+|
+
+.. _label-convs3m:
+
+.. code-block:: cpp
+
+	vector<double> Convertq3ToMassFractions(Grid, InDistr)
+		
+Calculates mass fractions from :math:`q_3` distribution using the size grid by :math:`w_i = q_{3,i}\cdot \Delta d_i`.
+
+|
+
+.. _label-convb3m:
+
+.. code-block:: cpp
+
+	vector<double> ConvertQ3ToMassFractions(InDistr)
+
+Calculates mass fractions from :math:`Q_3` distribution using the size grid: :math:`w_0 = Q_{3,0}` and :math:`w_i = Q_{3,i} - Q_{3,i-1}`.
+
+|
+
+.. _label-convs0m:
+
+.. code-block:: cpp
+
+	vector<double> Convertq0ToMassFractions(Grid, InDistr)
+
+Calculates mass fractions from :math:`q_0` distribution using the functions :ref:`Convertq0Toq3 <label-convs0s3>` and :ref:`Convertq3ToMassFractions <label-convs3m>`.
+
+|
+
+.. _label-convb0m:
+
+.. code-block:: cpp
+
+	vector<double> ConvertQ0ToMassFractions(Grid, InDistr)
+
+Calculates mass fractions from :math:`Q_0` distribution using the functions :ref:`ConvertQ0Toq0 <label-convb0s0>` and :ref:`Convertq0ToMassFractions <label-convs0m>`.
+
+|
+
+.. _label-convs2m:
+
+.. code-block:: cpp
+
+	vector<double> Convertq2ToMassFractions(Grid, InDistr)
+	
+Calculates mass fractions from :math:`q_2` distribution using the functions :ref:`Convertq2Toq3 <label-convs2s3>` and :ref:`Convertq3ToMassFractions <label-convs3m>`.
+
+|
+
+.. _label-convb2m:
+
+.. code-block:: cpp
+
+	vector<double> ConvertQ2ToMassFractions(Grid, InDistr)
+
+Calculates mass fractions from :math:`Q_2` distribution using the functions :ref:`ConvertQ2Toq2 <label-convb2s2>` and :ref:`Convertq2ToMassFractions <label-convs2m>`.
+
+|
+
+.. _label-convns0:
+
+.. code-block:: cpp
+
+	vector<double> ConvertNumbersToq0(Grid, InDistr)
+	
+Calculates :math:`q_0` distribution using the number distribution and the size grid by :math:`q_{0,i} = \dfrac{N_i}{\Delta d_i \, N_{tot}}`.
+
+|
+
+.. _label-convnb2:
+
+.. code-block:: cpp
+
+	vector<double> ConvertNumbersToQ2(Grid, InDistr)
+	
+Calculates :math:`Q_2` distribution using the number distribution and the size grid by :math:`Q_{2,i} = \dfrac{\sum\limits_{j=0}^i N_j \, \pi\,d_j^2}{\sum\limits_j N_j\, \pi\,d_j^2}`.
+
+|
+
+.. code-block:: cpp
+
+	vector<double> ConvertNumbersToQ0(Grid, InDistr)
+
+Calculates :math:`Q_0` distribution using the number distribution and the functions :ref:`ConvertNumbersToq0 <label-convns0>` and :ref:`Convertq0ToQ0 <label-convs0b0>`.
+
+|
+
+.. code-block:: cpp
+
+	vector<double> ConvertNumbersToq2(Grid, InDistr)
+
+Calculates :math:`q_2` distribution using the number distribution and the functions :ref:`ConvertNumbersToQ2 <label-convnb2>` and :ref:`ConvertQ2Toq2 <label-convb2s2>`.
+
+|
+
+.. _label-convns3:
+
+.. code-block:: cpp
+
+	vector<double> ConvertNumbersToq3(Grid, InDistr)
+	
+Calculates :math:`q_3` distribution using the number distribution and the functions :ref:`ConvertNumbersToq0 <label-convns0>` and :ref:`Convertq0Toq3 <label-convs0s3>`.
+
+|
+
+.. code-block:: cpp
+
+	vector<double> ConvertNumbersToQ3(Grid, InDistr)
+	
+Calculates :math:`Q_3` distribution using the number distribution and the functions :ref:`ConvertNumbersToq3 <label-convns3>` and :ref:`Convertq3ToQ3 <label-convs3b3>`.
+
+|
+
+.. code-block:: cpp
+
+	vector<double> ConvertNumbersToMassFractions(Grid, InDistr)
+	
+Calculates mass fractions from the number distribution using the functions :ref:`ConvertNumberToq0 <label-convns0>` and :ref:`Convertq0ToMassFractions <label-convms0>`.
+
+|
+
+.. code-block:: cpp
+
+	vector<double> Convertq0Toq0(OldGrid, OldDistr, NewGrid)
+	
+Converts :math:`q_0` distribution to the same distribution on the modified size grid.
+
+|
+
+.. code-block:: cpp
+
+	vector<double> Convertq2Toq2(OldGrid, OldDistr, NewGrid)
+	
+Converts :math:`q_2` distributions to the same distribution on the modified size grid.
+
+|
+
+.. code-block:: cpp
+
+	vector<double> Convertq3Toq3(OldGrid, OldDistr, NewGrid)
+
+Converts :math:`q_3` distributions to the same distribution on the modified size grid.
+
+|
+
+.. code-block:: cpp
+
+	NormalizeDensityDistribution(Grid, qiDistr)
+	
+Normalizes density distribution :math:`q_0` or :math:`q_3` by :math:`q_i = \dfrac{q_i}{\sum\limits_j q_j\,\Delta d_j}`.
+
+|
+
+.. code-block:: cpp
+
+	double GetDistributionMedian(Grid, QxDistr)
+	
+Returns median in [m] of :math:`Q_0` or :math:`Q_3` distribution. Median is a diameter, which corresponds to a value of distribution equal to 0.5.
+
+|
+
+.. code-block:: cpp
+
+	double GetDistributionValue (Grid, QxDistr, Val)
+
+Returns diameter in [m], which corresponds to a specified value of cumulative distribution :math:`Q_0` or :math:`Q_3`. Input value ``Val`` should range between 0 and 1.
+
+|
+
+.. code-block:: cpp
+
+	double GetDistributionMode (Grid, qxDistr)
+
+Returns diameter in [m], which corresponds to a maximum value of density distribution.
+
+|
+
+.. code-block:: cpp
+
+	double GetAverageDiameter (Grid, qxDistr)
+
+Returns average diameter in [m] of the distribution :math:`q_0` or :math:`q_3`.
+
+|
+
+.. code-block:: cpp
+
+	double GetSauterDiameter (Grid, q3Distr)
+
+Calculates Sauter diameter (:math:`d_{32}`) of :math:`q_3` distribution in [m].
+
+|
+
+.. code-block:: cpp
+
+	double GetSpecificSurface (Grid, q3Distr)
+
+Calculates specific surface of :math:`q_3` distribution in [m :math:`^2`].
+
+|
 
 .. _label-thermo:
 
 Thermodynamics
 ==============
 
+In Dyssol, thermodynamic functions are applied to calculate a material stream / holdup temperature :math:`T` from a given enthalpy value :math:`H`. In most cases, the enthalpy of a compound correlates with temperature *non-linearly*. Thus, for backward calculation of the temperature from an enthalpy value, you need to solve a non-linear equation :math:`T = f^{-1}(H)`.
+
+This solving step is replaced by a *lookup table* functionality, i.e. co-dependent temperature and enthalpy are pre-calculated for a certain range of values and then stored in a table. This table can be used to determine temperature-enthalpy value pairs by interpolation between two neighbor points.
+
+To add more functionality, these lookup tables can be called for every property defined in the materials database.
+
+.. math::
+
+	Val_{prop,i}(T/p) = f_i(T/p)
+	
+	f_{tot}(T/p) = \sum\limits_i w_i \, f_i(T/p)
+	
+	T/p = f_{tot}^{-1}(Val_{prop,tot})
 
 
+The temperature or pressure (e.g. pressure from saturation pressure or different properties) is then calculated in the following steps:
 
+	1.	Create tables of value pairs for each compound that is present in the system, i.e. temperature / pressure and respective dependent property value over a certain range of the temperature / pressure.
 
+	2.	Combine the compound-lookup tables by mass-weighted summation of the tables.
 
+	3.	Read-out of temperature / pressure from the resulting lookup-table at a certain point of the property by interpolation between neighbor value pairs.
+
+The functions in base unit are less time-consuming than the material stream / holdup-function and therefore are implemented for usage during solving process (i.e. function :ref:`CalculateResiduals <label-CalculateResiduals>`), if the composition of the material stream / holdup varies in each iteration.
+
+In :ref:`label-unitsLib`, ``Heater`` and ``HeatExchanger`` apply thermodynamic calculations.
+
+|
+
+For material stream and holdup
+------------------------------
+
+.. code-block:: cpp
+
+	double CalcTemperatureFromProperty(ECompoundTPProperties Property, double Time, double Value)
+
+Returns temperature of the material stream / holdup for a specific value ``Value`` of the property ``Property`` at the time point ``Time``. Possible properties are those defined in :ref:`label-materialDat`.
+
+|
+
+.. code-block:: cpp
+
+	double CalcPressureFromProperty(ECompoundTPProperties Property, double Time, double Value)
+
+Returns pressure of the material stream / holdup for a specific value ``Value`` of the property ``Property`` at the time point ``Time``. Possible properties are those defined in :ref:`label-materialDat`.
+
+|
+
+For base unit
+-------------
+
+.. code-block:: cpp
+
+	double CalcTemperatureFromProperty(ECompoundTPProperties Property,vector<double>& CompoundFractions, double Value)
+
+Returns temperature of a generic system of composition ``CompoundFractions`` for a specific value ``Value`` of the property ``Property``. Possible properties are those defined in :ref:`label-materialDat`.
+
+|
+
+.. code-block:: cpp
+
+	double CalcPressureFromProperty(ECompoundTPProperties Property,vector<double>& CompoundFractions, double Value)
+
+Returns pressure of a generic system of composition ``CompoundFractions`` for a specific value ``Value`` of the property ``Property``. Possible properties are those defined in :ref:`label-materialDat`.
+
+|
+
+.. code-block:: cpp
+
+	void HeatExchange(CMaterialStream* Stream1, CMaterialStream* Stream2, double Time, double Efficiency);
+
+Performs a heat exchange between material streams ``Stream1`` and ``Stream2`` at specified time point ``Time`` with a specified efficiency (0 ≤ ``Efficiency`` ≤ 1).
+
+.. math::
+
+	|\dot Q| = \varepsilon \, |\dot Q_{ideal}| = \varepsilon \, \left | \int_{T_1}^{T_{mix}} \dot m_1\,c_{P,1}(\theta)\,d\theta \right | = \varepsilon \, \left | \int_{T_2}^{T_{mix}} \dot m_2\,c_{P,2}(\theta)\,d\theta \right |
+
+:math:`\varepsilon` stands for efficiency and :math:`\theta` for temperature as an integration variable.
+
+|
+
+.. _label-externalSolver:
+
+External solver
+===============
+
+As mentioned in section :ref:`label-solverDev`, you can generate your own solvers in Dyssol under class ``CExternalSolver``. 
+
+In Dyssol, external solvers are connected with open-source programm packages from the internet. Thus you can only do some basic operations for these solvers, such as generate new solver, name it, get ID and version, initialize and finalize, etc.
+
+In this section, the functions and variables applied in external solver are introduced.
+
+|
+
+.. code-block:: cpp
+
+	CExternalSolver()
+	
+Basic **constructor** of the solver. Creates an empty external solver. Called only once when solver is added to the unit.
+
+Internal variables are:
+
+- ``m_solverName``: name of the solver that will be displayed in user interface of Dyssol.
+
+- ``m_authorName``: solver’s author
+
+- ``m_solverUniqueKey``: unique identificator of the solver. Simulation environment distinguishes different solvers with the help of this identificator. You must ensure that ID of your solver is unique. This ID can be created manually or using *GUID-generator* of Visual Studio (*Tools → GUID Genarator*).
+
+- ``m_solverVersion``: current version of the solver.
+
+|
+
+Basic information
+-----------------
+
+.. code-block:: cpp
+
+	std::string GetName()
+
+Returns name of the solver.
+
+|
+
+.. code-block:: cpp
+
+	std::string GetUniqueID()
+	
+Returns string key, which is unique among all solvers.
+
+|
+
+.. code-block:: cpp
+
+	std::string GetAuthorName()
+
+Returns name of the solver's author.
+
+|
+
+.. code-block:: cpp
+
+	unsigned GetVersion()
+
+Returns version of the solver.
+
+|
+
+Virtual functions
+-----------------
+
+.. code-block:: cpp
+
+	virtual void Initialize()
+
+Solver‘s initialization. This function is called only once for each simulation during the initialization of unit. Implementation of this function is not obligatory and can be skipped.
+
+|
+
+.. code-block:: cpp
+
+	virtual void Finalize()
+
+Unit‘s finalization. This function is called only once for each simulation during the finalization of unit. Implementation of this function is not obligatory and can be skipped.
+
+|
+
+.. _label-DAE:
+
+DAE Systems
+===========
+
+In Dyssol, you can solve systems of :abbr:`DAE (Differential-algebraic equations)` automatically. In this case, the unit should contain one or several additional objects of class ``CDAEModel``. This class is used to describe :abbr:`DAE (Differential-algebraic equations)` systems and can be automatically solved with class ``CDAESolver``. 
+
+|
+
+DAE model
+---------
+
+.. code-block:: cpp
+
+	CDAEModel()
+
+Basic **constructor**. Creates an empty DAE model.
+
+|
+
+Variables
+"""""""""
+
+.. _label-AddDAEVariable:
+
+.. code-block:: cpp
+
+	unsigned AddDAEVariable(bool _bIsDifferentiable, double _dVariableInit, double _dDerivativeInit, double _dConstraint)
+	
+Adds new algebraic (``_bIsDifferentiable = false``) or differential (``_bIsDifferentiable = true``) variable with initial values ``_dVariableInit`` and ``_dDerivativeInit``. 
+
+Should be called in function ``Initialize(Time)`` of the unit. Returns unique index of added variable. 
+
+``_dConstraint`` sets the constraint for the variable, different values of ``_dConstraint`` are defined as follows:
+
+	-	0.0: no constraint
+	
+	-	1.0: Variable ≥ 0.0
+	
+	-	−1.0: Variable ≤ 0.0
+	
+	-	2.0: Variable > 0.0
+	
+	-	−2.0: Variable < 0.0
+
+|
+
+.. code-block:: cpp
+
+	unsigned GetVariablesNumber()
+	
+Returns current number of defined variables. 
+
+|
+
+.. code-block:: cpp
+
+	void ClearVariables()
+
+Removes all defined variables from the model.
+
+|
+
+Tolerance
+"""""""""
+
+.. _label-setTol:
+
+.. code-block:: cpp
+
+	void SetTolerance(double _dRTol, double _dATol)
+
+Sets values of relative and absolute tolerances for all variables. 
+
+|
+
+.. code-block:: cpp
+
+	void SetTolerance(double _dRTol, std::vector<double> &_vATol)
+
+Sets value of relative tolerance for all variables and absolute tolerances for each variable separately.
+
+|
+
+.. code-block:: cpp
+
+	double GetRTol()
+
+Returns current relative tolerance. 
+
+|
+
+.. code-block:: cpp
+
+	double GetATol(unsigned _dIndex)
+
+Returns current absolute tolerance for specified variable. 
+
+|
+
+Virtual functions
+"""""""""""""""""
+
+.. _label-CalculateResiduals:
+
+.. code-block:: cpp
+
+	virtual void CalculateResiduals(double _dTime, double *_pVars, double *_pDerivs, double *_pRes, void *_pUserData)
+	
+Computes the problem residual for given values of the independent variable ``_dTime``, state vector ``_pVars``, and derivatives ``_pDerivs``. Here the :abbr:`DAE (Differential-algebraic equations)` system should be specified in implicit form. Function will be called by solver automatically.
+
+	- ``_dTime``: current value of the independent variable :math:`t`.
+
+	- ``_pVars``: pointer to an array of the dependent variables, :math:`y(t)`.
+
+	- ``_pDerivs``: pointer to an array of derivatives :math:`y'(t)`.
+
+	- ``_pRes``: output residual vector :math:`F(t, y, y')`.
+
+	- ``_pUserData``: pointer to user's data. Is used to provide access from this function to unit’s data.
+
+|
+
+.. _label-ResultsHandler:
+
+.. code-block:: cpp
+
+	virtual void ResultsHandler(double _dTime, double *_pVars, double *_pDerivs, void *_pUserData)
+	
+Processing the results returned by the solver at each calculated step. Called by solver every time when the solution in new time point is ready.
+
+	- ``_dTime``: current value of the independent variable :math:`t`.
+
+	- ``_pVars``: current values of the dependent variables, :math:`y(t)`.
+
+	- ``_pDerivs``: current values of derivatives :math:`y'(t)`.
+
+	- ``_pUserData``: pointer to user's data. Is used to provide access from this function to unit’s data.
+
+|
+
+Other functions
+"""""""""""""""
+
+.. code-block:: cpp
+
+	void Clear()
+	
+Removes all data from the model. 
+
+|
+
+.. code-block:: cpp
+
+	void SetUserData(void *_pUserData)
+
+Set pointer to user’s data. This data will be returned in overloaded functions :ref:`CalculateResiduals <label-CalculateResiduals>` and :ref:`ResultsHandler <label-ResultsHandler>`. Usually is used to provide access from these functions to unit’s data.
+
+|
+
+.. _label-DAEsolver:
+
+DAE solver
+----------
+
+.. code-block:: cpp
+
+	CDAESolver()
+
+Basic **constructor**. Creates an empty solver.
+
+|
+
+Model
+"""""
+
+.. _label-setModel:
+
+.. code-block:: cpp
+
+	bool SetModel(CDAEModel *_pModel)
+
+Sets model to a solver. Should be called in function ``Initialize(Time)`` of the unit. Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetMaxStep()
+
+Sets maximum time step for solver. Should be used in ``Unit::Initialize(Time)`` before the function ``CDAESolver::SetModel()``.
+
+|
+
+.. _label-Calculate:
+
+.. code-block:: cpp
+
+	bool Calculate(double _dTime)
+
+Solves problem on a given time point. Should be called in function ``Simulate(Time)`` of the unit. Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool Calculate(double _dStartTime, double _dEndTime)
+
+Solves problem on a given time interval. Should be called in function ``Simulate(Time)`` of the unit. Returns ``false`` on error.
+
+|
+
+Other functions
+"""""""""""""""
+
+.. code-block:: cpp
+
+	void SaveState()
+
+Saves current state of the solver. Should be called in function :ref:`SaveState <label-SaveState>` of the unit.
+
+|
+
+.. code-block:: cpp
+
+	void LoadState()
+
+Loads last saved state of the solver. Should be called in function :ref:`LoadState <label-LoadState>` of the unit.
+
+|
+
+.. code-block:: cpp
+
+	std::string GetError()
+
+Returns error’s description. Can be called if function :ref:`SetModel <label-setModel>` or :ref:`Calculate <label-Calculate>` returns ``false``.
+
+|
+
+Application example
+-------------------
+
+Assume that you are going to solve a dynamic :abbr:`DAE (Differential-algebraic equations)` system,
+
+.. math::
+
+	\begin{cases}
+		\dfrac{dx}{dt} = -0.04 \cdot x + 10^4 \cdot y \cdot z &x(0) = 0.04 
+		
+		\dfrac{dy}{dt} = 0.04\cdot x - 10^4 \cdot y \cdot z - 3 \cdot 10^7 \cdot y^2 &y(0) = -0.04
+		
+		x + y + z = 1
+	\end{cases}
+
+where :math:`x`, :math:`y`, :math:`z` are fractions of solid, liquid and vapor phases of the output stream of the unit.
+
+Now you want to develope a new unit for for automatic calculation of this :abbr:`DAE (Differential-algebraic equations)` by using built-in solvers of Dyssol, just do the following steps:
+
+1.	Add a new template unit to your solution and name it ``DynamicUnitWithSolver``, please refer to :ref:`label-unitDev`. 
+
+2.	In file ``Unit.h``, there is already a class of :abbr:`DAE (Differential-algebraic equations)` model ``CMyDAEModel`` defined with:
+
+	- two functions, which must be overridden (:ref:`CalculateResiduals <label-CalculateResiduals>` and :ref:`ResultsHandler <label-ResultsHandler>`) and
+	
+	- a class of unit ``CUnit`` with two additional variables (for :abbr:`DAE (Differential-algebraic equations)` model ``CMyDAEModel m_Model``, for :abbr:`DAE (Differential-algebraic equations)` solver ``CDAESolver m_Solver``). 
+
+	Add three variables in class ``CMyDAEModel`` to store indices for :math:`x`, :math:`y` and :math:`z` variables, name them ``m_nS``, ``m_nL`` and ``m_nV`` respectively. 
+	
+	After adding description of class ``CMyDAEModel``, your code should look like this:
+	
+	.. code-block:: cpp
+	
+		class CMyDAEModel : public CDAEModel
+		{		
+		public:		
+			unsigned m_nS; //solid fraction			
+			unsigned m_nL; //liquid fraction			
+			unsigned m_nV; //vapor fraction
+			
+		public:		
+			void CalculateResiduals(double _dTime, double* _pVars, double* _pDers, double* _pRes, void* _pUserData);			
+			void ResultsHandler(double _dTime, double* _pVars, double* _pDerivs, void *_pUserData);
+		};
+
+3.	Setup unit’s basic info (name, author’s name, unique id, ports) as described in :ref:`label-unitDev`.Then provide model with pointer to your unit, in order to have an access to the unit from functions of the model. Now your unit’s constructor must look like this:
+
+	.. code-block:: cpp
+	
+		CUnit::CUnit()
+		{
+			m_sUnitName = "DummyUnit4";
+			m_sAuthorName = "Author";
+			m_sUniqueID = "344BCC0048AA4c3a9117F20A9F8AF9A8"; //an example ID
+
+			AddPort("InPort", INPUT_PORT);
+			AddPort("OutPort", OUTPUT_PORT);
+
+			m_Model.SetUserData(this);
+		}
+
+4.	Implement function ``Initialize`` of the unit: add 3 variables with specified initial conditions to the model (using function :ref:`AddDAEVariable  <label-AddDAEVariable>`) according to the equation system. As initials use phase fractions of the input stream. 
+
+	.. code-block:: cpp
+
+		m_Model.m_nS = m_Model.AddDAEVariable(true,dSolidFraction,0.04,1.0);
+		m_Model.m_nL = m_Model.AddDAEVariable(true,dLiquidFraction,-0.04,1.0);
+		m_Model.m_nV = m_Model.AddDAEVariable(false,dVaporFraction,0,1.0);
+
+	Since function ``Initialize`` is called every time when simulation starts, all variables must be previously removed from the model by calling ``ClearVariables``. 
+
+	.. code-block:: cpp
+
+		m_Model.ClearVariables();
+
+	Set tolerances to the model using function :ref:`SetTolerance <label-setTol>`. As tolerances for the model global tolerances of the system can be used. 
+
+	.. code-block:: cpp
+
+		m_Model.SetTolerance( GetRelTolerance(), GetAbsTolerance() );
+
+	Now, you can connect your model to the solver by calling function :ref:`SetModel <label-setModel>`. To receive errors from solver, connect it to the global errors handling procedure. 
+
+	.. code-block:: cpp
+
+		if( !m_Solver.SetModel(&m_Model) )
+			RaiseError(m_Solver.GetError());
+				
+	Initialize the unit after all changes take place using function ``Initialize``.
+
+	.. code-block:: cpp
+
+		void CUnit::Initialize(double _dTime)
+		{
+			CMaterialStream *pInpStream = GetPortStream("InPort");	
+
+			double dSFr = pInpStream->GetSinglePhaseProp(_dTime, FRACTION, SOA_SOLID);
+			double dLFr = pInpStream->GetSinglePhaseProp(_dTime, FRACTION, SOA_LIQUID);
+			double dVFr = pInpStream->GetSinglePhaseProp(_dTime, FRACTION, SOA_VAPOR);
+
+			m_Model.ClearVariables();
+			m_Model.m_nS = m_Model.AddDAEVariable(true, dSFr, 0.04, 1.0);
+			m_Model.m_nL = m_Model.AddDAEVariable(true, dLFr, -0.04, 1.0);
+			m_Model.m_nV = m_Model.AddDAEVariable(false, dVFr, 0, 1.0);
+
+			m_Model.SetTolerance( GetRelTolerance(), GetAbsTolerance() );
+			if( !m_Solver.SetModel(&m_Model) )
+				RaiseError(m_Solver.GetError());
+		}
+			
+5.	Connect solver to a system saving / loading procedure in functions ``SaveState()`` and ``LoadState()`` of the unit:
+
+	.. code-block:: cpp
+
+		void CUnit::SaveState()
+		{
+			m_Solver.SaveState();
+		}
+
+		void CUnit::LoadState()
+		{
+			m_Solver.LoadState();
+		}
+
+6.	In function ``Simulate`` of the unit calculation procedure should be run by calling function ``Calculate`` of the solver. Additionally solver can be connected to the system’s errors handling procedure to receive possible errors during the calculation. Unit’s ``Simulate`` function after that must look as follows:
+
+	.. code-block:: cpp
+
+		void CUnit::Simulate(double _dStartTime, double _dEndTime)
+		{
+			CMaterialStream *pInputStream = GetPortStream("InPort");
+			CMaterialStream *pOutputStream = GetPortStream("OutPort");
+
+			pOutputStream->RemoveTimePointsAfter(_dStartTime, true);
+			pOutputStream->CopyFromStream(pInputStream, _dStartTime);
+
+			if( !m_Solver.Calculate(_dStartTime, _dEndTime) )
+				RaiseError( m_Solver.GetError() );
+		}
+
+7.	In function ``CalculateResiduals``, :abbr:`DAE (Differential-algebraic equations)` system in implicit form should be described:
+	
+	.. math::
+
+		\begin{cases}
+			\frac{dx}{dt} = -0.04 \cdot x + 10^4 \cdot y \cdot z &x(0) = 0.04 
+			
+			\frac{dy}{dt} = 0.04\cdot x - 10^4 \cdot y \cdot z - 3 \cdot 10^7 \cdot y^2 &y(0) = -0.04
+			
+			x + y + z = 1
+		\end{cases}
+
+		
+	.. code-block:: cpp
+
+		void CMyDAEModel::CalculateResiduals(double _dTime, double* _pVars, double* _pDers, double* _pRes, void* _pUserData)
+		{
+			_pRes[m_nS] = _pDers[m_nS] - (-0.04*_pVars[m_nS] + 1.0e4*_pVars[m_nL]*_pVars[m_nV]);
+			_pRes[m_nL] = _pDers[m_nL] - ( 0.04*_pVars[m_nS] - 1.0e4*_pVars[m_nL]*_pVars[m_nV] - 3.0e7*_pVars[m_nL]*_pVars[m_nL] );
+			_pRes[m_nV] = _pVars[m_nS] + _pVars[m_nL] + _pVars[m_nV] - 1;
+		}
+
+8.	Last step is handling of results from the solver (``CMyDAEModel::ResultsHandler``). Calculated fractions can be set here to the output stream of the unit. To access to the unit’s data, use the pointer ``_pUserData`` defined previously:
+
+	.. code-block:: cpp
+
+		void CMyDAEModel::ResultsHandler(double _dTime, double* _pVars, double* _pDerivs, void *_pUserData)
+		{
+			CUnit *unit = static_cast<CUnit*>(_pUserData);
+			CMaterialStream *pStream = static_cast<CMaterialStream*>(unit->GetPortStream("OutPort"));
+
+			pStream->AddTimePoint(_dTime);
+
+			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_SOLID, _pVars[m_nS]);
+			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_LIQUID, _pVars[m_nL]);
+			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_VAPOR, _pVars[m_nV]);
+		} 
+
+|
+
+Matrices
+========
+
+Several types of matrix classes, including the following types, are introduced in this section. 
+
+- Transform matrix: ``CTransformMatrix``.
+
+- Dense 2-dimensional matrix: ``CDense2DMatrix``.
+
+- Dense multidimensional matrix: ``CDenseMDMatrix``.
+
+|
+
+Transformation matrix
+---------------------
+
+:ref:`label-TM` (class ``CTransformMatrix``) are applied to describe laws of changes for multidimensional distributions. Each cell of matrix describes how much of material will be transferred from one class of multidimensional distribution to another.
+
+|
+
+.. code-block:: cpp
+
+	CTransformMatrix()
+	
+Basic **constructor**. Creates an empty matrix.
+
+|
+
+.. code-block:: cpp
+
+	CTransformMatrix (unsigned _nType, unsigned _nClasses)
+
+Creates matrix to transform one-dimensional distribution with type ``_nType`` and ``_nClasses`` classes. ``_nType`` is one of the :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. 
+
+All values in matrix will be set to 0.
+
+|
+
+.. code-block:: cpp
+
+	CTransformMatrix(unsigned _nType1, unsigned _nClasses1, unsigned _nType2, unsigned _nClasses2)
+
+Creates matrix to transform two-dimensional distribution with types ``_nType1`` and ``_nType2`` and classes ``_nClasses1`` and ``_nClasses2``. ``_nType1`` and ``_nType2`` are types from :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. 
+
+All values in matrix will be set to 0.
+
+|
+
+.. code-block:: cpp
+
+	CTransformMatrix(const std::vector<unsigned> &_vTypes, const std::vector<unsigned> &_vClasses)
+
+Creates transformation matrix for distribution with specified types and classes. ``_vTypes`` and ``_vClasses`` must have the same length. ``_vTypes`` is the vector of types from :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. 
+
+All values in matrix will be set to 0.
+
+|
+
+Dimensions
+""""""""""
+
+.. code-block:: cpp
+
+	bool SetDimensions(unsigned _nType, unsigned _nClasses)
+
+Sets new dimensions set to the matrix in order to transform one-dimensional distribution with type ``_nType`` and ``_nClasses`` classes. ``_nType`` is one of the :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. 
+
+Old data will be erased and matrix will be initialized with zeroes. Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetDimensions(unsigned _nType1, unsigned _nClasses1, unsigned _nType2, unsigned _nClasses2)
+
+Sets new dimensions set to the matrix in order to transform two-dimensional distribution. 
+
+``_nType1`` and ``_nType2`` are types of the :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. Types must be unique. ``_nClasses1`` and ``_nClasses2`` are number of classes in corresponding distributions. 
+
+Old data will be erased and matrix will be initialized with zeroes. Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetDimensions(unsigned _nType1, unsigned _nClasses1, unsigned _nType2, unsigned _nClasses2, unsigned _nType3, unsigned _nClasses3)
+
+Sets new dimensions set to the matrix in order to transform three-dimensional distribution. 
+
+``_nType1``, ``_nType2`` and ``_nType3`` are one of the :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. Types must be unique.  ``_nClasses1``, ``_nClasses2`` and ``_nClasses3`` are number of classes in corresponding distributions. 
+
+Old data will be erased and matrix will be initialized with zeroes. Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetDimensions(const std::vector<unsigned> &_vTypes, const std::vector<unsigned> &_vClasses)
+
+Sets new dimensions set with types ``_vTypes`` and numbers of classes ``_vClasses``. ``_vTypes`` is the vector of :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. 
+
+All old data will be erased and matrix will be initialized with zeroes. Sizes of vectors ``_vTypes`` and ``_vClasses`` must be equal. Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	std::vector<unsigned> GetDimensions()
+
+Returns vector with all current defined dimensions types.
+
+|
+
+.. code-block:: cpp
+
+	std::vector<unsigned> GetClasses()
+
+Returns vector with current numbers of classes.
+
+|
+
+.. code-block:: cpp
+
+	unsigned GetDimensionsNumber() 
+
+Returns current number of dimensions.
+
+|
+
+Get data
+""""""""
+
+.. code-block:: cpp
+
+	double GetValue(unsigned _nCoordSrc, unsigned _nCoordDst)
+
+Returns value by specified coordinates according to all defined dimensions in transformation matrix for one-dimensional distribution. ``_nCoordSrc`` is coordinate of a source class, ``_nCoordDst`` is coordinate of a destination class. 
+
+Returning value is a mass fraction, which will be transferred from the source class to the destination class. Works with one-dimensional distribution only. Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	double GetValue(unsigned _nCoordSrc1, unsigned _nCoordSrc2, unsigned _nCoordDst1, unsigned _nCoordDst2)
+
+Returns value by specified coordinates according to all defined dimensions in transformation matrix for two-dimensional distribution. ``_nCoordSrc1`` and ``_nCoordSrc2`` are coordinates of a source class, ``_nCoordDst1`` and ``_nCoordDst2`` are coordinate of a destination class. 
+
+Returning value is a mass fraction, which will be transferred from the source class to the destination class. Works with two-dimensional distribution only. Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	double GetValue(const std::vector<unsigned> &_vCoordsSrc, const std::vector<unsigned> &_vCoordsDst)
+
+Returns value by specified coordinates according to all defined dimensions. ``_vCoordsSrc`` are coordinates of a source class, ``_vCoordsDst`` are coordinates of a destination class. Sizes of vectors ``_vCoordsSrc`` and ``_vCoordsDst`` must be equal and must correspond to the number of currently defined dimensions. 
+
+Returning value is a mass fraction, which will be transferred from the source class to the destination class. Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	double GetValue(const std::vector<unsigned> &_vDimsSrc, const std::vector<unsigned> &_vCoordsSrc, const std::vector<unsigned> &_vDimsDst, const std::vector<unsigned> &_vCoordsDst)
+
+Returns value according to specified coordinates and dimensions. Number of dimensions must be the same as defined in the transformation matrix, but their sequence can be different. Sizes of all vectors must be equal. 
+
+Returning value is a mass fraction, which will be transferred from the source class to the destination class. Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool GetVectorValue(const std::vector<unsigned> &_vCoordsSrc, const std::vector<unsigned> &_vCoordsDst, std::vector<double> &_vResult)
+
+Returns vector value by specified coordinates according to all defined dimensions. Size of one vector of coordinates must be equal to the number of dimensions in transformation matrix; size of the second one must be one less. 
+
+Returning value ``_vResult`` is a vector of mass fractions, which will be transferred from the source to the destination. Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool GetVectorValue(const std::vector<unsigned> &_vDimsSrc, const std::vector<unsigned> &_vCoordsSrc, const std::vector<unsigned> &_vDimsDst, const std::vector<unsigned> &_vCoordsDst, std::vector<double> &_vResult)
+
+Returns vector of values according to specified coordinates and dimensions sequence. Number of dimensions must be the same as defined in the transformation matrix, but their sequence can be different. Size of one vector of coordinates must be equal to the number of dimensions in transformation matrix; size of the second one must be one less. 
+
+Returning value ``_vResult`` is a vector of mass fractions, which will be transferred from the source to the destination. Returns ``false`` on error.
+
+|
+
+Set data
+""""""""
+
+.. code-block:: cpp
+
+	bool SetValue(unsigned _nCoordSrc, unsigned _nCoordDst, double _dValue)
+
+Sets value by specified coordinates for one-dimensional distribution. ``_nCoordSrc`` is a coordinate of the source class; ``_nCoordDst`` is a coordinate of the destination class. ``_dValue`` is a mass fraction, which will be transferred from the source class to the destination class. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetValue (unsigned _nCoordSrc1, unsigned _nCoordSrc2, unsigned _nCoordDst1, unsigned _nCoordDst2, double _dValue)
+
+Sets value by specified coordinates for two-dimensional distribution. 
+
+``_nCoordSrc1`` and ``_nCoordSrc2`` are coordinate of the source class; ``_nCoordDst1`` and ``_nCoordDst2`` are coordinate of the destination class. ``_dValue`` is a mass fraction, which will be transferred from the source class to the destination class. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetValue (const std::vector<unsigned> &_vCoordsSrc, const std::vector<unsigned> &_vCoordsDst, double _dValue)
+
+Sets value by specified coordinates and full dimensions set. ``_vCoordsSrc`` are coordinates of the source class, ``_vCoordsDst`` are coordinates of the destination class. Sizes of vectors ``_vCoordsSrc`` and ``_vCoordsDst`` must be equal. ``_dValue`` is a mass fraction, which will be transferred from the source class to the destination class. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetValue (const std::vector<unsigned> &_vDimsSrc, const std::vector<unsigned> &_vCoordsSrc, const std::vector<unsigned> &_vDimsDst, const std::vector<unsigned> &_vCoordsDst, double _dValue)
+
+Sets value according to specified coordinates and dimensions. Number of dimensions must be the same as defined in the transformation matrix, but their sequence can be different. Sizes of all vectors must be equal. ``_dValue`` is a mass fraction, which will be transferred from the source class to the destination class. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetVectorValue (const std::vector<unsigned> &_vCoordsSrc, const std::vector<unsigned> &_vCoordsDst, const std::vector<double> &_vValue)
+
+Sets vector of values by specified coordinates according to all defined dimensions. Size of one vector of coordinates must be equal to the number of dimensions in transformation matrix; size of the second one must be one less. ``_vValue`` is a vector of mass fractions, which will be transferred from the source to the destination. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetVectorValue (const std::vector<unsigned> &_vDimsSrc, const std::vector<unsigned> &_vCoordsSrc, const std::vector<unsigned> &_vDimsDst, const std::vector<unsigned> &_vCoordsDst, const std::vector<double> &_vValue)
+
+Sets vector of values according to specified coordinates and dimensions sequence. Number of dimensions must be the same as defined in the transformation matrix, but their sequence can be different. Size of one vector of coordinates must be equal to the number of dimensions in transformation matrix; size of the second one must be one less. ``_vValue`` is a vector of mass fractions, which will be transferred from the source to the destination. 
+
+Returns ``false`` on error.
+
+|
+
+Other functions
+"""""""""""""""
+
+.. code-block:: cpp
+
+	void Normalize()
+
+Normalizes data in matrix: sets sum of material which transfers from each single class to 1.
+
+|
+
+.. code-block:: cpp
+
+	void ClearData()
+
+Sets all data in matrix to 0.
+
+|
+
+.. code-block:: cpp
+
+	void Clear()
+
+Removes all data and information about dimensions from the matrix.
+
+|
+
+Two-dimensional matrix
+----------------------
+
+Basic information and functions of class ``CDense2DMatrix`` are introduced below.
+
+|
+
+.. code-block:: cpp
+
+	CDense2DMatrix()
+
+**Basic constructor**. Creates empty matrix with zero in all rows and columns.
+
+|
+
+.. code-block:: cpp
+
+	CDense2DMatrix(CDense2DMatrix &_matrix)
+
+**Copy constructor**. Creates matrix with the same dimensions as in ``_matrix`` and copies all data.
+
+|
+
+.. code-block:: cpp
+
+	CDense2DMatrix(unsigned _nRows, unsigned _nColumns)
+
+Creates new matrix with specified number of rows and columns. All data will be set to 0.
+
+|
+
+Dimensions
+""""""""""
+
+.. code-block:: cpp
+
+	void SetDimensions(unsigned _nRows, unsigned _nColumns)
+
+Sets new dimensions to the matrix. Old data is removed and all entries are set to zero.
+
+|
+
+.. code-block:: cpp
+
+	unsigned GetRowsNumber()
+
+Returns number of rows in the matrix.
+
+|
+
+.. code-block:: cpp
+
+	unsigned GetColumnsNumber()
+
+Returns number of columns in the matrix.
+
+|
+
+Get data
+""""""""
+
+.. code-block:: cpp
+
+	double GetValue(unsigned _nRow, unsigned _nColumn)
+
+Returns data by the specified indexes. Returns ``0`` if such indexes do not exist.
+
+|
+
+.. code-block:: cpp
+
+	std::vector<double> GetRow(unsigned _nRow)
+
+Returns vector of data for specified row. Returns empty vector if such row does not exist.
+
+|
+
+.. code-block:: cpp
+
+	std::vector<double> GetColumn(unsigned _nColumn)
+
+Returns vector of data for specified column. Returns empty vector if such column does not exist.
+
+|
+
+.. code-block:: cpp
+
+	std::vector<std::vector<double>> GetMatrix()
+
+Returns all data in form of vector-of-vectors.
+
+|
+
+Set data
+""""""""
+
+.. code-block:: cpp
+
+	void SetValue(unsigned _nRow, unsigned _ nColumn, double _dValue)
+
+Sets data ``_dValue`` by the specified indexes.
+
+|
+
+.. code-block:: cpp
+
+	void SetRow(unsigned _nRow, const std::vector<double>& _Values)
+
+Sets data ``_Values`` to a specified row.
+
+|
+
+.. code-block:: cpp
+
+	void SetColumn(unsigned _nColumn, const std::vector<double>& _Values)
+
+Sets data ``_Values`` to a specified column.
+
+|
+
+.. code-block:: cpp
+
+	void SetMatrix(const std::vector<std::vector<double>>& _matr)
+
+Sets all values in form vector-of-vectors ``_matr`` to matrix. ``_matr`` must have the same dimensions as the matrix itself.
+
+|
+
+Overloaded operators
+""""""""""""""""""""
+
+.. code-block:: cpp
+
+	CDense2DMatrix operator+(const CDense2DMatrix& _Matrix1, const CDense2DMatrix &_Matrix2)
+
+Performs **addition** of two matrices with the same dimensions. Returns an empty matrix in case of different dimensions.
+
+|
+
+.. code-block:: cpp
+
+	CDense2DMatrix operator-(const CDense2DMatrix &_Matrix1, const CDense2DMatrix &_Matrix2)
+
+Performs **subtraction** of two matrices with the same dimensions. Returns an empty matrix in case of different dimensions.
+
+|
+
+.. code-block:: cpp
+
+	CDense2DMatrix operator*(double _dMultiplier)
+
+Performs **multiplication** of the matrix with a coefficient ``_dMultiplier``.
+
+|
+
+.. code-block:: cpp
+
+	CDense2DMatrix& operator=(const CDense2DMatrix &_matrix)
+
+Sets dimenions and data from the ``_matrix`` to a left matrix.
+
+|
+
+Other functions
+"""""""""""""""
+
+.. code-block:: cpp
+
+	void Normalize()
+
+Normalizes the matrix so that the sum of all elements equals to 1.
+
+|
+
+.. code-block:: cpp
+
+	void ClearData()
+
+Sets all elements in matrix to 0.
+
+|
+
+.. code-block:: cpp
+
+	void Clear()
+	
+Removes all data and sets number of rows and columns equal to 0.
+
+|
+
+Multidimensional matrix
+-----------------------
+
+Basic information and functions of class ``CDenseMDMatrix`` are introduced below.
+
+|
+
+.. code-block:: cpp
+
+	CDenseMDMatrix()
+
+**Basic constructor**. Creates an empty matrix.
+
+|
+
+.. code-block:: cpp
+
+	CDenseMDMatrix(const CDenseMDMatrix &_source)
+
+**Copy constructor**. Creates matrix with the same dimensions as in ``_source`` and copies all data from there.
+
+|
+
+Dimensions
+""""""""""
+
+.. code-block:: cpp
+
+	bool SetDimensions(unsigned _nType, unsigned _nClasses)
+
+Sets **one-dimensional** distribution of type _nType and numbers of classes ``_nClasses``. 
+
+``_nType`` is one of :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. All old data will be erased. Matrix will be initialized with zero values. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetDimensions(unsigned _nType1, unsigned _nClasses1, unsigned _nType2, unsigned _nClasses2)
+
+Sets **two-dimensional** distribution of types ``_nType1`` and ``_nType2`` and numbers of classes ``_nClasses1`` and ``_nClasses2``. 
+
+``_nType1`` and ``_nType2`` are from :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. All types must be unique. All old data will be erased. Matrix will be initialized with zero values. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetDimensions(unsigned _nType1, unsigned _nClasses1, unsigned _nType2, unsigned _nClasses2, unsigned _nType3, unsigned _nClasses3)
+
+Sets **three-dimensional** distribution of types ``_nType1``, ``nType2`` and ``_nType3`` and numbers of classes ``_nClasses1``, ``_nClasses2`` and ``_nClasses3``. 
+
+``_nType1``, ``nType2`` and ``_nType3`` are from :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. All types must be unique. All old data will be erased. Matrix will be initialized with zero values. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetDimensions(const std::vector<unsigned> &_vTypes, const std::vector<unsigned> &_vClasses)
+
+Sets types ``_vTypes`` of dimensions and numbers of classes ``_vClasses``. 
+
+``_vTypes`` is the vector of :ref:`pre-defined types of solid distributions <label-EDistrTypes>`. All types must be unique. All old data will be erased. Matrix will be initialized with zero values. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	std::vector<unsigned> GetDimensions()
+
+Returns vector with all currently defined dimensions types.
+
+|
+
+.. code-block:: cpp
+
+	std::vector<unsigned> GetClasses()
+
+Returns vector with current numbers of classes.
+
+|
+
+.. code-block:: cpp
+
+	unsigned GetDimensionsNumber() 
+
+Returns current number of dimensions.
+
+|
+
+Get data
+""""""""
+
+.. code-block:: cpp
+
+	double GetValue(unsigned _nDim, unsigned _nCoord)
+
+Returns value with specified coordinate ``_nCoord`` of specified dimension ``_nDim``. It is possible to use this function if matrix has more than one dimension: if number of dimensions does not conform to the matrix, the sum of values by remaining dimensions will be returned. 
+
+Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	double GetValue(unsigned _nDim1, unsigned _nCoord1, unsigned _nDim2, unsigned _nCoord2)
+
+Returns value according to specified coordinates and dimensions. It is possible to use this function if matrix has more than two dimensions: if number of dimensions does not conform to the matrix, the sum of values by remaining dimensions will be returned. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	double GetValue(unsigned _nDim1, unsigned _nCoord1, unsigned _nDim2, unsigned _nCoord2, unsigned _nDim3, unsigned _nCoord3)
+
+Returns value according to specified coordinates and dimensions. It is possible to use this function if matrix has more than three dimensions: if number of dimensions does not conform to the matrix, the sum of values by remaining dimensions will be returned. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	double GetValue(const std::vector<unsigned> &_vDims, const std::vector<unsigned> &_vCoords)
+
+Returns value according to specified coordinates and dimensions. It is possible to use this function if matrix has more dimensions than was defined in ``_vDims``: if number of dimensions does not conform to the matrix, the sum of values by remaining dimensions will be returned. Sequence of dimensions may not match the sequence, which was defined in the matrix. Number of dimensions ``_vDims`` and coordinates ``_vCoords`` must be the same. 
+
+Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	double GetValue(const std::vector<unsigned> &_vCoords)
+
+Returns value by specified coordinates according to the full defined set of dimensions. Returns ``-1`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool GetVectorValue(unsigned _nDim, std::vector<double> &_vResult)
+
+Returns vector ``_vResult`` according to specified dimension. If number of dimensions in the matrix is more than one, then the sum of values by remaining dimensions will be returned. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool GetVectorValue(unsigned _nDim1, unsigned _nCoord1, unsigned _nDim2, std::vector<double> &_vResult)
+
+Returns vector of values ``_vResult`` according to specified dimensions and coordinate. If number of dimensions in the matrix is more than two, then the sum of values by remaining dimensions will be returned. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool GetVectorValue(unsigned _nDim1, unsigned _nCoord1, unsigned _nDim2, unsigned _nCoord2, unsigned _nDim3, std::vector<double> &_vResult)
+
+Returns vector of values ``_vResult`` according to specified dimensions and coordinates. If number of dimensions in the matrix is more than three, then the sum of values by remaining dimensions will be returned. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool GetVectorValue(const std::vector<unsigned> &_vDims, const std::vector<unsigned> &_vCoords, std::vector<double> &_vResult) 
+
+Returns vector of values ``_vResult`` according to specified dimensions and coordinates. If number of dimensions in the matrix is more than it was specified in ``_vDims``, then the sum of values by remaining dimensions will be returned. Sequence of dimensions may not match the sequence, which was defined in the matrix. Number of coordinates ``_vCoords`` must be one less than the number of dimensions ``_vDims``. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool GetVectorValue(const std::vector<unsigned> &_vCoords, std::vector<double> &_vResult)
+
+Returns vector of values ``_vResult`` by specified coordinates according to the full defined set of dimensions. Returns ``false`` on error.
+
+|
+
+Set data
+""""""""
+
+.. code-block:: cpp
+
+	bool SetValue(unsigned _nCoord, double _dValue)
+
+Sets value ``_dValue`` with coordinate ``_nCoord`` into one-dimensional matrix. Sets the value only if the matrix has one dimension. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetValue(unsigned _nDim1, unsigned _nCoord1, unsigned _nCoord2, double _dValue)
+
+Sets value ``_dValue`` according to specified coordinates and dimensions into two-dimensional matrix. Sets the value only if the matrix has two dimensions. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns false on ``error``.
+
+|
+
+.. code-block:: cpp
+
+	bool SetValue(unsigned _nDim1, unsigned _nCoord1, unsigned _nDim2, unsigned _nCoord2, unsigned _nCoord3, double _dValue)
+
+Sets value ``_dValue`` according to specified coordinates and dimensions into three-dimensional matrix. Sets the value only if the matrix has three dimensions. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetValue(const std::vector<unsigned> &_vDims, const std::vector<unsigned> &_vCoords, double _dValue)
+
+Sets value ``_dValue`` according to specified coordinates and dimensions. Sets the value only if the number of dimensions is the same as in the matrix. Number of dimensions ``_vDims`` and coordinates ``_vCoords`` must be the same. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetValue(const std::vector<unsigned> &_vCoords, double _dValue)
+
+Sets value ``_dValue`` according to specified coordinates for full set of dimensions. Sets the value only if the number of coordinates is the same as the number of dimensions in the matrix. Number of coordinates ``_vCoords`` must be equal to a number of dimensions in matrix. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetVectorValue(const std::vector<double> &_vValue)
+
+Sets vector of values ``_vValue`` in one-dimensional matrix. Sets the values only if the matrix has one dimension. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetVectorValue(unsigned _nDim, unsigned _nCoord, const std::vector<double> &_vValue)
+
+Sets vector of values ``_vValue`` according to specified dimension and coordinate in two-dimensional matrix. Sets the values only if the matrix has two dimensions. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetVectorValue(unsigned _nDim1, unsigned _nCoord1, unsigned _nDim2, unsigned _nCoord2, const std::vector<double> &_vValue)
+
+Sets vector of values ``_vValue`` according to specified dimensions and coordinates in three-dimensional matrix. Sets the values only if the matrix has three dimensions. Sequence of dimensions may not match the sequence, which was defined in the matrix. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetVectorValue(const std::vector<unsigned> &_vDims, const std::vector<unsigned> &_vCoords, const std::vector<double> &_vValue) 
+
+Sets vector of values ``_vValue`` according to specified dimensions and coordinates. Sets values only if the number of dimensions in ``_vDims`` is one less than in the matrix. Number of dimensions ``_vDims`` and coordinates ``_vCoords`` must be equal. 
+
+Returns ``false`` on error.
+
+|
+
+.. code-block:: cpp
+
+	bool SetVectorValue (const std::vector<unsigned> &_vCoords, const std::vector<double> &_vValue) 
+
+Sets vector of values ``_vValue`` according to specified coordinates for full set of dimensions, which were defined in the matrix. Sets values only if the number of coordinates is one less than number of dimensions in the matrix. 
+
+Returns ``false`` on error.
+
+|
+
+Overloaded operators
+""""""""""""""""""""
+
+.. code-block:: cpp
+	
+	CDenseMDMatrix operator+(const CDenseMDMatrix &_matrix)
+
+Performs **addition** of the matrix with the same dimensions. Returns an empty matrix with 0 defined dimensions in case of different dimenions.
+
+|
+
+.. code-block:: cpp
+
+	CDenseMDMatrix operator-(const CDenseMDMatrix &_matrix)
+
+Performs **subtraction** of matrices with the same dimensions. Returns an empty matrix with 0 defined dimensions in case of different dimenions.
+
+|
+
+.. code-block:: cpp
+
+	CDenseMDMatrix operator*(double _dFactor)
+
+Performs **multiplication** of the matrix by a coefficient ``_dFactor``.
+
+|
+
+.. code-block:: cpp
+
+	CDenseMDMatrix& operator=(const CDenseMDMatrix &_matrix)
+
+Sets dimenions and data from the ``_matrix`` to a left matrix.
+
+|
+
+Other functions
+"""""""""""""""
+
+.. code-block:: cpp
+
+	void Normalize()
+
+Normalizes the matrix so that the sum of all elements equals to 1.
+
+|
+
+.. code-block:: cpp
+
+	bool IsNormalized()
+
+Returns ``true`` if the matrix is normalized.
+
+|
+
+.. code-block:: cpp
+
+	void ClearData()
+
+Sets all elements in matrix equal to 0.
+
+|
+
+.. code-block:: cpp
+
+	void Clear()
+
+Removes all data and information about dimensions from the matrix.
+
+|
+
+List of universal constants
+===========================
+
+In Dyssol, some universal constants have been defined, which you may use directly in your codes.
+
++------------------------------------------+----------------------------------------+--------------------+
+|  Define                                  |   Typical value                        |   Unit             |
++==========================================+========================================+====================+
+|   ``AVOGADRO_CONSTANT``                  |   :math:`6.02214199(47) \cdot 10^{23}` |   [1/mol]          |
++------------------------------------------+----------------------------------------+--------------------+
+|   ``BOLTZMANN_CONSTANT``                 |   :math:`1.3806503(24) \cdot 10^{-23}` |   [J/K]            |
++------------------------------------------+----------------------------------------+--------------------+
+|   ``IDEAL_GAS_STATE_REFERENCE_PRESSURE`` |   :math:`101\,325`                     |   [Pa]             |
++------------------------------------------+----------------------------------------+--------------------+
+|   ``MOLAR_GAS_CONSTANT``                 |   :math:`8.314472(15)`                 |   [J/mol/K]        |
++------------------------------------------+----------------------------------------+--------------------+
+|   ``SPEED_OF_LIGHT_IN_VACUUM``           |   :math:`2.99792458(1) \cdot 10^8`     |  [m/s]             |
++------------------------------------------+----------------------------------------+--------------------+
+|   ``STANDARD_ACCELERATION_OF_GRAVITY``   |  :math:`9.80665`                       |   [m/s :math:`^2`] |
++------------------------------------------+----------------------------------------+--------------------+
+|   ``STANDARD_CONDITION_T``               |   :math:`298.15`                       |   [K]              |
++------------------------------------------+----------------------------------------+--------------------+
+|   ``STANDARD_CONDITION_P``               |   :math:`101\,325`                     |   [Pa]             |
++------------------------------------------+----------------------------------------+--------------------+
+|   ``MATH_PI``                            |   :math:`3.14159265358979323846`       |   [-]              |
++------------------------------------------+----------------------------------------+--------------------+
 
 
 
