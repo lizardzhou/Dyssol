@@ -209,7 +209,7 @@
 <div class="line"><br /></div>
 </div>
 <div class="section" id="application-example">
-<h4>Application example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h4>
+<span id="label-mysplitter"></span><h4>Application example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h4>
 <p>Now you want to develop a new steady-state model of splitter with one input stream and three output streams, as the figure shown below. The splitting factors for the first and second outlets are <span class="math notranslate nohighlight">\(k_1\)</span> and <span class="math notranslate nohighlight">\(k_2\)</span> respectively.</p>
 <a class="reference internal image-reference" href="_images/task5-1.jpg"><img alt="" class="align-center" src="_images/task5-1.jpg" style="width: 300px;" /></a>
 <p>You need the following steps:</p>
@@ -293,7 +293,7 @@
 </li>
 <li><p class="first">Perform test simulation:</p>
 <blockquote>
-<div><p>Now you have your complete code for the splitter. Build the solution and then run Dyssol in debug mode. Add material streams and the unit, choose the unit type “MySplitter”, set inlet mass flow and splitting factors according to the table below, and finally check if the results are correct.</p>
+<div><p>Now you have your complete code for the splitter. Build the solution and then run Dyssol in debug mode. Add material streams and the unit, choose the unit type “MySplitter”, set inlet mass flow and splitting factors according to the table below, and finally check if the results are correct. Finally, save the simulation file for the <a class="reference internal" href="#label-basics"><span class="std std-ref">example of developing a dynamic unit</span></a>.</p>
 <table border="1" class="docutils">
 <colgroup>
 <col width="72%" />
@@ -563,7 +563,7 @@
 <blockquote>
 <div><ul class="simple">
 <li>Get pointer to the output streams to enable calculation with stream properties.</li>
-<li>Get vector with particle diameters (GetClassesMeans(DISTR_SIZE)) and store them to variable <code class="docutils literal notranslate"><span class="pre">d</span></code>.</li>
+<li>Get vector with particle diameters (<code class="docutils literal notranslate"><span class="pre">GetClassesMeans(DISTR_SIZE)</span></code>) and store them to variable <code class="docutils literal notranslate"><span class="pre">d</span></code>.</li>
 <li>Get gas properties (<code class="docutils literal notranslate"><span class="pre">GetPhaseTPDProp()</span></code> for <code class="docutils literal notranslate"><span class="pre">DENSITY</span></code> and <code class="docutils literal notranslate"><span class="pre">VISCOSITY</span></code>) at the time point <code class="docutils literal notranslate"><span class="pre">time</span></code>.</li>
 <li>Save current values of <code class="docutils literal notranslate"><span class="pre">_pVars</span></code> and save them to variable <code class="docutils literal notranslate"><span class="pre">v_rel</span></code>.</li>
 <li>Calculate variables <code class="docutils literal notranslate"><span class="pre">Re_i</span></code>, <code class="docutils literal notranslate"><span class="pre">Cwp_i</span></code>, <code class="docutils literal notranslate"><span class="pre">v_rel_update_i</span></code> according to the <a class="reference internal" href="#label-eq-sys"><span class="std std-ref">equation system described above</span></a> and save the value of the relative velocity to <code class="docutils literal notranslate"><span class="pre">_pFunc</span></code>.</li>
@@ -580,8 +580,8 @@
         <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">outStreamF</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Fines&quot;</span><span class="p">);</span>
 
         <span class="c1">// Overall parameter</span>
-        <span class="kt">double</span> <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">;</span> <span class="c1">// graviational acceleration</span>
 
+        <span class="kt">double</span> <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">;</span> <span class="c1">// graviational acceleration</span>
         <span class="c1">// Get diameter classes and their number</span>
         <span class="kt">unsigned</span> <span class="n">num_classes</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetClassesNumber</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">);</span>
         <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetClassesMeans</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">);</span>
@@ -645,7 +645,7 @@
 <li><p class="first">Plotting: Add a new curve to the plot (<code class="docutils literal notranslate"><span class="pre">AddCurveOnPlot</span></code>) at time <code class="docutils literal notranslate"><span class="pre">_dTime</span></code> and then add the points for separation (<code class="docutils literal notranslate"><span class="pre">AddPointOnCurve</span></code>).</p>
 </li>
 </ul>
-<p>You can find tehe example code for this function below:</p>
+<p>You can find the example code for this function below:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CMyNLModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">)</span> <span class="p">{</span>
 
         <span class="c1">// Get pointer to air classifier unit</span>
@@ -828,9 +828,9 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="section" id="id2">
-<h4>Application example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<p>You will learn to implement a simple unit (however without any physical meaning), where the basic functionality of classes <code class="docutils literal notranslate"><span class="pre">CBaseUnit</span></code>, <code class="docutils literal notranslate"><span class="pre">CMaterialStream</span></code> and <code class="docutils literal notranslate"><span class="pre">CHoldup</span></code> can be tested.</p>
+<div class="section" id="label-basics">
+<span id="id2"></span><h4>Application example<a class="headerlink" href="#label-basics" title="Permalink to this headline">¶</a></h4>
+<p>You will learn to implement a simple dynamic unit (however without any physical meaning), where the basic functionality of classes <code class="docutils literal notranslate"><span class="pre">CBaseUnit</span></code>, <code class="docutils literal notranslate"><span class="pre">CMaterialStream</span></code> and <code class="docutils literal notranslate"><span class="pre">CHoldup</span></code> can be tested.</p>
 <p>Do the following steps:</p>
 <ol class="arabic simple">
 <li>Copy a directory with the template unit <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\UnitsTemplates\DynamicUnit</span></code> to the directory for new units <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\</span></code>.</li>
@@ -940,11 +940,10 @@
         <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">AddStream</span><span class="p">(</span><span class="n">pInStream</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="n">_dEndTime</span><span class="p">);</span>
 
         <span class="c1">// Copy the holdup into outlet stream at end time point with mass flow 1 kg/s</span>
-        <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">pHoldup</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+        <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">pHoldup</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
 
         <span class="c1">// Set new temperature 320 K to outlet at time point 15 s</span>
-        <span class="c1">//pOutStream-&gt;AddTimePoint(15);</span>
-        <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">SetTemperature</span><span class="p">(</span><span class="n">_dEndTime</span><span class="p">,</span> <span class="mi">320</span><span class="p">);</span>
+        <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">SetTemperature</span><span class="p">(</span><span class="mi">15</span><span class="p">,</span> <span class="mi">320</span><span class="p">);</span>
 
         <span class="c1">// Plot holdup mass for all defined time points</span>
         <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">times</span> <span class="o">=</span> <span class="n">GetAllDefinedTimePoints</span><span class="p">(</span><span class="n">_dStartTime</span><span class="p">,</span> <span class="n">_dEndTime</span><span class="p">);</span>
@@ -970,8 +969,7 @@
         <span class="c1">// Get overall properties of streams and holdups</span>
         <span class="kt">double</span> <span class="n">massFlow</span> <span class="o">=</span> <span class="n">pInStream</span><span class="o">-&gt;</span><span class="n">GetMassFlow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">BASIS_MASS</span><span class="p">);</span>
         <span class="kt">double</span> <span class="n">massHoldup</span> <span class="o">=</span> <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">GetMass</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">BASIS_MASS</span><span class="p">);</span>
-        <span class="c1">//double outTemp1 = pOutStream-&gt;GetTemperature(15);</span>
-        <span class="kt">double</span> <span class="n">outTemp2</span> <span class="o">=</span> <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">GetTemperature</span><span class="p">(</span><span class="n">_dEndTime</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">outTemp</span> <span class="o">=</span> <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">GetTemperature</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
         <span class="kt">double</span> <span class="n">molarMassHoldup</span> <span class="o">=</span> <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">GetOverallProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">MOLAR_MASS</span><span class="p">);</span>
         <span class="c1">// Get solid distribution information</span>
         <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">PSD_b3</span> <span class="o">=</span> <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">GetPSD</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">PSD_Q3</span><span class="p">);</span>
@@ -990,8 +988,8 @@
 <li><p class="first">Build the solution by <em>Build → Build Solution</em> and run Dyssol by <em>Debug → Start Debugging</em>.</p>
 <blockquote>
 <div><ul class="simple">
-<li>Change the flowsheet from <em>Task 5</em> to be able to test new unit: remove units <em>Out2</em>, <em>Out3</em> and streams <em>Out2</em>, <em>Out3</em>.</li>
-<li>Change unit model <em>MySplitter</em> to <em>Basics</em>. Set unit parameters as ParamTD = 1.2, ParamConst = 1e-8.</li>
+<li>Change the flowsheet from <a class="reference internal" href="#label-mysplitter"><span class="std std-ref">example of steady-state unit</span></a> to be able to test new unit: remove units <em>Out2</em>, <em>Out3</em> and streams <em>Out2</em>, <em>Out3</em>.</li>
+<li>Change unit model <em>MySplitter</em> to <em>Basics</em>. Set unit parameters as <em>ParamTD</em> = <code class="docutils literal notranslate"><span class="pre">1.2</span></code>, <em>ParamConst</em> = <code class="docutils literal notranslate"><span class="pre">1e-8</span></code>.</li>
 <li>Run the simulation, make sure the simulation is finished and save the obtained flowsheet as <em>Task6</em>. Close Dyssol.</li>
 </ul>
 </div></blockquote>
@@ -1130,6 +1128,41 @@
 </tr>
 </tbody>
 </table>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You will see the outlet temperature at 15 s is not changed to 320 K. In this process, only <code class="docutils literal notranslate"><span class="pre">_dStartTime</span></code> and <code class="docutils literal notranslate"><span class="pre">_dEndTime</span></code> are defined in the simulation (due to the simulation file of a <a class="reference internal" href="#label-mysplitter"><span class="std std-ref">steady-state process</span></a>), the time point t = 15 s is not defined and thus no change will take place. If you add a time point for the outlet stream,</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">AddTimePoint</span><span class="p">(</span><span class="mi">15</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>the temperature will change to 320 K at t = 15 s.</p>
+<p class="last">Therefore, please pay attention to your time points during the dynamic simulation. <strong>A time point must be defined in advance, at which your simulation is performed.</strong> However, in most cases, the time points during a simulation are calculated by the solvers and you don’t need to define them extra.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>You can also observe the temperature change at <code class="docutils literal notranslate"><span class="pre">_dEndTime</span></code> to 320 K, like the code below:</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">pHoldup</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">SetTemperature</span><span class="p">(</span><span class="n">_dEndTime</span><span class="p">,</span> <span class="mi">320</span><span class="p">);</span>
+<span class="c1">// ... intermediate code ... //</span>
+<span class="kt">double</span> <span class="n">outTemp</span> <span class="o">=</span> <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">GetTemperature</span><span class="p">(</span><span class="n">_dEndTime</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p>In this case, the outlet temperature is still 300 K. The reason is that the default value of variable <code class="docutils literal notranslate"><span class="pre">DeleteDataAfter</span></code> in <code class="docutils literal notranslate"><span class="pre">CopyFromHoldup</span></code> is <code class="docutils literal notranslate"><span class="pre">true</span></code>, which means the information at copied time (here <code class="docutils literal notranslate"><span class="pre">_dStartTime</span></code>) is kept and those afterwards are deleted. Since there is no information at <code class="docutils literal notranslate"><span class="pre">_dEndTime</span></code>, the program returns the temperature at <code class="docutils literal notranslate"><span class="pre">_dStartTime</span></code>.</p>
+<p>If you set the value of variable <code class="docutils literal notranslate"><span class="pre">DeleteDataAfter</span></code> to <code class="docutils literal notranslate"><span class="pre">false</span></code>, the outlet temperature doesn’t change either, because only the holdup information at <code class="docutils literal notranslate"><span class="pre">_dStartTime</span></code> is copied, which has nothing to do with that at <code class="docutils literal notranslate"><span class="pre">_dEndTime</span></code>. You must also copy the holdup info at the end in order to change the temperature at the end.</p>
+<blockquote>
+<div><div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">pHoldup</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+<span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">pHoldup</span><span class="p">,</span> <span class="n">_dEndTime</span><span class="p">,</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">SetTemperature</span><span class="p">(</span><span class="n">_dEndTime</span><span class="p">,</span> <span class="mi">320</span><span class="p">);</span>
+<span class="c1">// ... intermediate code ... //</span>
+<span class="kt">double</span> <span class="n">outTemp</span> <span class="o">=</span> <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">GetTemperature</span><span class="p">(</span><span class="n">_dEndTime</span><span class="p">);</span>
+</pre></div>
+</div>
+</div></blockquote>
+<p class="last"><strong>For developing dynamic units in Dyssol, don’t forget to treat your parameter at different time points separately.</strong></p>
+</div>
 </div></blockquote>
 </li>
 <li><p class="first">Solid distributed properties and PSD of streams and holdups:</p>
@@ -1764,7 +1797,7 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#development-of-dynamic-units">Development of dynamic units</a><ul>
-<li><a class="reference internal" href="#id2">Application example</a></li>
+<li><a class="reference internal" href="#label-basics">Application example</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#development-of-dynamic-units-with-internal-dae-solver">Development of dynamic units with internal DAE solver</a><ul>

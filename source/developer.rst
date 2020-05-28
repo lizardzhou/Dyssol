@@ -183,6 +183,8 @@ Unit‘s **finalization**. This function is called only once at the end of the s
 
 |
 
+.. _label-mySplitter:
+
 Application example
 """""""""""""""""""
 
@@ -279,7 +281,7 @@ You need the following steps:
 
 - Perform test simulation:
 
-	Now you have your complete code for the splitter. Build the solution and then run Dyssol in debug mode. Add material streams and the unit, choose the unit type "MySplitter", set inlet mass flow and splitting factors according to the table below, and finally check if the results are correct.
+	Now you have your complete code for the splitter. Build the solution and then run Dyssol in debug mode. Add material streams and the unit, choose the unit type "MySplitter", set inlet mass flow and splitting factors according to the table below, and finally check if the results are correct. Finally, save the simulation file for the :ref:`example of developing a dynamic unit <label-Basics>`.
 	
 	+-------------------------------------+
 	| **General**                         |
@@ -582,7 +584,7 @@ Now you need the following steps:
 	
 		- Get pointer to the output streams to enable calculation with stream properties.
 		
-		- Get vector with particle diameters (GetClassesMeans(DISTR_SIZE)) and store them to variable ``d``.
+		- Get vector with particle diameters (``GetClassesMeans(DISTR_SIZE)``) and store them to variable ``d``.
 		
 		- Get gas properties (``GetPhaseTPDProp()`` for ``DENSITY`` and ``VISCOSITY``) at the time point ``time``.
 
@@ -605,8 +607,8 @@ Now you need the following steps:
 				CMaterialStream* outStreamF = unit->GetPortStream("Fines"); 
 				
 				// Overall parameter
-				double g = 9.81; // graviational acceleration 
 				
+				double g = 9.81; // graviational acceleration 
 				// Get diameter classes and their number
 				unsigned num_classes = unit->GetClassesNumber(DISTR_SIZE); 
 				std::vector<double> d = unit->GetClassesMeans(DISTR_SIZE); 
@@ -667,7 +669,7 @@ Now you need the following steps:
 		
 		- Plotting: Add a new curve to the plot (``AddCurveOnPlot``) at time ``_dTime`` and then add the points for separation (``AddPointOnCurve``).
 		
-		You can find tehe example code for this function below:
+		You can find the example code for this function below:
 		
 		.. code-block:: cpp
 		
@@ -864,19 +866,12 @@ Unit‘s **finalization**. This function is called only once at the end of the s
 
 |
 
+.. _label-Basics:
+
 Application example
 """""""""""""""""""
 
-.. Without adding time point: the temperature at 15 s is still 300K (unchanged), this is because the time point 15 s is not defined. After adding the point, the temperature changes to 320 K. EMPHASIZE: THE TIME POINT MUST BE DEFINED IN ADVANCE IN ORDER TO SIMULATE AT IT
-
-.. Copy holdup at start time & change temperature at end: the outlet temperature at end is 300 K (unchanged), this is because the default setting for DeleteDataAfter in CopyHoldup is true, which means all information after the start time point is deleted, only the information at copied time (here the start time) is kept, where the temperature is 300 K. Since there is no info at end time, the program returns the original temperature at start time.
-
-.. Copy holdup at start time & change temperature at end: if DeleteDataAfter is set to false, the temperature doesn't change either, because only the holdup info at the beginning is copied, which has nothing to do with holdup info at the end. You must also copy the holdup info at the end to change the temperature at the end. ENPHASIZE: THIS IS A CHARACHTER OF DYNAMIC UNIT IN DYSSOL, SHOWING THAT YOU MUST TREAT YOUR PARAMETER AT DIFFERENT TIME POINTS SEPARATELY
-
-.. Copy holdup at end time & change temperature at end: the outlet temperature at end is 320 K (changed) - easy to understand^^
-
-
-You will learn to implement a simple unit (however without any physical meaning), where the basic functionality of classes ``CBaseUnit``, ``CMaterialStream`` and ``CHoldup`` can be tested.
+You will learn to implement a simple dynamic unit (however without any physical meaning), where the basic functionality of classes ``CBaseUnit``, ``CMaterialStream`` and ``CHoldup`` can be tested.
 
 Do the following steps:
 
@@ -1002,11 +997,10 @@ Do the following steps:
 			pHoldup->AddStream(pInStream, _dStartTime, _dEndTime);
 
 			// Copy the holdup into outlet stream at end time point with mass flow 1 kg/s
-			pOutStream->CopyFromHoldup(pHoldup, _dStartTime, 1, false);
+			pOutStream->CopyFromHoldup(pHoldup, _dStartTime, 1);
 
 			// Set new temperature 320 K to outlet at time point 15 s
-			//pOutStream->AddTimePoint(15);
-			pOutStream->SetTemperature(_dEndTime, 320);
+			pOutStream->SetTemperature(15, 320);
 
 			// Plot holdup mass for all defined time points
 			std::vector<double> times = GetAllDefinedTimePoints(_dStartTime, _dEndTime);
@@ -1032,8 +1026,7 @@ Do the following steps:
 			// Get overall properties of streams and holdups
 			double massFlow = pInStream->GetMassFlow(2, BASIS_MASS);
 			double massHoldup = pHoldup->GetMass(5, BASIS_MASS);
-			//double outTemp1 = pOutStream->GetTemperature(15);
-			double outTemp2 = pOutStream->GetTemperature(_dEndTime);
+			double outTemp = pOutStream->GetTemperature(15);
 			double molarMassHoldup = pHoldup->GetOverallProperty(1, MOLAR_MASS);
 			// Get solid distribution information
 			std::vector<double> PSD_b3 = pHoldup->GetPSD(50, PSD_Q3);
@@ -1045,8 +1038,9 @@ Do the following steps:
 
 	- Build the solution by *Build → Build Solution* and run Dyssol by *Debug → Start Debugging*. 
 	
-		- Change the flowsheet from *Task 5* to be able to test new unit: remove units *Out2*, *Out3* and streams *Out2*, *Out3*. 
-		- Change unit model *MySplitter* to *Basics*. Set unit parameters as ParamTD = 1.2, ParamConst = 1e-8. 
+		- Change the flowsheet from :ref:`example of steady-state unit <label-mySplitter>` to be able to test new unit: remove units *Out2*, *Out3* and streams *Out2*, *Out3*. 
+		
+		- Change unit model *MySplitter* to *Basics*. Set unit parameters as *ParamTD* = ``1.2``, *ParamConst* = ``1e-8``. 
 		
 		- Run the simulation, make sure the simulation is finished and save the obtained flowsheet as *Task6*. Close Dyssol.
 
@@ -1079,7 +1073,7 @@ Do the following steps:
 		+---------------------------------------------------------------------+-----------------------------------------------+----------------------+
 		| Density of the first compound by T = 273 K, P = 1e+5 Pa             | ``GetCompoundTPDProp(… DENSITY, …)``          | 1600                 |
 		+---------------------------------------------------------------------+-----------------------------------------------+----------------------+
-	
+		
 	- Tolerances:
 	
 		+---------------------------------------------------------------------+-----------------------------------------------+----------------------+
@@ -1103,7 +1097,44 @@ Do the following steps:
 		+---------------------------------------------------------------------+-----------------------------------------------+----------------------+
 		| Molar mass of the holdup at t = 1 s                                 | ``pHoldup->GetOverallProperty()``             | 0.06                 |
 		+---------------------------------------------------------------------+-----------------------------------------------+----------------------+
-	
+		
+		.. note::
+			
+			You will see the outlet temperature at 15 s is not changed to 320 K. In this process, only ``_dStartTime`` and ``_dEndTime`` are defined in the simulation (due to the simulation file of a :ref:`steady-state process <label-mySplitter>`), the time point t = 15 s is not defined and thus no change will take place. If you add a time point for the outlet stream,
+				
+				.. code-block:: cpp
+				
+					pOutStream->AddTimePoint(15);
+					
+			the temperature will change to 320 K at t = 15 s. 
+				
+			Therefore, please pay attention to your time points during the dynamic simulation. **A time point must be defined in advance, at which your simulation is performed.** However, in most cases, the time points during a simulation are calculated by the solvers and you don't need to define them extra.
+			
+		.. note::
+		
+			You can also observe the temperature change at ``_dEndTime`` to 320 K, like the code below:
+				
+				.. code-block:: cpp
+				
+					pOutStream->CopyFromHoldup(pHoldup, _dStartTime, 1);
+					pOutStream->SetTemperature(_dEndTime, 320);
+					// ... intermediate code ... //
+					double outTemp = pOutStream->GetTemperature(_dEndTime);
+					
+			In this case, the outlet temperature is still 300 K. The reason is that the default value of variable ``DeleteDataAfter`` in ``CopyFromHoldup``	is ``true``, which means the information at copied time (here ``_dStartTime``) is kept and those afterwards are deleted. Since there is no information at ``_dEndTime``, the program returns the temperature at ``_dStartTime``.
+			
+			If you set the value of variable ``DeleteDataAfter`` to ``false``, the outlet temperature doesn't change either, because only the holdup information at ``_dStartTime`` is copied, which has nothing to do with that at ``_dEndTime``. You must also copy the holdup info at the end in order to change the temperature at the end. 
+				
+				.. code-block:: cpp
+				
+					pOutStream->CopyFromHoldup(pHoldup, _dStartTime, 1, false);
+					pOutStream->CopyFromHoldup(pHoldup, _dEndTime, 1);
+					pOutStream->SetTemperature(_dEndTime, 320);
+					// ... intermediate code ... //
+					double outTemp = pOutStream->GetTemperature(_dEndTime);
+			
+			**For developing dynamic units in Dyssol, don't forget to treat your parameter at different time points separately.**
+
 	- Solid distributed properties and PSD of streams and holdups:
 	
 		+---------------------------------------------------------------------+-----------------------------------------------+----------------------+
