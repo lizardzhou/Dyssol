@@ -85,6 +85,8 @@ Following methods are applied in Dyssol for simulation. Click the corresponding 
 
 |
 
+.. _label-equationSolvers:
+
 Built-in equation solvers
 """""""""""""""""""""""""
 
@@ -95,9 +97,9 @@ Dyssol uses IDA and KINSOL solvers in `SUNDIALS package <https://computation.lln
    :alt: 
    :align: center 
 
-`IDA solver <https://computing.llnl.gov/projects/sundials/ida>`_ is used for automatic calculation of DAE systems inside the units, which applies variable-order, variable-coefficient backward differentiation formulas, in fixed-leading-coefficient form.
+`IDA solver <https://computing.llnl.gov/projects/sundials/ida>`_ is used for automatic calculation of **dynamic differential-algebraic equation systems** inside the units, which applies variable-order, variable-coefficient backward differentiation formulas, in fixed-leading-coefficient form.
 
-`KINSOL solver <https://computing.llnl.gov/projects/sundials/kinsol>`_ is used for calculation of nonlinear algebraic systems, which applies a fixed-point iteration with Anderson acceleration.
+`KINSOL solver <https://computing.llnl.gov/projects/sundials/kinsol>`_ is used for automatic calculation of **nonlinear algebraic systems**, which applies a fixed-point iteration with Anderson acceleration.
 
 .. seealso:: Skorych et al., Investigation of an FFT-based solver applied to dynamic flowsheet simulation of agglomeration processes, Advanced Powder Technology, 30 (2019).
 

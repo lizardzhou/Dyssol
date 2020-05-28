@@ -159,7 +159,7 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">AddMaterialStream</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">StreamName</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">StreamKey</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
+<div class="highlight-cpp notranslate" id="label-addmaterialstream"><div class="highlight"><pre><span></span><span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">AddMaterialStream</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">StreamName</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">StreamKey</span> <span class="o">=</span> <span class="s">&quot;&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Adds new material stream with the specified name <code class="docutils literal notranslate"><span class="pre">StreamName</span></code> for internal temporary use to the unit. <code class="docutils literal notranslate"><span class="pre">StreamName</span></code> should be unique within the unit. Structure of the stream will be the same as the global stream’s structure (phases, grids, compounds etc.).</p>
@@ -399,7 +399,7 @@
 </div>
 <div class="section" id="state-variables">
 <h3>State variables<a class="headerlink" href="#state-variables" title="Permalink to this headline">¶</a></h3>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="n">AddStateVariable</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">Name</span><span class="p">,</span> <span class="kt">double</span> <span class="n">InitValue</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">SaveHistory</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span>
+<div class="highlight-cpp notranslate" id="label-addstatevariable"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="n">AddStateVariable</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">Name</span><span class="p">,</span> <span class="kt">double</span> <span class="n">InitValue</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">SaveHistory</span> <span class="o">=</span> <span class="nb">false</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Adds new state variable and initializes it with <code class="docutils literal notranslate"><span class="pre">InitValue</span></code>. Name must be unique within the unit’s state variables. Parameter <code class="docutils literal notranslate"><span class="pre">SaveHistory</span></code> specifies if the history of all changes of variable should be saved during calculation for further post-processing. To save history, function <code class="docutils literal notranslate"><span class="pre">SaveStateVariables()</span></code> should be called. All variables which are added with this function will be automatically saved and restored during the simulation. Should be used in <code class="docutils literal notranslate"><span class="pre">Initialize</span></code> function of the unit.</p>
@@ -755,7 +755,7 @@
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">unsigned</span> <span class="n">GetDistributionsNumber</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Retunrs number of solids distributions, which have been defined in the flowsheet.</p>
+<p>Returns number of solids distributions, which have been defined in the flowsheet.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -927,42 +927,44 @@
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">AddCurveOnPlot</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">PlotName</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CurveName</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Adds new curve with specified name on the 2-dimensional plot with name <code class="docutils literal notranslate"><span class="pre">PlotName</span></code>. Returns index of the curve within specified plot. Returns <code class="docutils literal notranslate"><span class="pre">-1</span></code> on error.</p>
+<p>Adds new curve with specified name <code class="docutils literal notranslate"><span class="pre">CurveName</span></code> on the 2-dimensional plot with name <code class="docutils literal notranslate"><span class="pre">PlotName</span></code>. Returns index of the curve within specified plot. Returns <code class="docutils literal notranslate"><span class="pre">-1</span></code> on error.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span> <span class="n">AddCurveOnPlot</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">PlotName</span><span class="p">,</span> <span class="kt">double</span> <span class="n">ZValue</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Adds new curve with specified z-value on the 2- or 3-dimensional plot with name <code class="docutils literal notranslate"><span class="pre">PlotName</span></code>. Returns index of the curve within specified plot. Returns <code class="docutils literal notranslate"><span class="pre">-1</span></code> on error.</p>
+<p>Adds new curve with specified <code class="docutils literal notranslate"><span class="pre">ZValue</span></code> on the 2- or 3-dimensional plot with name <code class="docutils literal notranslate"><span class="pre">PlotName</span></code>. Returns index of the curve within specified plot.</p>
+<p><code class="docutils literal notranslate"><span class="pre">ZValue</span></code> can be time, …</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">-1</span></code> on error.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">AddPointOnCurve</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">PlotName</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CurveName</span><span class="p">,</span> <span class="kt">double</span> <span class="n">X</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Y</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Adds new point on specified curve for 2-dimensional plot.</p>
+<p>Adds new point on specified curve <code class="docutils literal notranslate"><span class="pre">CurveName</span></code> for 2-dimensional plot.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">AddPointOnCurve</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">PlotName</span><span class="p">,</span> <span class="kt">double</span> <span class="n">ZValue</span><span class="p">,</span> <span class="kt">double</span> <span class="n">X</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Y</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Adds new point on specified curve for 3-dimensional plot</p>
+<p>Adds new point on specified curve for 3-dimensional plot with specified <code class="docutils literal notranslate"><span class="pre">ZValue</span></code>. <code class="docutils literal notranslate"><span class="pre">ZValue</span></code> can be time, …</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">AddPointOnCurve</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">PlotName</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">CurveName</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">X</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">Y</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Adds new points on specified curve for 2-dimensional plot.</p>
+<p>Adds new points on specified curve <code class="docutils literal notranslate"><span class="pre">CurveName</span></code> for 2-dimensional plot named <code class="docutils literal notranslate"><span class="pre">PlotName</span></code>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">AddPointOnCurve</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">PlotName</span><span class="p">,</span> <span class="kt">double</span> <span class="n">ZValue</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">X</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">Y</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Adds new points on specified curve for 3-dimensional plot.</p>
+<p>Adds new points on specified curve <code class="docutils literal notranslate"><span class="pre">ZValue</span></code> for 3-dimensional plot named <code class="docutils literal notranslate"><span class="pre">PlotName</span></code>. <code class="docutils literal notranslate"><span class="pre">ZValue</span></code> can be time, …</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -990,14 +992,14 @@
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">Time</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Initializes unit at the time point <code class="docutils literal notranslate"><span class="pre">Time</span></code>. Is called by the simulator only once at the start of the simulation. Here some additionaly objects can be initialized (for example holdups, material streams or state variables).</p>
+<p>Initializes unit at the time point <code class="docutils literal notranslate"><span class="pre">Time</span></code>. Is called by the simulator only once at the start of the simulation. Here some additional objects can be initialized (for example holdups, material streams or state variables).</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate" id="label-savestate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">SaveState</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Saves current state of the unit. All time dependent variables which weren’t added to the unit be manually saved here with the help of <code class="docutils literal notranslate"><span class="pre">AddStateVariable()</span></code>, <code class="docutils literal notranslate"><span class="pre">AddMaterialStream()</span></code> or <code class="docutils literal notranslate"><span class="pre">AddHoldup()</span></code>.</p>
+<p>Saves current state of the unit. All time dependent variables which weren’t added to the unit be manually saved here with the help of <a class="reference internal" href="#label-addstatevariable"><span class="std std-ref">AddStateVariable</span></a>, <a class="reference internal" href="#label-addmaterialstream"><span class="std std-ref">AddMaterialStream</span></a> or <a class="reference internal" href="#label-addholdup"><span class="std std-ref">AddHoldup</span></a>.</p>
 <p>For flowsheets containing <strong>recycled streams</strong>, this function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation.</p>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -2408,7 +2410,7 @@
 <div class="line"><br /></div>
 </div>
 <p>Following functions are for class <code class="docutils literal notranslate"><span class="pre">CHoldup</span></code>.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">CHoldup</span> <span class="o">*</span><span class="n">SrcHoldup</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Time</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">DeleteDataAfter</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">CHoldup</span> <span class="o">*</span><span class="n">SrcHoldup</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Time</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">DeleteDataAfter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Copies all holdup data from <code class="docutils literal notranslate"><span class="pre">SrcHoldup</span></code> for the specified time point <code class="docutils literal notranslate"><span class="pre">Time</span></code> to the current holdup.</p>
@@ -2416,7 +2418,7 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">CHoldup</span> <span class="o">*</span><span class="n">SrcHoldup</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Start</span><span class="p">,</span> <span class="kt">double</span> <span class="n">End</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">DeleteDataAfter</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">CHoldup</span> <span class="o">*</span><span class="n">SrcHoldup</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Start</span><span class="p">,</span> <span class="kt">double</span> <span class="n">End</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">DeleteDataAfter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Copies all holdup data from <code class="docutils literal notranslate"><span class="pre">SrcHoldup</span></code> on the certain time interval to the current holdup. Boundary points <code class="docutils literal notranslate"><span class="pre">Start</span></code> and <code class="docutils literal notranslate"><span class="pre">End</span></code> are included into this interval.</p>
@@ -2424,7 +2426,7 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CopyFromHoldup</span><span class="p">(</span><span class="kt">double</span> <span class="n">TimeDst</span><span class="p">,</span> <span class="n">CHoldup</span> <span class="o">*</span><span class="n">SrcHoldup</span><span class="p">,</span> <span class="kt">double</span> <span class="n">TimeSrc</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">DeleteDataAfter</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CopyFromHoldup</span><span class="p">(</span><span class="kt">double</span> <span class="n">TimeDst</span><span class="p">,</span> <span class="n">CHoldup</span> <span class="o">*</span><span class="n">SrcHoldup</span><span class="p">,</span> <span class="kt">double</span> <span class="n">TimeSrc</span><span class="p">,</span> <span class="kt">bool</span> <span class="n">DeleteDataAfter</span> <span class="o">=</span> <span class="nb">true</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Copies all holdup data from time point <code class="docutils literal notranslate"><span class="pre">TimeSrc</span></code> of holdup <code class="docutils literal notranslate"><span class="pre">SrcHoldup</span></code> to the time point <code class="docutils literal notranslate"><span class="pre">TimeDst</span></code> of this holdup.</p>
@@ -2432,7 +2434,7 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">AddHoldup</span><span class="p">(</span><span class="n">CHoldup</span> <span class="o">*</span><span class="n">Holdup</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate" id="label-addholdup"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">AddHoldup</span><span class="p">(</span><span class="n">CHoldup</span> <span class="o">*</span><span class="n">Holdup</span><span class="p">,</span> <span class="kt">double</span> <span class="n">Time</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Performs a mixing of this holdup with holdup <code class="docutils literal notranslate"><span class="pre">Holdup</span></code> for the specified time point <code class="docutils literal notranslate"><span class="pre">Time</span></code>.</p>
@@ -2467,7 +2469,7 @@
 <p>Notations:</p>
 <p><span class="math notranslate nohighlight">\(d_i\)</span> – diameter of particle in class <span class="math notranslate nohighlight">\(i\)</span></p>
 <p><span class="math notranslate nohighlight">\(\Delta d_i\)</span> – size of the class <span class="math notranslate nohighlight">\(i\)</span></p>
-<p><span class="math notranslate nohighlight">\(M_k\)</span> – <span class="math notranslate nohighlight">\(k\)</span>-moment</p>
+<p><span class="math notranslate nohighlight">\(M_k\)</span> – <span class="math notranslate nohighlight">\(k\)</span>-th moment</p>
 <p><span class="math notranslate nohighlight">\(q\)</span> – density distribution</p>
 <p><span class="math notranslate nohighlight">\(q_0\)</span> – number related density distribution</p>
 <p><span class="math notranslate nohighlight">\(Q_0\)</span> – number related cumulative distribution</p>
@@ -2845,7 +2847,7 @@
 <div class="section" id="external-solver">
 <span id="label-externalsolver"></span><h2>External solver<a class="headerlink" href="#external-solver" title="Permalink to this headline">¶</a></h2>
 <p>As mentioned in section <a class="reference internal" href="developer.html#label-solverdev"><span class="std std-ref">Solver development</span></a>, you can generate your own solvers in Dyssol under class <code class="docutils literal notranslate"><span class="pre">CExternalSolver</span></code>.</p>
-<p>In Dyssol, external solvers are connected with open-source programm packages from the internet. Thus you can only do some basic operations for these solvers, such as generate new solver, name it, get ID and version, initialize and finalize, etc.</p>
+<p>In Dyssol, external solvers are connected with <a class="reference internal" href="simulation.html#label-equationsolvers"><span class="std std-ref">open-source programm packages</span></a>. Thus you can only do some basic operations for these solvers, such as generate new solver, name it, get ID and version, initialize and finalize, etc.</p>
 <p>In this section, the functions and variables applied in external solver are introduced.</p>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -3060,28 +3062,31 @@
 <div class="highlight-cpp notranslate" id="label-setmodel"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">SetModel</span><span class="p">(</span><span class="n">CDAEModel</span> <span class="o">*</span><span class="n">_pModel</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Sets model to a solver. Should be called in function <code class="docutils literal notranslate"><span class="pre">Initialize(Time)</span></code> of the unit. Returns <code class="docutils literal notranslate"><span class="pre">false</span></code> on error.</p>
+<p>Sets model to a solver. Should be called in function <a class="reference internal" href="developer.html#label-dynamicunitinitialize"><span class="std std-ref">Initialize</span></a> of the unit.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">false</span></code> on error.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">SetMaxStep</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Sets maximum time step for solver. Should be used in <code class="docutils literal notranslate"><span class="pre">Unit::Initialize(Time)</span></code> before the function <code class="docutils literal notranslate"><span class="pre">CDAESolver::SetModel()</span></code>.</p>
+<p>Sets maximum time step for solver. Should be used in <a class="reference internal" href="developer.html#label-dynamicunitinitialize"><span class="std std-ref">Initialize</span></a> before the function <a class="reference internal" href="#label-setmodel"><span class="std std-ref">SetModel</span></a>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate" id="label-calculate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">Calculate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span>
+<div class="highlight-cpp notranslate" id="label-calculate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">Calculate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">unsigned</span> <span class="n">_nModel</span> <span class="o">=</span> <span class="n">KIN_NONE</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Solves problem on a given time point. Should be called in function <code class="docutils literal notranslate"><span class="pre">Simulate(Time)</span></code> of the unit. Returns <code class="docutils literal notranslate"><span class="pre">false</span></code> on error.</p>
+<p>Solves problem on a given time point <code class="docutils literal notranslate"><span class="pre">_dTime</span></code>. Should be called in function <a class="reference internal" href="developer.html#label-dynamicunitsimulate"><span class="std std-ref">Simulate</span></a> of the unit.</p>
+<p>Default value of <code class="docutils literal notranslate"><span class="pre">_nModel</span></code> is <code class="docutils literal notranslate"><span class="pre">KIN_NONE</span></code>, a Newton-based iteration method. Other available models can be found in declaration for KINSOL parameters in the <code class="docutils literal notranslate"><span class="pre">*.cpp</span></code> file, including: <code class="docutils literal notranslate"><span class="pre">KIN_FP</span></code> (fixed point), <code class="docutils literal notranslate"><span class="pre">KIN_LINESEARCH</span></code> and <code class="docutils literal notranslate"><span class="pre">KIN_PICARD</span></code>.</p>
+<p>Returns <code class="docutils literal notranslate"><span class="pre">false</span></code> on error.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">bool</span> <span class="n">Calculate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="kt">double</span> <span class="n">_dEndTime</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Solves problem on a given time interval. Should be called in function <code class="docutils literal notranslate"><span class="pre">Simulate(Time)</span></code> of the unit. Returns <code class="docutils literal notranslate"><span class="pre">false</span></code> on error.</p>
+<p>Solves problem on a given time interval. Should be called in function <a class="reference internal" href="developer.html#label-dynamicunitsimulate"><span class="std std-ref">Simulate</span></a> of the unit. Returns <code class="docutils literal notranslate"><span class="pre">false</span></code> on error.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -3139,37 +3144,36 @@
 
 <span class="k">public</span><span class="o">:</span>
         <span class="kt">void</span> <span class="n">CalculateResiduals</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDers</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pRes</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">);</span>
-        <span class="kt">void</span> <span class="nf">ResultsHandler</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDerivs</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">_pUserData</span><span class="p">);</span>
+        <span class="kt">void</span> <span class="nf">ResultsHandler</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDers</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">_pUserData</span><span class="p">);</span>
 <span class="p">};</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Setup unit’s basic info (name, author’s name, unique id, ports) as described in <a class="reference internal" href="developer.html#label-unitdev"><span class="std std-ref">Unit development</span></a>.Then provide model with pointer to your unit, in order to have an access to the unit from functions of the model. Now your unit’s constructor must look like this:</p>
+<li><p class="first">Setup unit’s basic info (name, author’s name, unique ID, ports) as described in <a class="reference internal" href="developer.html#label-unitdev"><span class="std std-ref">Unit development</span></a>.Then provide model with pointer to your unit, in order to have an access to the unit from functions of the model. Now your unit’s constructor should look like this:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CUnit</span><span class="o">::</span><span class="n">CUnit</span><span class="p">()</span>
 <span class="p">{</span>
+        <span class="c1">// Unit basic information</span>
         <span class="n">m_sUnitName</span> <span class="o">=</span> <span class="s">&quot;DummyUnit4&quot;</span><span class="p">;</span>
         <span class="n">m_sAuthorName</span> <span class="o">=</span> <span class="s">&quot;Author&quot;</span><span class="p">;</span>
         <span class="n">m_sUniqueID</span> <span class="o">=</span> <span class="s">&quot;344BCC0048AA4c3a9117F20A9F8AF9A8&quot;</span><span class="p">;</span> <span class="c1">//an example ID</span>
 
+        <span class="c1">// Add ports for in- and outlets</span>
         <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;InPort&quot;</span><span class="p">,</span> <span class="n">INPUT_PORT</span><span class="p">);</span>
         <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;OutPort&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
 
+        <span class="c1">// Set this unit as user data of the model applied</span>
         <span class="n">m_Model</span><span class="p">.</span><span class="n">SetUserData</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">Implement function <code class="docutils literal notranslate"><span class="pre">Initialize</span></code> of the unit: add 3 variables with specified initial conditions to the model (using function <a class="reference internal" href="#label-adddaevariable"><span class="std std-ref">AddDAEVariable</span></a>) according to the equation system. As initials use phase fractions of the input stream.</p>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">m_Model</span><span class="p">.</span><span class="n">m_nS</span> <span class="o">=</span> <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span><span class="n">dSolidFraction</span><span class="p">,</span><span class="mf">0.04</span><span class="p">,</span><span class="mf">1.0</span><span class="p">);</span>
-<span class="n">m_Model</span><span class="p">.</span><span class="n">m_nL</span> <span class="o">=</span> <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span><span class="n">dLiquidFraction</span><span class="p">,</span><span class="o">-</span><span class="mf">0.04</span><span class="p">,</span><span class="mf">1.0</span><span class="p">);</span>
-<span class="n">m_Model</span><span class="p">.</span><span class="n">m_nV</span> <span class="o">=</span> <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">false</span><span class="p">,</span><span class="n">dVaporFraction</span><span class="p">,</span><span class="mi">0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">);</span>
-</pre></div>
-</div>
+<li><p class="first">Implement function <code class="docutils literal notranslate"><span class="pre">Initialize</span></code> of the unit:</p>
 <p>Since function <code class="docutils literal notranslate"><span class="pre">Initialize</span></code> is called every time when simulation starts, all variables must be previously removed from the model by calling <code class="docutils literal notranslate"><span class="pre">ClearVariables</span></code>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">m_Model</span><span class="p">.</span><span class="n">ClearVariables</span><span class="p">();</span>
 </pre></div>
 </div>
-<p>Set tolerances to the model using function <a class="reference internal" href="#label-settol"><span class="std std-ref">SetTolerance</span></a>. As tolerances for the model global tolerances of the system can be used.</p>
+<p>Now you can add 3 variables with specified initial conditions to the model (using function <a class="reference internal" href="#label-adddaevariable"><span class="std std-ref">AddDAEVariable</span></a>) according to the equation system. Use phase fractions of the input stream as initials.</p>
+<p>Set tolerances to the model using function <a class="reference internal" href="#label-settol"><span class="std std-ref">SetTolerance</span></a>. As tolerances for the model, global tolerances of the system can be used.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">m_Model</span><span class="p">.</span><span class="n">SetTolerance</span><span class="p">(</span> <span class="n">GetRelTolerance</span><span class="p">(),</span> <span class="n">GetAbsTolerance</span><span class="p">()</span> <span class="p">);</span>
 </pre></div>
 </div>
@@ -3178,21 +3182,27 @@
         <span class="n">RaiseError</span><span class="p">(</span><span class="n">m_Solver</span><span class="p">.</span><span class="n">GetError</span><span class="p">());</span>
 </pre></div>
 </div>
-<p>Initialize the unit after all changes take place using function <code class="docutils literal notranslate"><span class="pre">Initialize</span></code>.</p>
+<p>Your code should look like this after following all steps above:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="n">CMaterialStream</span> <span class="o">*</span><span class="n">pInpStream</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;InPort&quot;</span><span class="p">);</span>
+        <span class="c1">// Get pointer to inlet stream</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">pInpStream</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;InPort&quot;</span><span class="p">);</span>
 
+        <span class="c1">// Clear previous state variables in model</span>
+        <span class="n">m_Model</span><span class="p">.</span><span class="n">ClearVariables</span><span class="p">();</span>
+
+        <span class="c1">// Add state variables to model</span>
         <span class="kt">double</span> <span class="n">dSFr</span> <span class="o">=</span> <span class="n">pInpStream</span><span class="o">-&gt;</span><span class="n">GetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_SOLID</span><span class="p">);</span>
         <span class="kt">double</span> <span class="n">dLFr</span> <span class="o">=</span> <span class="n">pInpStream</span><span class="o">-&gt;</span><span class="n">GetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_LIQUID</span><span class="p">);</span>
         <span class="kt">double</span> <span class="n">dVFr</span> <span class="o">=</span> <span class="n">pInpStream</span><span class="o">-&gt;</span><span class="n">GetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_VAPOR</span><span class="p">);</span>
-
-        <span class="n">m_Model</span><span class="p">.</span><span class="n">ClearVariables</span><span class="p">();</span>
         <span class="n">m_Model</span><span class="p">.</span><span class="n">m_nS</span> <span class="o">=</span> <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="n">dSFr</span><span class="p">,</span> <span class="mf">0.04</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
         <span class="n">m_Model</span><span class="p">.</span><span class="n">m_nL</span> <span class="o">=</span> <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="n">dLFr</span><span class="p">,</span> <span class="o">-</span><span class="mf">0.04</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
         <span class="n">m_Model</span><span class="p">.</span><span class="n">m_nV</span> <span class="o">=</span> <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="n">dVFr</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">);</span>
 
+        <span class="c1">// Set tolerance to model</span>
         <span class="n">m_Model</span><span class="p">.</span><span class="n">SetTolerance</span><span class="p">(</span> <span class="n">GetRelTolerance</span><span class="p">(),</span> <span class="n">GetAbsTolerance</span><span class="p">()</span> <span class="p">);</span>
+
+        <span class="c1">// Set model to solver</span>
         <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">m_Solver</span><span class="p">.</span><span class="n">SetModel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">m_Model</span><span class="p">)</span> <span class="p">)</span>
                 <span class="n">RaiseError</span><span class="p">(</span><span class="n">m_Solver</span><span class="p">.</span><span class="n">GetError</span><span class="p">());</span>
 <span class="p">}</span>
@@ -3212,31 +3222,34 @@
 </pre></div>
 </div>
 </li>
-<li><p class="first">In function <code class="docutils literal notranslate"><span class="pre">Simulate</span></code> of the unit calculation procedure should be run by calling function <code class="docutils literal notranslate"><span class="pre">Calculate</span></code> of the solver. Additionally solver can be connected to the system’s errors handling procedure to receive possible errors during the calculation. Unit’s <code class="docutils literal notranslate"><span class="pre">Simulate</span></code> function after that must look as follows:</p>
+<li><p class="first">In function <code class="docutils literal notranslate"><span class="pre">Simulate</span></code> of the unit, calculation procedure should be run by calling function <code class="docutils literal notranslate"><span class="pre">Calculate</span></code> of the solver. Additionally, solver can be connected to the system’s errors handling procedure to receive possible errors during the calculation. Unit’s <code class="docutils literal notranslate"><span class="pre">Simulate</span></code> function after that must look as follows:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="kt">double</span> <span class="n">_dEndTime</span><span class="p">)</span>
 <span class="p">{</span>
+        <span class="c1">// Get pointers to inlet and outlet streams</span>
         <span class="n">CMaterialStream</span> <span class="o">*</span><span class="n">pInputStream</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;InPort&quot;</span><span class="p">);</span>
         <span class="n">CMaterialStream</span> <span class="o">*</span><span class="n">pOutputStream</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;OutPort&quot;</span><span class="p">);</span>
 
         <span class="n">pOutputStream</span><span class="o">-&gt;</span><span class="n">RemoveTimePointsAfter</span><span class="p">(</span><span class="n">_dStartTime</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
-        <span class="n">pOutputStream</span><span class="o">-&gt;</span><span class="n">CopyFromStream</span><span class="p">(</span><span class="n">pInputStream</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">);</span>
+        <span class="n">pOutputStream</span><span class="o">-&gt;</span><span class="n">CopyFromStream</span><span class="p">(</span><span class="n">pInputStream</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">);</span> <span class="c1">// Copy the inlet stream information to outlet stream</span>
 
+        <span class="c1">// Run solver and check if errors take place</span>
         <span class="k">if</span><span class="p">(</span> <span class="o">!</span><span class="n">m_Solver</span><span class="p">.</span><span class="n">Calculate</span><span class="p">(</span><span class="n">_dStartTime</span><span class="p">,</span> <span class="n">_dEndTime</span><span class="p">)</span> <span class="p">)</span>
                 <span class="n">RaiseError</span><span class="p">(</span> <span class="n">m_Solver</span><span class="p">.</span><span class="n">GetError</span><span class="p">()</span> <span class="p">);</span>
 <span class="p">}</span>
 </pre></div>
 </div>
 </li>
-<li><p class="first">In function <code class="docutils literal notranslate"><span class="pre">CalculateResiduals</span></code>, <abbr title="Differential-algebraic equations">DAE</abbr> system in implicit form should be described:</p>
+<li><p class="first">In function <code class="docutils literal notranslate"><span class="pre">CalculateResiduals</span></code>, <abbr title="Differential-algebraic equations">DAE</abbr> system in implicit form should be described. According to the given equation system</p>
 <div class="math notranslate nohighlight">
 \[ \begin{align}\begin{aligned}\begin{cases}
-        \frac{dx}{dt} = -0.04 \cdot x + 10^4 \cdot y \cdot z &amp;x(0) = 0.04\\        \frac{dy}{dt} = 0.04\cdot x - 10^4 \cdot y \cdot z - 3 \cdot 10^7 \cdot y^2 &amp;y(0) = -0.04\\        x + y + z = 1
+        \dfrac{dx}{dt} = -0.04 \cdot x + 10^4 \cdot y \cdot z &amp;x(0) = 0.04\\        \dfrac{dy}{dt} = 0.04\cdot x - 10^4 \cdot y \cdot z - 3 \cdot 10^7 \cdot y^2 &amp;y(0) = -0.04\\        x + y + z = 1
 \end{cases}\end{aligned}\end{align} \]</div>
+<p>and the definition of residual <code class="docutils literal notranslate"><span class="pre">_pRes</span></code> (difference between new and old values from last calculation), the equaitons are expressed below. Here the values are arranged in vector <code class="docutils literal notranslate"><span class="pre">_pVars</span></code> according to sequence <span class="math notranslate nohighlight">\([x, y, z]\)</span>, in <code class="docutils literal notranslate"><span class="pre">_pDers</span></code> according to <span class="math notranslate nohighlight">\([dx, dy]\)</span>.</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CMyDAEModel</span><span class="o">::</span><span class="n">CalculateResiduals</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDers</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pRes</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">)</span>
 <span class="p">{</span>
-        <span class="n">_pRes</span><span class="p">[</span><span class="n">m_nS</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pDers</span><span class="p">[</span><span class="n">m_nS</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.04</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="n">m_nS</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0e4</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="n">m_nL</span><span class="p">]</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="n">m_nV</span><span class="p">]);</span>
-        <span class="n">_pRes</span><span class="p">[</span><span class="n">m_nL</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pDers</span><span class="p">[</span><span class="n">m_nL</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span> <span class="mf">0.04</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="n">m_nS</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0e4</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="n">m_nL</span><span class="p">]</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="n">m_nV</span><span class="p">]</span> <span class="o">-</span> <span class="mf">3.0e7</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="n">m_nL</span><span class="p">]</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="n">m_nL</span><span class="p">]</span> <span class="p">);</span>
-        <span class="n">_pRes</span><span class="p">[</span><span class="n">m_nV</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pVars</span><span class="p">[</span><span class="n">m_nS</span><span class="p">]</span> <span class="o">+</span> <span class="n">_pVars</span><span class="p">[</span><span class="n">m_nL</span><span class="p">]</span> <span class="o">+</span> <span class="n">_pVars</span><span class="p">[</span><span class="n">m_nV</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
+        <span class="n">_pRes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pDers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span><span class="o">-</span><span class="mf">0.04</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="mf">1.0e4</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
+        <span class="n">_pRes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pDers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="p">(</span> <span class="mf">0.04</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="mf">1.0e4</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mf">3.0e7</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">*</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="p">);</span>
+        <span class="n">_pRes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="mi">1</span><span class="p">;</span>
 <span class="p">}</span>
 </pre></div>
 </div>
@@ -3244,14 +3257,17 @@
 <li><p class="first">Last step is handling of results from the solver (<code class="docutils literal notranslate"><span class="pre">CMyDAEModel::ResultsHandler</span></code>). Calculated fractions can be set here to the output stream of the unit. To access to the unit’s data, use the pointer <code class="docutils literal notranslate"><span class="pre">_pUserData</span></code> defined previously:</p>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CMyDAEModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDerivs</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">_pUserData</span><span class="p">)</span>
 <span class="p">{</span>
+        <span class="c1">// Get pointers to streams</span>
         <span class="n">CUnit</span> <span class="o">*</span><span class="n">unit</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">CUnit</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">_pUserData</span><span class="p">);</span>
         <span class="n">CMaterialStream</span> <span class="o">*</span><span class="n">pStream</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">CMaterialStream</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;OutPort&quot;</span><span class="p">));</span>
 
+        <span class="c1">// Add time point to outlet stream</span>
         <span class="n">pStream</span><span class="o">-&gt;</span><span class="n">AddTimePoint</span><span class="p">(</span><span class="n">_dTime</span><span class="p">);</span>
 
-        <span class="n">pStream</span><span class="o">-&gt;</span><span class="n">SetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_SOLID</span><span class="p">,</span> <span class="n">_pVars</span><span class="p">[</span><span class="n">m_nS</span><span class="p">]);</span>
-        <span class="n">pStream</span><span class="o">-&gt;</span><span class="n">SetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_LIQUID</span><span class="p">,</span> <span class="n">_pVars</span><span class="p">[</span><span class="n">m_nL</span><span class="p">]);</span>
-        <span class="n">pStream</span><span class="o">-&gt;</span><span class="n">SetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_VAPOR</span><span class="p">,</span> <span class="n">_pVars</span><span class="p">[</span><span class="n">m_nV</span><span class="p">]);</span>
+        <span class="c1">// Set calculated results to corresponding phases</span>
+        <span class="n">pStream</span><span class="o">-&gt;</span><span class="n">SetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_SOLID</span><span class="p">,</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="n">pStream</span><span class="o">-&gt;</span><span class="n">SetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_LIQUID</span><span class="p">,</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+        <span class="n">pStream</span><span class="o">-&gt;</span><span class="n">SetSinglePhaseProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">FRACTION</span><span class="p">,</span> <span class="n">SOA_VAPOR</span><span class="p">,</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">2</span><span class="p">]);</span>
 <span class="p">}</span>
 </pre></div>
 </div>

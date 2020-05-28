@@ -139,6 +139,8 @@ Removes holdup with the specified name HoldupName from the unit. Should be used 
 
 |
 
+.. _label-AddMaterialStream:
+
 .. code-block:: cpp
 
 	CMaterialStream* AddMaterialStream(std::string StreamName, std::string StreamKey = "") 
@@ -419,6 +421,9 @@ Returns all time points for which time-dependent parameter is defined within the
 
 State variables
 ---------------
+
+
+.. _label-AddStateVariable:
 
 .. code-block:: cpp
 
@@ -765,7 +770,7 @@ Returns list with number of classes for all defined distributions.
 
 	unsigned GetDistributionsNumber()
 	
-Retunrs number of solids distributions, which have been defined in the flowsheet.
+Returns number of solids distributions, which have been defined in the flowsheet.
 
 |
 
@@ -960,7 +965,7 @@ Adds new 3-dimensional plot with specified name and axis, returns index of the p
 
 	int AddCurveOnPlot(std::string PlotName, std::string CurveName)
 
-Adds new curve with specified name on the 2-dimensional plot with name ``PlotName``. Returns index of the curve within specified plot. Returns ``-1`` on error.
+Adds new curve with specified name ``CurveName`` on the 2-dimensional plot with name ``PlotName``. Returns index of the curve within specified plot. Returns ``-1`` on error.
 
 |
 
@@ -968,7 +973,11 @@ Adds new curve with specified name on the 2-dimensional plot with name ``PlotNam
 
 	int AddCurveOnPlot(std::string PlotName, double ZValue)
 
-Adds new curve with specified z-value on the 2- or 3-dimensional plot with name ``PlotName``. Returns index of the curve within specified plot. Returns ``-1`` on error.
+Adds new curve with specified ``ZValue`` on the 2- or 3-dimensional plot with name ``PlotName``. Returns index of the curve within specified plot. 
+
+``ZValue`` can be time, ...
+
+Returns ``-1`` on error.
 
 |
 
@@ -976,7 +985,7 @@ Adds new curve with specified z-value on the 2- or 3-dimensional plot with name 
 
 	void AddPointOnCurve(std::string PlotName, std::string CurveName, double X, double Y)
 
-Adds new point on specified curve for 2-dimensional plot.
+Adds new point on specified curve ``CurveName`` for 2-dimensional plot.
 
 |
 
@@ -984,7 +993,7 @@ Adds new point on specified curve for 2-dimensional plot.
 
 	void AddPointOnCurve(std::string PlotName, double ZValue, double X, double Y)
 
-Adds new point on specified curve for 3-dimensional plot
+Adds new point on specified curve for 3-dimensional plot with specified ``ZValue``. ``ZValue`` can be time, ...
 
 |
 
@@ -992,7 +1001,7 @@ Adds new point on specified curve for 3-dimensional plot
 
 	void AddPointOnCurve(std::string PlotName, std::string CurveName, std::vector<double> X, std::vector<double> Y)
 
-Adds new points on specified curve for 2-dimensional plot.
+Adds new points on specified curve ``CurveName`` for 2-dimensional plot named ``PlotName``.
 
 |
 
@@ -1000,7 +1009,7 @@ Adds new points on specified curve for 2-dimensional plot.
 
 	void AddPointOnCurve(std::string PlotName, double ZValue, std::vector<double> X, std::vector<double> Y)
 
-Adds new points on specified curve for 3-dimensional plot.
+Adds new points on specified curve ``ZValue`` for 3-dimensional plot named ``PlotName``. ``ZValue`` can be time, ...
 
 |
 
@@ -1031,7 +1040,7 @@ Calculates unit for specified time interval for **dynamic units**. Is called by 
 
 	void Initialize(double Time)
 	
-Initializes unit at the time point ``Time``. Is called by the simulator only once at the start of the simulation. Here some additionaly objects can be initialized (for example holdups, material streams or state variables).
+Initializes unit at the time point ``Time``. Is called by the simulator only once at the start of the simulation. Here some additional objects can be initialized (for example holdups, material streams or state variables).
 
 |
 
@@ -1041,7 +1050,7 @@ Initializes unit at the time point ``Time``. Is called by the simulator only onc
 
 	void SaveState()
 
-Saves current state of the unit. All time dependent variables which weren’t added to the unit be manually saved here with the help of ``AddStateVariable()``, ``AddMaterialStream()`` or ``AddHoldup()``. 
+Saves current state of the unit. All time dependent variables which weren’t added to the unit be manually saved here with the help of :ref:`AddStateVariable <label-AddStateVariable>`, :ref:`AddMaterialStream <label-AddMaterialStream>` or :ref:`AddHoldup <label-AddHoldup>`. 
 
 For flowsheets containing **recycled streams**, this function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation.
 
@@ -2467,7 +2476,7 @@ Following functions are for class ``CHoldup``.
 
 .. code-block:: cpp
 
-	void CopyFromHoldup(CHoldup *SrcHoldup, double Time, bool DeleteDataAfter)
+	void CopyFromHoldup(CHoldup *SrcHoldup, double Time, bool DeleteDataAfter = true)
 	
 Copies all holdup data from ``SrcHoldup`` for the specified time point ``Time`` to the current holdup. 
 
@@ -2477,7 +2486,7 @@ If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``
 
 .. code-block:: cpp
 
-	void CopyFromHoldup(CHoldup *SrcHoldup, double Start, double End, bool DeleteDataAfter)
+	void CopyFromHoldup(CHoldup *SrcHoldup, double Start, double End, bool DeleteDataAfter = true)
 	
 Copies all holdup data from ``SrcHoldup`` on the certain time interval to the current holdup. Boundary points ``Start`` and ``End`` are included into this interval. 
 
@@ -2488,13 +2497,15 @@ If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``
 
 .. code-block:: cpp
 
-	void CopyFromHoldup(double TimeDst, CHoldup *SrcHoldup, double TimeSrc, bool DeleteDataAfter)
+	void CopyFromHoldup(double TimeDst, CHoldup *SrcHoldup, double TimeSrc, bool DeleteDataAfter = true)
 	
 Copies all holdup data from time point ``TimeSrc`` of holdup ``SrcHoldup`` to the time point ``TimeDst`` of this holdup. 
 
 If flag ``DeleteDataAfter`` is set to ``true``, all data after the time point ``Time`` in the destination holdup will be removed before being copied.
 
 |
+
+.. _label-AddHoldup:
 
 .. code-block:: cpp
 
@@ -2542,7 +2553,7 @@ All functions receive grid (``Grid``) as the input parameter. The grid can be pr
 	
 	:math:`\Delta d_i` – size of the class :math:`i`
 	
-	:math:`M_k` – :math:`k`-moment 
+	:math:`M_k` – :math:`k`-th moment 
 	
 	:math:`q` – density distribution
 	
@@ -3051,7 +3062,7 @@ External solver
 
 As mentioned in section :ref:`label-solverDev`, you can generate your own solvers in Dyssol under class ``CExternalSolver``. 
 
-In Dyssol, external solvers are connected with open-source programm packages from the internet. Thus you can only do some basic operations for these solvers, such as generate new solver, name it, get ID and version, initialize and finalize, etc.
+In Dyssol, external solvers are connected with :ref:`open-source programm packages <label-equationSolvers>`. Thus you can only do some basic operations for these solvers, such as generate new solver, name it, get ID and version, initialize and finalize, etc.
 
 In this section, the functions and variables applied in external solver are introduced.
 
@@ -3311,7 +3322,9 @@ Model
 
 	bool SetModel(CDAEModel *_pModel)
 
-Sets model to a solver. Should be called in function ``Initialize(Time)`` of the unit. Returns ``false`` on error.
+Sets model to a solver. Should be called in function :ref:`Initialize <label-DynamicUnitInitialize>` of the unit. 
+
+Returns ``false`` on error.
 
 |
 
@@ -3319,7 +3332,7 @@ Sets model to a solver. Should be called in function ``Initialize(Time)`` of the
 
 	bool SetMaxStep()
 
-Sets maximum time step for solver. Should be used in ``Unit::Initialize(Time)`` before the function ``CDAESolver::SetModel()``.
+Sets maximum time step for solver. Should be used in :ref:`Initialize <label-DynamicUnitInitialize>` before the function :ref:`SetModel <label-setModel>`.
 
 |
 
@@ -3327,9 +3340,14 @@ Sets maximum time step for solver. Should be used in ``Unit::Initialize(Time)`` 
 
 .. code-block:: cpp
 
-	bool Calculate(double _dTime)
+	bool Calculate(double _dTime, unsigned _nModel = KIN_NONE)
 
-Solves problem on a given time point. Should be called in function ``Simulate(Time)`` of the unit. Returns ``false`` on error.
+Solves problem on a given time point ``_dTime``. Should be called in function :ref:`Simulate <label-DynamicUnitSimulate>` of the unit. 
+
+Default value of ``_nModel`` is ``KIN_NONE``, a Newton-based iteration method. Other available models can be found in declaration for KINSOL parameters in the ``*.cpp`` file, including: ``KIN_FP`` (fixed point), ``KIN_LINESEARCH`` and ``KIN_PICARD``.
+
+
+Returns ``false`` on error.
 
 |
 
@@ -3337,7 +3355,7 @@ Solves problem on a given time point. Should be called in function ``Simulate(Ti
 
 	bool Calculate(double _dStartTime, double _dEndTime)
 
-Solves problem on a given time interval. Should be called in function ``Simulate(Time)`` of the unit. Returns ``false`` on error.
+Solves problem on a given time interval. Should be called in function :ref:`Simulate <label-DynamicUnitSimulate>` of the unit. Returns ``false`` on error.
 
 |
 
@@ -3410,40 +3428,39 @@ Now you want to develope a new unit for for automatic calculation of this :abbr:
 			
 		public:		
 			void CalculateResiduals(double _dTime, double* _pVars, double* _pDers, double* _pRes, void* _pUserData);			
-			void ResultsHandler(double _dTime, double* _pVars, double* _pDerivs, void *_pUserData);
+			void ResultsHandler(double _dTime, double* _pVars, double* _pDers, void *_pUserData);
 		};
 
-3.	Setup unit’s basic info (name, author’s name, unique id, ports) as described in :ref:`label-unitDev`.Then provide model with pointer to your unit, in order to have an access to the unit from functions of the model. Now your unit’s constructor must look like this:
+3.	Setup unit’s basic info (name, author’s name, unique ID, ports) as described in :ref:`label-unitDev`.Then provide model with pointer to your unit, in order to have an access to the unit from functions of the model. Now your unit’s constructor should look like this:
 
 	.. code-block:: cpp
 	
 		CUnit::CUnit()
 		{
+			// Unit basic information
 			m_sUnitName = "DummyUnit4";
 			m_sAuthorName = "Author";
 			m_sUniqueID = "344BCC0048AA4c3a9117F20A9F8AF9A8"; //an example ID
 
+			// Add ports for in- and outlets
 			AddPort("InPort", INPUT_PORT);
 			AddPort("OutPort", OUTPUT_PORT);
 
+			// Set this unit as user data of the model applied 
 			m_Model.SetUserData(this);
 		}
 
-4.	Implement function ``Initialize`` of the unit: add 3 variables with specified initial conditions to the model (using function :ref:`AddDAEVariable  <label-AddDAEVariable>`) according to the equation system. As initials use phase fractions of the input stream. 
-
-	.. code-block:: cpp
-
-		m_Model.m_nS = m_Model.AddDAEVariable(true,dSolidFraction,0.04,1.0);
-		m_Model.m_nL = m_Model.AddDAEVariable(true,dLiquidFraction,-0.04,1.0);
-		m_Model.m_nV = m_Model.AddDAEVariable(false,dVaporFraction,0,1.0);
+4.	Implement function ``Initialize`` of the unit: 
 
 	Since function ``Initialize`` is called every time when simulation starts, all variables must be previously removed from the model by calling ``ClearVariables``. 
 
 	.. code-block:: cpp
 
 		m_Model.ClearVariables();
+	
+	Now you can add 3 variables with specified initial conditions to the model (using function :ref:`AddDAEVariable  <label-AddDAEVariable>`) according to the equation system. Use phase fractions of the input stream as initials. 
 
-	Set tolerances to the model using function :ref:`SetTolerance <label-setTol>`. As tolerances for the model global tolerances of the system can be used. 
+	Set tolerances to the model using function :ref:`SetTolerance <label-setTol>`. As tolerances for the model, global tolerances of the system can be used. 
 
 	.. code-block:: cpp
 
@@ -3456,24 +3473,30 @@ Now you want to develope a new unit for for automatic calculation of this :abbr:
 		if( !m_Solver.SetModel(&m_Model) )
 			RaiseError(m_Solver.GetError());
 				
-	Initialize the unit after all changes take place using function ``Initialize``.
+	Your code should look like this after following all steps above:
 
 	.. code-block:: cpp
 
 		void CUnit::Initialize(double _dTime)
 		{
-			CMaterialStream *pInpStream = GetPortStream("InPort");	
-
+			// Get pointer to inlet stream
+			CMaterialStream* pInpStream = GetPortStream("InPort");	
+			
+			// Clear previous state variables in model
+			m_Model.ClearVariables();
+			
+			// Add state variables to model
 			double dSFr = pInpStream->GetSinglePhaseProp(_dTime, FRACTION, SOA_SOLID);
 			double dLFr = pInpStream->GetSinglePhaseProp(_dTime, FRACTION, SOA_LIQUID);
 			double dVFr = pInpStream->GetSinglePhaseProp(_dTime, FRACTION, SOA_VAPOR);
-
-			m_Model.ClearVariables();
 			m_Model.m_nS = m_Model.AddDAEVariable(true, dSFr, 0.04, 1.0);
 			m_Model.m_nL = m_Model.AddDAEVariable(true, dLFr, -0.04, 1.0);
 			m_Model.m_nV = m_Model.AddDAEVariable(false, dVFr, 0, 1.0);
-
+			
+			// Set tolerance to model
 			m_Model.SetTolerance( GetRelTolerance(), GetAbsTolerance() );
+			
+			// Set model to solver
 			if( !m_Solver.SetModel(&m_Model) )
 				RaiseError(m_Solver.GetError());
 		}
@@ -3492,42 +3515,45 @@ Now you want to develope a new unit for for automatic calculation of this :abbr:
 			m_Solver.LoadState();
 		}
 
-6.	In function ``Simulate`` of the unit calculation procedure should be run by calling function ``Calculate`` of the solver. Additionally solver can be connected to the system’s errors handling procedure to receive possible errors during the calculation. Unit’s ``Simulate`` function after that must look as follows:
+6.	In function ``Simulate`` of the unit, calculation procedure should be run by calling function ``Calculate`` of the solver. Additionally, solver can be connected to the system’s errors handling procedure to receive possible errors during the calculation. Unit’s ``Simulate`` function after that must look as follows:
 
 	.. code-block:: cpp
 
 		void CUnit::Simulate(double _dStartTime, double _dEndTime)
-		{
+		{	
+			// Get pointers to inlet and outlet streams
 			CMaterialStream *pInputStream = GetPortStream("InPort");
 			CMaterialStream *pOutputStream = GetPortStream("OutPort");
 
 			pOutputStream->RemoveTimePointsAfter(_dStartTime, true);
-			pOutputStream->CopyFromStream(pInputStream, _dStartTime);
-
+			pOutputStream->CopyFromStream(pInputStream, _dStartTime); // Copy the inlet stream information to outlet stream
+			
+			// Run solver and check if errors take place
 			if( !m_Solver.Calculate(_dStartTime, _dEndTime) )
 				RaiseError( m_Solver.GetError() );
 		}
 
-7.	In function ``CalculateResiduals``, :abbr:`DAE (Differential-algebraic equations)` system in implicit form should be described:
+7.	In function ``CalculateResiduals``, :abbr:`DAE (Differential-algebraic equations)` system in implicit form should be described. According to the given equation system
 	
 	.. math::
 
 		\begin{cases}
-			\frac{dx}{dt} = -0.04 \cdot x + 10^4 \cdot y \cdot z &x(0) = 0.04 
+			\dfrac{dx}{dt} = -0.04 \cdot x + 10^4 \cdot y \cdot z &x(0) = 0.04 
 			
-			\frac{dy}{dt} = 0.04\cdot x - 10^4 \cdot y \cdot z - 3 \cdot 10^7 \cdot y^2 &y(0) = -0.04
+			\dfrac{dy}{dt} = 0.04\cdot x - 10^4 \cdot y \cdot z - 3 \cdot 10^7 \cdot y^2 &y(0) = -0.04
 			
 			x + y + z = 1
 		\end{cases}
 
+	and the definition of residual ``_pRes`` (difference between new and old values from last calculation), the equaitons are expressed below. Here the values are arranged in vector ``_pVars`` according to sequence :math:`[x, y, z]`, in ``_pDers`` according to :math:`[dx, dy]`.
 		
 	.. code-block:: cpp
 
 		void CMyDAEModel::CalculateResiduals(double _dTime, double* _pVars, double* _pDers, double* _pRes, void* _pUserData)
 		{
-			_pRes[m_nS] = _pDers[m_nS] - (-0.04*_pVars[m_nS] + 1.0e4*_pVars[m_nL]*_pVars[m_nV]);
-			_pRes[m_nL] = _pDers[m_nL] - ( 0.04*_pVars[m_nS] - 1.0e4*_pVars[m_nL]*_pVars[m_nV] - 3.0e7*_pVars[m_nL]*_pVars[m_nL] );
-			_pRes[m_nV] = _pVars[m_nS] + _pVars[m_nL] + _pVars[m_nV] - 1;
+			_pRes[0] = _pDers[0] - (-0.04*_pVars[0] + 1.0e4*_pVars[1]*_pVars[2]);
+			_pRes[1] = _pDers[1] - ( 0.04*_pVars[0] - 1.0e4*_pVars[1]*_pVars[2] - 3.0e7*_pVars[1]*_pVars[1] );
+			_pRes[2] = _pVars[0] + _pVars[1] + _pVars[2] - 1;
 		}
 
 8.	Last step is handling of results from the solver (``CMyDAEModel::ResultsHandler``). Calculated fractions can be set here to the output stream of the unit. To access to the unit’s data, use the pointer ``_pUserData`` defined previously:
@@ -3536,14 +3562,17 @@ Now you want to develope a new unit for for automatic calculation of this :abbr:
 
 		void CMyDAEModel::ResultsHandler(double _dTime, double* _pVars, double* _pDerivs, void *_pUserData)
 		{
+			// Get pointers to streams
 			CUnit *unit = static_cast<CUnit*>(_pUserData);
 			CMaterialStream *pStream = static_cast<CMaterialStream*>(unit->GetPortStream("OutPort"));
-
+			
+			// Add time point to outlet stream
 			pStream->AddTimePoint(_dTime);
-
-			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_SOLID, _pVars[m_nS]);
-			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_LIQUID, _pVars[m_nL]);
-			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_VAPOR, _pVars[m_nV]);
+			
+			// Set calculated results to corresponding phases
+			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_SOLID, _pVars[0]);
+			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_LIQUID, _pVars[1]);
+			pStream->SetSinglePhaseProp(_dTime, FRACTION, SOA_VAPOR, _pVars[2]);
 		} 
 
 |

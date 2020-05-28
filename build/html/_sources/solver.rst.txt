@@ -7,7 +7,7 @@ Solver library
 
 Basic solver provides interfaces to the simulation system and to units. 
 
-You can implement your own solver and add it to the solver library. Please refer to :ref:`label-solverDev` for detailed information. 
+Currently in Dyssol, you can develop your own :ref:`agglomeration <label-agg>` solver and add it to the solver library. Please refer to :ref:`label-solverDev` for detailed information. 
 
 The solver can also be added to a unit as a parameter.
 
@@ -16,8 +16,6 @@ The solver can also be added to a unit as a parameter.
    :alt: 
    :align: center 
 
-Currently, the solver library for :ref:`label-agg` is available in Dyssol. 
-
 |
 
 .. _label-agg-solvers:
@@ -25,7 +23,7 @@ Currently, the solver library for :ref:`label-agg` is available in Dyssol.
 Agglomeration solvers
 =====================
 
-Solvers are applied to calculate the birth and death rate of agglomerates according to different mathematical models. In Dyssol, 3 solver types are available:
+Solvers are applied to calculate the birth and death rate of agglomerates according to different mathematical models. In Dyssol, 3 types of solver are available:
 
 	- Cell average
 	- Fast Fourier transformation (FFT)

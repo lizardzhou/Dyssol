@@ -69,7 +69,7 @@ File
 
 - Command line interface:
 
-	Using this option, you can save your current simulation to a :ref:`label-config-file` in ``*.txt`` form. In the configuration file, you may have the following activities. However, it is impossible to change the flowsheet structure in the configuration file.
+	Using this option, you can save your current simulation to a configuration file in ``*.txt`` form. In the configuration file, you may have the following activities. However, it is impossible to change the flowsheet structure in the configuration file.
 
 	- Run simulations in command line mode
 	
@@ -79,7 +79,7 @@ File
 	
 	- Possibility to save flowsheet as the configuration file for the command line mode
 	
-	Please refer to the help document in directory ``Dyssol\Help\Command Line.pdf`` for more information.
+	Please refer to :ref:`run Dyssol in command line mode <label-config-file>` for more information.
 
 	.. image:: ./pics/gui/command.png
 	   :width: 960px

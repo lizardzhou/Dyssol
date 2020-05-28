@@ -60,7 +60,7 @@
 <div class="section" id="configuration-of-visual-studio-project-template">
 <span id="label-vcconfig"></span><h2>Configuration of Visual Studio project template<a class="headerlink" href="#configuration-of-visual-studio-project-template" title="Permalink to this headline">¶</a></h2>
 <ol class="arabic">
-<li><p class="first">Open directory where Dyssol has been installed (usually <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Dyssol</span></code>) and copy folder <code class="docutils literal notranslate"><span class="pre">VCProject</span></code> to the desired location on your hard drive (further as <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;</span></code>).</p>
+<li><p class="first">Open directory where Dyssol has been installed (for example <code class="docutils literal notranslate"><span class="pre">C:\Program</span> <span class="pre">Files</span> <span class="pre">(x86)\Dyssol</span></code>) and copy folder <code class="docutils literal notranslate"><span class="pre">VCProject</span></code> to the desired location on your hard drive (further as <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;</span></code>).</p>
 </li>
 <li><p class="first">Open the copied folder <code class="docutils literal notranslate"><span class="pre">VCProject</span></code> and run file <code class="docutils literal notranslate"><span class="pre">Dyssol.sln</span></code> to open solution in Microsoft Visual Studio, which should be previously installed.</p>
 </li>
@@ -122,8 +122,8 @@
 <ol class="arabic simple">
 <li>Copy the desired template of the unit from <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\UnitsTemplates</span></code> to the folder <code class="docutils literal notranslate"><span class="pre">Units</span></code> in solution (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units</span></code>).</li>
 <li>Rename template’s folder according to the name of your new unit (further <code class="docutils literal notranslate"><span class="pre">&lt;MyUnitFolder&gt;</span></code>). The name can be chosen freely.</li>
-<li>Rename project files in template’s folder (<code class="docutils literal notranslate"><span class="pre">*.vcxproj</span></code>, <code class="docutils literal notranslate"><span class="pre">*.vcxproj.filters</span></code>) according to the name of the new unit.</li>
-<li>Run the solution file (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\Dyssol.sln</span></code>) to open it in Visual Studio.</li>
+<li>Rename project files in template’s folder (<code class="docutils literal notranslate"><span class="pre">*.vcxproj</span></code>, <code class="docutils literal notranslate"><span class="pre">*.vcxproj.filters</span></code>) according to the name of your new unit.</li>
+<li>Run the solution file (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Dyssol.sln</span></code>) to open it in Visual Studio.</li>
 <li>Add project with your new unit to the solution. To do this, select in Visual Studio <em>File → Add → Existing Project</em> and specify path to the project file (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\&lt;MyUnitFolder&gt;\&lt;*.vcxproj&gt;</span></code>).</li>
 <li>Rename added project in Visual Studio according to the name of your unit.</li>
 </ol>
@@ -168,11 +168,11 @@
 </ul>
 <p>You must ensure that ID of your unit is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</p>
 </li>
-<li><p class="first">Specify ports: add new, rename or delete existing.</p>
-</li>
-<li><p class="first">If unit has some additionally parameters, than specify them here.</p>
+<li><p class="first">Specify ports for stream in- and outlet(s): add new, rename or delete existing.</p>
 </li>
 <li><p class="first">Additional internal material streams can be defined here.</p>
+</li>
+<li><p class="first">Sepcify unit parameters.</p>
 </li>
 <li><p class="first">All other operations, which should take place only once during the unit’s creation.</p>
 </li>
@@ -187,17 +187,17 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. additional material streams, state variables or plots).</p>
+<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation at time point <code class="docutils literal notranslate"><span class="pre">dTime</span></code>. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. additional material streams, state variables or plots).</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Steady-state calculation</strong> for a specified time point. This function is called iteratively for all time points for which this unit should be calculated. All main calculations should be implemented here.</p>
+<p><strong>Steady-state calculation</strong> for a specified time point <code class="docutils literal notranslate"><span class="pre">dTime</span></code>. This function is called iteratively for all time points for which this unit should be calculated. All main calculations should be implemented here.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -208,10 +208,138 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<div class="section" id="application-example">
+<h4>Application example<a class="headerlink" href="#application-example" title="Permalink to this headline">¶</a></h4>
+<p>Now you want to develop a new steady-state model of splitter with one input stream and three output streams, as the figure shown below. The splitting factors for the first and second outlets are <span class="math notranslate nohighlight">\(k_1\)</span> and <span class="math notranslate nohighlight">\(k_2\)</span> respectively.</p>
+<a class="reference internal image-reference" href="_images/task5-1.jpg"><img alt="" class="align-center" src="_images/task5-1.jpg" style="width: 300px;" /></a>
+<p>You need the following steps:</p>
+<ol class="arabic simple">
+<li>Copy the directory with the template unit <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\UnitsTemplates\SteadyStateUnit</span></code> to the directory for new units <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\</span></code>.</li>
+<li>Rename the copied template’s directory <code class="docutils literal notranslate"><span class="pre">SteadyStateUnit</span></code> to <code class="docutils literal notranslate"><span class="pre">MySplitter</span></code>. Open the directory <code class="docutils literal notranslate"><span class="pre">MySplitter</span></code> and rename file <code class="docutils literal notranslate"><span class="pre">SteadyState.vcxproj</span></code> to <code class="docutils literal notranslate"><span class="pre">MySplitter.vcxproj</span></code>.</li>
+<li>Open the template solution <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Dyssol.sln</span></code> in Visual Studio.</li>
+<li>Add project with your new unit to the solution: select in Visual Studio <em>File → Add → Existing Project</em> and specify path to the project file <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\MySplitter\MySplitter.vcxproj</span></code>.</li>
+<li>Rename added project in Visual Studio from <code class="docutils literal notranslate"><span class="pre">UnitT_SteadyState</span></code> to <code class="docutils literal notranslate"><span class="pre">Unit_MySplitter</span></code>.</li>
+<li>Open <code class="docutils literal notranslate"><span class="pre">Unit_MySplitter</span></code> → <code class="docutils literal notranslate"><span class="pre">Unit.cpp</span></code> in the Visual Studio’s <em>Solution Explorer</em> and extend the unit with the following functionality (please refer to <a class="reference internal" href="class.html#label-baseunit"><span class="std std-ref">Basic unit</span></a>, <a class="reference internal" href="class.html#label-stream"><span class="std std-ref">Stream</span></a> and <a class="reference internal" href="class.html#label-psd"><span class="std std-ref">Particle size distribution</span></a> when necessary):</li>
+</ol>
+<ul>
+<li><p class="first">Modify constructor <code class="docutils literal notranslate"><span class="pre">CUnit()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Specify unit’s name by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code> to <code class="docutils literal notranslate"><span class="pre">My</span> <span class="pre">Splitter</span></code>. This name will appear in the drop-down list for unit types in Dyssol simulation.</li>
+<li>Specify author’s name by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>.</li>
+<li>Set new unique key of the unit by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code> to some random string. To generate such a string <em>GUID generator</em> of Visual Studio can be used <em>Tools → Create GUID</em>.</li>
+<li>Add two additional output ports and rename all of them.</li>
+</ul>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CUnit</span><span class="o">::</span><span class="n">CUnit</span><span class="p">()</span> <span class="p">{</span>
+
+<span class="c1">// Basic unit&#39;s info</span>
+<span class="n">m_sUnitName</span> <span class="o">=</span> <span class="s">&quot;MySplitter&quot;</span><span class="p">;</span>
+<span class="n">m_sAuthorName</span> <span class="o">=</span> <span class="s">&quot;MyName&quot;</span><span class="p">;</span>
+<span class="n">m_sUniqueID</span> <span class="o">=</span> <span class="s">&quot;B59F8349A7014AC294D6580C0D8E21FE&quot;</span><span class="p">;</span>
+
+<span class="c1">// Add ports</span>
+<span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;In&quot;</span><span class="p">,</span> <span class="n">INPUT_PORT</span><span class="p">);</span>
+<span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Out1&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
+<span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Out2&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
+<span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Out3&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
+
+<span class="c1">// Add unit parameters - splitting factors</span>
+<span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;k1&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;k1&quot;</span><span class="p">);</span>
+<span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;k2&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;k2&quot;</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Modify function <code class="docutils literal notranslate"><span class="pre">Initialize()</span></code>: remove all codes in it.</p>
+</li>
+<li><p class="first">Modify function <code class="docutils literal notranslate"><span class="pre">Simulate()</span></code>:</p>
+<blockquote>
+<div><p>Here you should perform all steps which are needed in the simulaition, including get port streams, set mass flow of inlet streams and the calculation of output streams. Also don’t forget to give user warning if some streams becomes minus.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span> <span class="p">{</span>
+
+<span class="c1">// Get streams of all ports and assign them to corresponding material streams</span>
+<span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">pInStream</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;In&quot;</span><span class="p">);</span>
+<span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">pOutStream1</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Out1&quot;</span><span class="p">);</span>
+<span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">pOutStream2</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Out2&quot;</span><span class="p">);</span>
+<span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">pOutStream3</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Out3&quot;</span><span class="p">);</span>
+
+<span class="c1">// Copy inlet stream to all outlet streams</span>
+<span class="n">pOutStream1</span><span class="o">-&gt;</span><span class="n">CopyFromStream</span><span class="p">(</span><span class="n">pInStream</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">);</span>
+<span class="n">pOutStream2</span><span class="o">-&gt;</span><span class="n">CopyFromStream</span><span class="p">(</span><span class="n">pInStream</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">);</span>
+<span class="n">pOutStream3</span><span class="o">-&gt;</span><span class="n">CopyFromStream</span><span class="p">(</span><span class="n">pInStream</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">);</span>
+
+<span class="c1">// Set mass flow rate of inlet stream</span>
+<span class="kt">double</span> <span class="n">dMassFlowIn</span> <span class="o">=</span> <span class="n">pInStream</span><span class="o">-&gt;</span><span class="n">GetMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">);</span>
+
+<span class="c1">// Add splitting factors</span>
+<span class="kt">double</span> <span class="n">dSplitFactor1</span> <span class="o">=</span> <span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;k1&quot;</span><span class="p">);</span>
+<span class="kt">double</span> <span class="n">dSplitFactor2</span> <span class="o">=</span> <span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;k2&quot;</span><span class="p">);</span>
+
+<span class="c1">// Give warning if sum of splitting factors is greater than 1</span>
+<span class="k">if</span> <span class="p">(</span><span class="n">dSplitFactor1</span> <span class="o">+</span> <span class="n">dSplitFactor2</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span>
+        <span class="n">RaiseError</span><span class="p">(</span><span class="s">&quot;Warning about minus outlet 3...&quot;</span><span class="p">);</span>
+
+<span class="c1">// Set calculated mass flow rate to corresponding outlet streams</span>
+<span class="n">pOutStream1</span><span class="o">-&gt;</span><span class="n">SetMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">dMassFlowIn</span> <span class="o">*</span> <span class="n">dSplitFactor1</span><span class="p">);</span>
+<span class="n">pOutStream2</span><span class="o">-&gt;</span><span class="n">SetMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">dMassFlowIn</span> <span class="o">*</span> <span class="n">dSplitFactor2</span><span class="p">);</span>
+<span class="n">pOutStream3</span><span class="o">-&gt;</span><span class="n">SetMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">dMassFlowIn</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">dSplitFactor1</span> <span class="o">-</span> <span class="n">dSplitFactor2</span><span class="p">));</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Perform test simulation:</p>
+<blockquote>
+<div><p>Now you have your complete code for the splitter. Build the solution and then run Dyssol in debug mode. Add material streams and the unit, choose the unit type “MySplitter”, set inlet mass flow and splitting factors according to the table below, and finally check if the results are correct.</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="72%" />
+<col width="28%" />
+</colgroup>
+<tbody valign="top">
+<tr class="row-odd"><td colspan="2"><strong>General</strong></td>
+</tr>
+<tr class="row-even"><td>Materials</td>
+<td>Sand</td>
+</tr>
+<tr class="row-odd"><td>Phases</td>
+<td>Solid</td>
+</tr>
+<tr class="row-even"><td colspan="2"><strong>Inlet</strong></td>
+</tr>
+<tr class="row-odd"><td>Time points</td>
+<td>0 s</td>
+</tr>
+<tr class="row-even"><td>Mass stream</td>
+<td>1 kg/s</td>
+</tr>
+<tr class="row-odd"><td>Phase mass fractions</td>
+<td>Solid: 1</td>
+</tr>
+<tr class="row-even"><td>Compounds mass fractions</td>
+<td>Sand: 1</td>
+</tr>
+<tr class="row-odd"><td colspan="2"><strong>Options</strong></td>
+</tr>
+<tr class="row-even"><td>Simulation time</td>
+<td>60 s</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+</ul>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 <div class="section" id="development-of-steady-state-units-with-internal-non-linear-solver">
-<h3>Development of steady-state units with internal non-linear solver<a class="headerlink" href="#development-of-steady-state-units-with-internal-non-linear-solver" title="Permalink to this headline">¶</a></h3>
-<p>You can solve nonlinear equation systems automatically in Dyssol system. In this case, the unit should contain one or several additional objects of <code class="docutils literal notranslate"><span class="pre">NLModel</span></code> class. This class is used to describe non-linear systems and can be automatically solved with <code class="docutils literal notranslate"><span class="pre">NLSolver</span></code> class.</p>
+<span id="label-nlsolver"></span><h3>Development of steady-state units with internal non-linear solver<a class="headerlink" href="#development-of-steady-state-units-with-internal-non-linear-solver" title="Permalink to this headline">¶</a></h3>
+<p>You can solve nonlinear equation systems automatically in Dyssol system. In this case, the unit should contain one or several additional objects of <code class="docutils literal notranslate"><span class="pre">CNLModel</span></code> class. This class is used to describe non-linear systems and can be automatically solved with <code class="docutils literal notranslate"><span class="pre">CNLSolver</span></code> class.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -219,17 +347,23 @@
 </pre></div>
 </div>
 <p><strong>Constructor</strong> of the unit: called only once when unit is added to the flowsheet. In this function a set of parameters should be specified:</p>
-<ol class="arabic simple">
-<li>Basic info:<ul>
+<ol class="arabic">
+<li><p class="first">Basic info:</p>
+<ul class="simple">
 <li><code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code>: Name of the unit that will be displayed in Dyssol.</li>
 <li><code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>: Unit’s author</li>
-<li><code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>: Unique identificator of the unit. Simulation environment distinguishes different units with the help of this identificator. You must ensure that ID of your unit is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</li>
+<li><code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>: Unique identificator of the unit. Simulation environment distinguishes different units with the help of this identificator.</li>
 </ul>
+<p>You must ensure that ID of your unit is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</p>
 </li>
-<li>Specify ports: add new, rename or delete existing.</li>
-<li>If unit has some additionally parameters, than specify them here.</li>
-<li>Additional material streams can be defined here.</li>
-<li>All other operations, which should take place only once during the unit’s creation.</li>
+<li><p class="first">Specify ports for stream in- and outlet(s): add new, rename or delete existing.</p>
+</li>
+<li><p class="first">Additional internal material streams can be defined here.</p>
+</li>
+<li><p class="first">Sepcify unit parameters.</p>
+</li>
+<li><p class="first">All other operations, which should take place only once during the unit’s creation.</p>
+</li>
 </ol>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -241,25 +375,25 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (for example holdups, material streams, state variables or plots).</p>
+<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation at time point <code class="docutils literal notranslate"><span class="pre">dTime</span></code>. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (for example holdups, material streams, state variables or plots).</p>
 <p>In this function, variables of all <code class="docutils literal notranslate"><span class="pre">NLModels</span></code> should be specified by using function <code class="docutils literal notranslate"><span class="pre">NLModel::AddNLVariable()</span></code>; connection between <code class="docutils literal notranslate"><span class="pre">NLModel</span></code> and <code class="docutils literal notranslate"><span class="pre">NLSolver</span></code> classes should be created by calling function <code class="docutils literal notranslate"><span class="pre">NLSolver::SetModel()</span></code>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Steady-state calculation</strong> for a specified time point. This function is called iteratively for all time points for which this unit should be calculated. All main calculations should be implemented here. Calculation of the defined NL-system can be run here by calling function <code class="docutils literal notranslate"><span class="pre">NLSolver::Calculate()</span></code>.</p>
+<p><strong>Steady-state calculation</strong> for a specified time point <code class="docutils literal notranslate"><span class="pre">dTime</span></code>. This function is called iteratively for all time points for which this unit should be calculated. All main calculations should be implemented here. Calculation of the defined NL-system can be run here by calling function <code class="docutils literal notranslate"><span class="pre">NLSolver::Calculate()</span></code>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">SaveState</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <code class="docutils literal notranslate"><span class="pre">AddStateVariable()</span></code> and <code class="docutils literal notranslate"><span class="pre">AddMaterialStream()</span></code> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
+<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <a class="reference internal" href="class.html#label-addstatevariable"><span class="std std-ref">AddStateVariable</span></a> and <a class="reference internal" href="class.html#label-addmaterialstream"><span class="std std-ref">AddMaterialStream</span></a> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -277,19 +411,358 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NLModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">()</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NLModel</span><span class="o">::</span><span class="n">CalculateFunctions</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pFunc</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Handling of results</strong>, which are returned from <code class="docutils literal notranslate"><span class="pre">NLSolver</span></code> on each time point. Called by solver every time when the solution in a new time point is ready.</p>
+<p>Here the non-linear system should be specified. This function will be called by solver automatically.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NLModel</span><span class="o">::</span><span class="n">CalculateFunctions</span><span class="p">()</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">NLModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">pUserData</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Here the non-linear system should be <strong>specified</strong>. This function will be called by solver automatically.</p>
+<p>Handling of results, which are returned from <code class="docutils literal notranslate"><span class="pre">NLSolver</span></code> on each time point. Called by solver every time when the solution in a new time point is ready.</p>
 <div class="line-block">
 <div class="line"><br /></div>
+</div>
+<div class="section" id="id1">
+<h4>Application example<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<p>In this example, you need to develop a steady-state unit for a simple air classifying process, which separates particles according to their sinking velocity in a fluid stream. Additionally, the time and particle size dependence of separation efficiency should be plotted.</p>
+<p>The separation depends on the relative velocity between the fluid and the particles <span class="math notranslate nohighlight">\(v_{rel,i} = u_G - v_{P,i}\)</span>. Floating particles with no velocity, i.e. <span class="math notranslate nohighlight">\(v_{rel,i} = u_G\)</span>, will be divided evenly to coarse and fines stream.</p>
+<p>The separation efficiency and cut-off velocity are defined as in the formulas below.</p>
+<div class="math notranslate nohighlight" id="label-eq-sepeff">
+\[\xi_{C,i} = 1 / \left(  1 + \dfrac{w_{cut}}{v_{rel,i}} \cdot e^{x \left[ 1 - \left(\dfrac{v_{rel,i}}{w_{cut}}\right)^3 \right]} \right)\]</div>
+<div class="math notranslate nohighlight" id="label-eq-wcut">
+\[w_{cut} = u_G = \dfrac{\dot{m}_G}{\rho_G \cdot A}\]</div>
+<p id="label-eq-sys">To complete the simulation, you need to solve the following implicit equation system:</p>
+<div class="math notranslate nohighlight">
+\[Re_{P,i} = \dfrac{|v_{rel,i}|\cdot d_{P,i}\cdot \rho_G}{\eta_G}\]</div>
+<div class="math notranslate nohighlight">
+\[C_{W,P,i} = \dfrac{24}{Re_{P,i}} + \dfrac{4}{\sqrt{Re_{P,i}}} + 0.4\]</div>
+<div class="math notranslate nohighlight">
+\[v_{rel,i} = \sqrt{\dfrac{4\,\rho_P\,d_{P,i}\,g}{3\,\rho_G\,C_{W,P,i}}}\]</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Notations:</p>
+<p><span class="math notranslate nohighlight">\(v_{rel,i}\)</span> – Relative velocity of particle of size class <span class="math notranslate nohighlight">\(i\)</span> [m/s]</p>
+<p><span class="math notranslate nohighlight">\(v_{P,i}\)</span> – Velocity of particle of size class <span class="math notranslate nohighlight">\(i\)</span> [m/s]</p>
+<p><span class="math notranslate nohighlight">\(u_G\)</span> – Velocity of gas [m/s]</p>
+<p><span class="math notranslate nohighlight">\(\xi_{C,i}\)</span> – Separation efficiency of size class <span class="math notranslate nohighlight">\(i\)</span> [-]</p>
+<p><span class="math notranslate nohighlight">\(w_{cut}\)</span> – Cut-off velocity [m/s]</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_G\)</span> – Gas mass flow [kg/s]</p>
+<p><span class="math notranslate nohighlight">\(Re_{P,i}\)</span> – Reynolds number of size class <span class="math notranslate nohighlight">\(i\)</span> [-]</p>
+<p><span class="math notranslate nohighlight">\(d_{P,i}\)</span> – Particle diameter of size class <span class="math notranslate nohighlight">\(i\)</span> [m]</p>
+<p><span class="math notranslate nohighlight">\(C_{W,P,i}\)</span> – Drag coefficient of size class <span class="math notranslate nohighlight">\(i\)</span> [-]</p>
+<p><span class="math notranslate nohighlight">\(\rho_G\)</span> – Gas density [<span class="math notranslate nohighlight">\(kg/m^3\)</span>]</p>
+<p><span class="math notranslate nohighlight">\(\rho_P\)</span> – Particle / solid density [<span class="math notranslate nohighlight">\(kg/m^3\)</span>]</p>
+<p><span class="math notranslate nohighlight">\(\eta_G\)</span> – Gas dynamic viscosity [Pa·s]</p>
+<p><span class="math notranslate nohighlight">\(x\)</span> – Sharpness factor [-]</p>
+<p><span class="math notranslate nohighlight">\(A\)</span> – Cross-sectional area [<span class="math notranslate nohighlight">\(m^2\)</span>]</p>
+<p class="last"><span class="math notranslate nohighlight">\(g\)</span> – Gravitational acceleration [<span class="math notranslate nohighlight">\(m/s^2\)</span>]</p>
+</div>
+<p>Now you need the following steps:</p>
+<ol class="arabic simple">
+<li>Copy the directory with the template unit <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\UnitsTemplates\SteadyStateWithNLSolver\</span></code> to the directory for new units <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\</span></code>. Rename the folder to <code class="docutils literal notranslate"><span class="pre">AirClassifierTemplate</span></code> and the file <code class="docutils literal notranslate"><span class="pre">SteadyStateWithNLSolver.vcxproj</span></code> to <code class="docutils literal notranslate"><span class="pre">AirClassifier.vcxproj</span></code>.</li>
+<li>Along with this application example, you obtain a pre-configured template folder of the air classifier unit <code class="docutils literal notranslate"><span class="pre">...\Task8\AirClassifierTemplate\</span></code>, in which you find the source file <code class="docutils literal notranslate"><span class="pre">Unit.cpp</span></code> and header file <code class="docutils literal notranslate"><span class="pre">Unit.h</span></code>. Copy the contents of them to the corresponding <code class="docutils literal notranslate"><span class="pre">Unit.cpp</span></code> and <code class="docutils literal notranslate"><span class="pre">Unit.h</span></code> files in your template folder <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\AirClassifierTemplate\</span></code>.</li>
+<li>Open the template solution <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Dyssol.sln</span></code> in Visual Studio.</li>
+<li>Add project with your new unit to the solution: select <em>File → Add → Existing Project</em> and specify path to the project file <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\AirClassifierTemplate\</span></code>. Rename the unit to <code class="docutils literal notranslate"><span class="pre">Unit_AirClassifier</span></code>.</li>
+<li>Open <code class="docutils literal notranslate"><span class="pre">Unit_AirClassifier</span></code> → <code class="docutils literal notranslate"><span class="pre">Unit.cpp</span></code> in the Visual Studio’s and extend the unit with the following functionality:</li>
+</ol>
+<ul>
+<li><p class="first">Edit the unit <code class="docutils literal notranslate"><span class="pre">CUnit</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Modify constructor <code class="docutils literal notranslate"><span class="pre">CUnit()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Specify unit’s name by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code> to <code class="docutils literal notranslate"><span class="pre">Air</span> <span class="pre">classifier</span></code>. This name will appear in the drop-down list for unit types in Dyssol simulation.</li>
+<li>Specify author’s name by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>.</li>
+<li>For <code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>, unlike the examples in steady-state unit, DO NOT change the ID, because the given ID is connected with the simulation file provided. If you change the ID, the parameter in simulation file would not be read by Dyssol and you can’t carry out your simulaiton.</li>
+<li>Add 2 unit parameters using function <code class="docutils literal notranslate"><span class="pre">AddConstParameter</span></code>: the cross-sectional area A ranging between 0.01 and 100, and the sharpness factor x ranging between 0.01 and 10. You can set inital value to 1 for both parameters.</li>
+</ul>
+<p>You find the example code below:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CUnit</span><span class="o">::</span><span class="n">CUnit</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// Basic unit&#39;s info</span>
+        <span class="n">m_sUnitName</span> <span class="o">=</span> <span class="s">&quot;Air classifier&quot;</span><span class="p">;</span>
+        <span class="n">m_sAuthorName</span> <span class="o">=</span> <span class="s">&quot;Your name&quot;</span><span class="p">;</span>
+        <span class="n">m_sUniqueID</span> <span class="o">=</span> <span class="s">&quot;211D0E54C80A4F3EB464671EEA222932&quot;</span><span class="p">;</span> <span class="c1">// DO NOT change this ID</span>
+
+        <span class="c1">// Add ports</span>
+        <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">,</span> <span class="n">INPUT_PORT</span><span class="p">);</span>
+        <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Coarse&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
+        <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Fines&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
+
+        <span class="c1">// Add unit parameters</span>
+        <span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Area&quot;</span><span class="p">);</span> <span class="c1">// A</span>
+        <span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">,</span> <span class="mf">0.01</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Sharpness&quot;</span><span class="p">);</span> <span class="c1">// x</span>
+
+        <span class="c1">// Add user data to model</span>
+        <span class="n">m_NLModel</span><span class="p">.</span><span class="n">SetUserData</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Modify function <code class="docutils literal notranslate"><span class="pre">Initialize()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Get the number of size classes (<code class="docutils literal notranslate"><span class="pre">GetClassesNumber(DISTR_SIZE)</span></code>) and save them to variable <code class="docutils literal notranslate"><span class="pre">num_classes</span></code>.</li>
+<li>For each particle size class add a non-linear variable to the model (<code class="docutils literal notranslate"><span class="pre">AddNLVariable</span></code>) with initial value 1 and no constraints.</li>
+<li>Add a plot to the unit for the separation efficiency: Separation (Y axis is “Separation”) against diameter (X axis is “Diameter”) and time (Z axis is “Time”).</li>
+</ul>
+<p>The finished code of the function is shown below.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// Check Simulation Setup</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsPhaseDefined</span><span class="p">(</span><span class="n">SOA_VAPOR</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseError</span><span class="p">(</span><span class="s">&quot;Gas phase not defined.&quot;</span><span class="p">);</span> <span class="c1">// Check for gas phase</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsPhaseDefined</span><span class="p">(</span><span class="n">SOA_SOLID</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseError</span><span class="p">(</span><span class="s">&quot;Solid phase not defined.&quot;</span><span class="p">);</span> <span class="c1">// Check for solid phase</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsDistributionDefined</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseError</span><span class="p">(</span><span class="s">&quot;Particle size distribution not defined.&quot;</span><span class="p">);</span> <span class="c1">// Check for size distribution</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Clear all state variables in model</span>
+        <span class="n">m_NLModel</span><span class="p">.</span><span class="n">ClearVariables</span><span class="p">();</span>
+
+        <span class="c1">// Get number of diameter classes</span>
+        <span class="kt">unsigned</span> <span class="n">num_classes</span> <span class="o">=</span> <span class="n">GetClassesNumber</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">);</span>
+
+        <span class="c1">// Add variable to the model of nonlinear equation system</span>
+        <span class="k">for</span><span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_classes</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">m_NLModel</span><span class="p">.</span><span class="n">AddNLVariable</span><span class="p">(</span><span class="mf">1.0</span><span class="p">,</span> <span class="mf">0.0</span><span class="p">);</span>
+                <span class="c1">// v_rel_i (relative velocity for each particle size class)</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Set model to the solver</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">m_NLSolver</span><span class="p">.</span><span class="n">SetModel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">m_NLModel</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseError</span><span class="p">(</span><span class="n">m_NLSolver</span><span class="p">.</span><span class="n">GetError</span><span class="p">());</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Add Plot</span>
+        <span class="n">AddPlot</span><span class="p">(</span><span class="s">&quot;Plot&quot;</span><span class="p">,</span> <span class="s">&quot;Diameter&quot;</span><span class="p">,</span> <span class="s">&quot;Separation&quot;</span><span class="p">,</span> <span class="s">&quot;Time&quot;</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<ul>
+<li><p class="first">Edit the solver <code class="docutils literal notranslate"><span class="pre">CMyNLModel</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Implement function <code class="docutils literal notranslate"><span class="pre">CalculateFunctions(double*</span> <span class="pre">_pVars,</span> <span class="pre">double*</span> <span class="pre">_pFunc,</span> <span class="pre">void*</span> <span class="pre">_pUserData)</span></code>: in this funciton, the updated values <code class="docutils literal notranslate"><span class="pre">_pFunc</span></code> of the non-linear variables <code class="docutils literal notranslate"><span class="pre">_pVars</span></code> is computed until the residual between <code class="docutils literal notranslate"><span class="pre">_pFunc</span></code> and <code class="docutils literal notranslate"><span class="pre">_pVar</span></code> reaches a certain tolerance.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Get pointer to the output streams to enable calculation with stream properties.</li>
+<li>Get vector with particle diameters (GetClassesMeans(DISTR_SIZE)) and store them to variable <code class="docutils literal notranslate"><span class="pre">d</span></code>.</li>
+<li>Get gas properties (<code class="docutils literal notranslate"><span class="pre">GetPhaseTPDProp()</span></code> for <code class="docutils literal notranslate"><span class="pre">DENSITY</span></code> and <code class="docutils literal notranslate"><span class="pre">VISCOSITY</span></code>) at the time point <code class="docutils literal notranslate"><span class="pre">time</span></code>.</li>
+<li>Save current values of <code class="docutils literal notranslate"><span class="pre">_pVars</span></code> and save them to variable <code class="docutils literal notranslate"><span class="pre">v_rel</span></code>.</li>
+<li>Calculate variables <code class="docutils literal notranslate"><span class="pre">Re_i</span></code>, <code class="docutils literal notranslate"><span class="pre">Cwp_i</span></code>, <code class="docutils literal notranslate"><span class="pre">v_rel_update_i</span></code> according to the <a class="reference internal" href="#label-eq-sys"><span class="std std-ref">equation system described above</span></a> and save the value of the relative velocity to <code class="docutils literal notranslate"><span class="pre">_pFunc</span></code>.</li>
+</ul>
+<p>The example code for this function looks like this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CMyNLModel</span><span class="o">::</span><span class="n">CalculateFunctions</span><span class="p">(</span><span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pFunc</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// Get pointer to air classifier unit</span>
+        <span class="k">auto</span> <span class="n">unit</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">CUnit</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">_pUserData</span><span class="p">);</span>
+
+        <span class="c1">// Get pointers to streams</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">inStream</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">);</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">outStreamC</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Coarse&quot;</span><span class="p">);</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">outStreamF</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Fines&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Overall parameter</span>
+        <span class="kt">double</span> <span class="n">g</span> <span class="o">=</span> <span class="mf">9.81</span><span class="p">;</span> <span class="c1">// graviational acceleration</span>
+
+        <span class="c1">// Get diameter classes and their number</span>
+        <span class="kt">unsigned</span> <span class="n">num_classes</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetClassesNumber</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">);</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetClassesMeans</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">);</span>
+
+        <span class="c1">// Get stream parameters</span>
+        <span class="kt">double</span> <span class="n">rho_solid</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetPhaseTPDProp</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">DENSITY</span><span class="p">,</span> <span class="n">SOA_SOLID</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">rho_gas</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetPhaseTPDProp</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">DENSITY</span><span class="p">,</span> <span class="n">SOA_VAPOR</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">eta_gas</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetPhaseTPDProp</span><span class="p">(</span><span class="n">time</span><span class="p">,</span> <span class="n">VISCOSITY</span><span class="p">,</span> <span class="n">SOA_VAPOR</span><span class="p">);</span>
+
+        <span class="c1">// Get value of variables (v_rel_i) at current iteration of solver</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">v_rel</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_classes</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">v_rel</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">_pVars</span><span class="p">[</span><span class="n">i</span><span class="p">]);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Calculation of new function values of relative velocity</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_classes</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// Reynolds number of particle classes Re_i</span>
+                <span class="kt">double</span> <span class="n">Re_i</span> <span class="o">=</span> <span class="p">(</span><span class="n">fabs</span><span class="p">(</span><span class="n">v_rel</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">rho_gas</span><span class="p">)</span> <span class="o">/</span> <span class="n">eta_gas</span><span class="p">;</span>
+                <span class="c1">// Drag coefficient of particle classes Cwp_i</span>
+                <span class="kt">double</span> <span class="n">Cwp_i</span> <span class="o">=</span> <span class="mf">24.</span> <span class="o">/</span> <span class="n">Re_i</span> <span class="o">+</span> <span class="mf">4.</span> <span class="o">/</span> <span class="n">std</span><span class="o">::</span><span class="n">sqrt</span><span class="p">(</span><span class="n">Re_i</span><span class="p">)</span> <span class="o">+</span> <span class="mf">0.4</span><span class="p">;</span>
+                <span class="c1">// Relative velocity</span>
+                <span class="kt">double</span> <span class="n">v_rel_update_i</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">((</span><span class="mf">4.</span> <span class="o">*</span> <span class="n">rho_solid</span> <span class="o">*</span> <span class="n">d</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">g</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">3.</span> <span class="o">*</span> <span class="n">rho_gas</span> <span class="o">*</span> <span class="n">Cwp_i</span><span class="p">));</span>
+                <span class="c1">// Update function value</span>
+                <span class="n">_pFunc</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">v_rel_update_i</span><span class="p">;</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Implement function <code class="docutils literal notranslate"><span class="pre">ResultsHandler(double</span> <span class="pre">_dTime,</span> <span class="pre">double*</span> <span class="pre">_pVars,</span> <span class="pre">void*</span> <span class="pre">_pUserData)</span></code>: this function processes the results returned by the solver, after convergence is reached.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Initialize output streams for fines by copying the information from input and afterwards setting the total mass flows to zero.</p>
+</li>
+<li><p class="first">Get unit parameters for <code class="docutils literal notranslate"><span class="pre">A</span></code> and <code class="docutils literal notranslate"><span class="pre">x</span></code> (<code class="docutils literal notranslate"><span class="pre">GetConstParameterValue</span></code>).</p>
+</li>
+<li><p class="first">Get stream properties from input stream: solid and gas mass flows (<code class="docutils literal notranslate"><span class="pre">GetPhaseMassFlow</span></code>) as well as particle size distribution (<code class="docutils literal notranslate"><span class="pre">GetPSD</span></code>).</p>
+</li>
+<li><p class="first">Calculate cut-velocity <code class="docutils literal notranslate"><span class="pre">w_cut</span></code> according to the <a class="reference internal" href="#label-eq-wcut"><span class="std std-ref">equation for it</span></a>.</p>
+</li>
+<li><p class="first">Caculate the separation to the coarse stream <code class="docutils literal notranslate"><span class="pre">xiC_i</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Save the value of the relative velocity to <code class="docutils literal notranslate"><span class="pre">v_rel_i</span></code>.</li>
+<li>Calculate <code class="docutils literal notranslate"><span class="pre">xiC_i</span></code> according to the <a class="reference internal" href="#label-eq-sepeff"><span class="std std-ref">equation for it</span></a>.</li>
+<li>Calculate the accumulated mass fraction of coarse stream by adding up <code class="docutils literal notranslate"><span class="pre">xiC_i</span></code> multiplied by incoming mass fraction of class <span class="math notranslate nohighlight">\(i\)</span>, <code class="docutils literal notranslate"><span class="pre">wIn[i]</span></code>.</li>
+<li>Update the Transformation matrices.</li>
+<li>Save <code class="docutils literal notranslate"><span class="pre">xiC_i</span></code> to vector for later plotting purposes.</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Apply <a class="reference internal" href="multiDim.html#label-tm"><span class="std std-ref">transformation matrices</span></a> to output streams and set the phase mass flows. You need 2 matrices, one for coarse stream and the other for fine stream. Please also notice that all gases must leave with fine stream.</p>
+<blockquote>
+<div><p>The matrices contain the separatiom efficiency <code class="docutils literal notranslate"><span class="pre">xiC_i</span></code> of all size classes <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TInputToCoarse</span></code>: all elements NOT on diagonal are zero. <code class="docutils literal notranslate"><span class="pre">xiC_i</span></code> of classe <span class="math notranslate nohighlight">\(i\)</span> locates at position <span class="math notranslate nohighlight">\((i,i)\)</span>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">TInputToFine</span></code>: all elements NOT on diagonal are zero. <code class="docutils literal notranslate"><span class="pre">1</span> <span class="pre">-</span> <span class="pre">xiC_i</span></code> of classe <span class="math notranslate nohighlight">\(i\)</span> locates at position <span class="math notranslate nohighlight">\((i,i)\)</span>.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Plotting: Add a new curve to the plot (<code class="docutils literal notranslate"><span class="pre">AddCurveOnPlot</span></code>) at time <code class="docutils literal notranslate"><span class="pre">_dTime</span></code> and then add the points for separation (<code class="docutils literal notranslate"><span class="pre">AddPointOnCurve</span></code>).</p>
+</li>
+</ul>
+<p>You can find tehe example code for this function below:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CMyNLModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// Get pointer to air classifier unit</span>
+        <span class="k">auto</span> <span class="n">unit</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">CUnit</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">_pUserData</span><span class="p">);</span>
+
+        <span class="c1">// Get pointers to streams</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">inStream</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">);</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">outStreamC</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Coarse&quot;</span><span class="p">);</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">outStreamF</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Fines&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Get diameter classes and their number</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">d</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetClassesMeans</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">);</span>
+        <span class="kt">unsigned</span> <span class="n">num_classes</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetClassesNumber</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">);</span>
+
+        <span class="c1">// Initialize output streams:</span>
+        <span class="c1">// Setting total mass flow to zero allows only for ...</span>
+        <span class="c1">// ... setting phase mass flows at the end of the unit</span>
+        <span class="c1">// (total mass flow will be calculated automatically)</span>
+        <span class="n">outStreamC</span><span class="o">-&gt;</span><span class="n">CopyFromStream</span><span class="p">(</span><span class="n">inStream</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">);</span>
+        <span class="n">outStreamC</span><span class="o">-&gt;</span><span class="n">SetMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">outStreamF</span><span class="o">-&gt;</span><span class="n">CopyFromStream</span><span class="p">(</span><span class="n">inStream</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">);</span>
+        <span class="n">outStreamF</span><span class="o">-&gt;</span><span class="n">SetMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="mi">0</span><span class="p">);</span>
+
+        <span class="c1">// Setup transformation matrices</span>
+        <span class="n">CTransformMatrix</span> <span class="nf">TInputToCoarse</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">);</span>
+        <span class="n">CTransformMatrix</span> <span class="nf">TInputToFines</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">,</span> <span class="n">num_classes</span><span class="p">);</span>
+
+        <span class="c1">// Get parameters</span>
+        <span class="kt">double</span> <span class="n">A</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;A&quot;</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">x</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;x&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Get stream parameters</span>
+        <span class="kt">double</span> <span class="n">dm_solid</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetPhaseMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">SOA_SOLID</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">rho_solid</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetPhaseTPDProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">DENSITY</span><span class="p">,</span> <span class="n">SOA_SOLID</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">dm_gas</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetPhaseMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">SOA_VAPOR</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">rho_gas</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetPhaseTPDProp</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">DENSITY</span><span class="p">,</span> <span class="n">SOA_VAPOR</span><span class="p">);</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">wIn</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetPSD</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">PSD_MassFrac</span><span class="p">);</span>
+
+        <span class="c1">// Calculate cut velocity</span>
+        <span class="kt">double</span> <span class="n">w_cut</span> <span class="o">=</span> <span class="n">dm_gas</span> <span class="o">/</span> <span class="p">(</span><span class="n">rho_gas</span> <span class="o">*</span> <span class="n">A</span><span class="p">);</span>
+
+        <span class="c1">// Calculate separation efficiency:</span>
+        <span class="c1">// Fraction of mass in coarse stream</span>
+        <span class="kt">double</span> <span class="n">wC_acc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="c1">// Separation efficiency for each particle class</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">xiC</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">num_classes</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span> <span class="p">{</span>
+                <span class="c1">// Get value of variables (v_rel_i) after convergence of solver</span>
+                <span class="kt">double</span> <span class="n">v_rel_i</span> <span class="o">=</span> <span class="n">_pVars</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="c1">// Temporary value for separation of particle class to coarse stream</span>
+                <span class="kt">double</span> <span class="n">xiC_i</span><span class="p">;</span>
+                <span class="c1">// Check values of relative velocity:</span>
+                <span class="c1">// If v_rel_i &lt; 0, particles are faster than fluid, i.e. they will go to fines</span>
+                <span class="c1">// Else calculate separation based on functions</span>
+                <span class="k">if</span> <span class="p">(</span><span class="n">v_rel_i</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="n">xiC_i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+                <span class="p">}</span>
+                <span class="k">else</span> <span class="p">{</span>
+                        <span class="kt">double</span> <span class="n">temp_exp</span> <span class="o">=</span> <span class="n">exp</span><span class="p">(</span> <span class="n">x</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">pow</span><span class="p">(</span><span class="n">v_rel_i</span> <span class="o">/</span> <span class="n">w_cut</span><span class="p">,</span> <span class="mi">3</span><span class="p">)));</span>
+                        <span class="n">xiC_i</span> <span class="o">=</span> <span class="mf">1.</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">w_cut</span> <span class="o">/</span> <span class="n">v_rel_i</span> <span class="o">*</span> <span class="n">temp_exp</span><span class="p">);</span>
+                <span class="p">}</span>
+
+                <span class="c1">// Update fraction of mass that goes to coarse stream</span>
+                <span class="n">wC_acc</span> <span class="o">+=</span> <span class="n">wIn</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">xiC_i</span><span class="p">;</span>
+                <span class="c1">// Update transformation matrices of the separation</span>
+                <span class="n">TInputToCoarse</span><span class="p">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">xiC_i</span><span class="p">);</span>
+                <span class="n">TInputToFines</span><span class="p">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">xiC_i</span><span class="p">);</span>
+                <span class="c1">// Save temporary separation value to vector</span>
+                <span class="n">xiC</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">xiC_i</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Set properties of coarse stream:</span>
+        <span class="c1">// Apply transformation matrix to coarse stream</span>
+        <span class="n">outStreamC</span><span class="o">-&gt;</span><span class="n">ApplyTM</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">TInputToCoarse</span><span class="p">);</span>
+        <span class="c1">// Set coarse solid mass flow</span>
+        <span class="n">outStreamC</span><span class="o">-&gt;</span><span class="n">SetPhaseMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">SOA_SOLID</span><span class="p">,</span> <span class="n">wC_acc</span> <span class="o">*</span> <span class="n">dm_solid</span><span class="p">);</span>
+
+        <span class="c1">// Set properties of fine stream:</span>
+        <span class="c1">// Apply tranformation matrix to fines stream</span>
+        <span class="n">outStreamF</span><span class="o">-&gt;</span><span class="n">ApplyTM</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">TInputToFines</span><span class="p">);</span>
+        <span class="c1">// Set gas mass flow</span>
+        <span class="n">outStreamF</span><span class="o">-&gt;</span><span class="n">SetPhaseMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">SOA_VAPOR</span><span class="p">,</span> <span class="n">dm_gas</span><span class="p">);</span>
+        <span class="c1">// Set solid mass flow</span>
+        <span class="n">outStreamF</span><span class="o">-&gt;</span><span class="n">SetPhaseMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">SOA_SOLID</span><span class="p">,</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">wC_acc</span><span class="p">)</span> <span class="o">*</span> <span class="n">dm_solid</span><span class="p">);</span>
+
+        <span class="c1">// Plotting separation efficiency for coarse stream</span>
+        <span class="n">unit</span><span class="o">-&gt;</span><span class="n">AddCurveOnPlot</span><span class="p">(</span><span class="s">&quot;Plot&quot;</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">);</span>
+        <span class="n">unit</span><span class="o">-&gt;</span><span class="n">AddPointOnCurve</span><span class="p">(</span><span class="s">&quot;Plot&quot;</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">,</span> <span class="n">d</span><span class="p">,</span> <span class="n">xiC</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<ol class="arabic simple" start="6">
+<li>Test the unit in Dyssol:</li>
+</ol>
+<ul class="simple">
+<li>Build the solution and run Dyssol: <em>Build → Build Solution</em>, and then <em>Debug → Start Debugging</em>.</li>
+<li>Use exemplary flowsheet <code class="docutils literal notranslate"><span class="pre">...\Tasks8\AirClassifier.dflw</span></code> to test your unit. Compare your results with the expected ones below.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/task8-1.jpg"><img alt="" class="align-center" src="_images/task8-1.jpg" style="width: 800px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/task8-2.jpg"><img alt="" class="align-center" src="_images/task8-2.jpg" style="width: 800px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/task8-3.jpg"><img alt="" class="align-center" src="_images/task8-3.jpg" style="width: 800px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 </div>
 <div class="section" id="development-of-dynamic-units">
@@ -305,10 +778,10 @@
 <li><code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>: Unique identificator of the unit. Simulation environment distinguishes different units with the help of this identificator. You must ensure that ID of your unit is unique. This ID can be created manually or using <em>GUID-generator</em> of Visual Studio (<em>Tools → GUID Genarator</em>).</li>
 </ul>
 </li>
-<li>Specify ports: add new, rename or delete existing.</li>
-<li>If unit has some additionally parameters, than specify them here.</li>
-<li>Internal holdups and additional material streams can be defined here.</li>
-<li>All other operations, which should take place only once during the unit’s creation.</li>
+<li>Specify ports for stream in- and outlet(s): add new, rename or delete existing.</li>
+<li>Specify unit parameters.</li>
+<li>Define internal holdups and additional material streams.</li>
+<li>Define all other operations, which should take place only once during the unit’s creation.</li>
 </ol>
 <div class="line-block">
 <div class="line"><br /></div>
@@ -320,24 +793,24 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. holdups, material streams or state variables).</p>
+<p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation at <code class="docutils literal notranslate"><span class="pre">dTime</span></code>. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. holdups, material streams or state variables).</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Tstart</span><span class="p">,</span> <span class="n">Tend</span><span class="p">)</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="kt">double</span> <span class="n">_dEndTime</span><span class="p">)</span>
 </pre></div>
 </div>
-<p><strong>Dynamic calculation</strong> of the unit on a specified time interval. All logic of the unit’s model must be implemented here.</p>
+<p><strong>Dynamic calculation</strong> of the unit on a specified time interval from <code class="docutils literal notranslate"><span class="pre">dStartTime</span></code> to <code class="docutils literal notranslate"><span class="pre">dEndTime</span></code>. All logic of the unit’s model must be implemented here.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">SaveState</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <code class="docutils literal notranslate"><span class="pre">AddStateVariable()</span></code>, <code class="docutils literal notranslate"><span class="pre">AddMaterialStream()</span></code> or <code class="docutils literal notranslate"><span class="pre">AddHoldup()</span></code> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
+<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <a class="reference internal" href="class.html#label-addstatevariable"><span class="std std-ref">AddStateVariable</span></a>, <a class="reference internal" href="class.html#label-addmaterialstream"><span class="std std-ref">AddMaterialStream</span></a> or <a class="reference internal" href="class.html#label-addholdup"><span class="std std-ref">AddHoldup</span></a> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -355,10 +828,349 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
+<div class="section" id="id2">
+<h4>Application example<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>You will learn to implement a simple unit (however without any physical meaning), where the basic functionality of classes <code class="docutils literal notranslate"><span class="pre">CBaseUnit</span></code>, <code class="docutils literal notranslate"><span class="pre">CMaterialStream</span></code> and <code class="docutils literal notranslate"><span class="pre">CHoldup</span></code> can be tested.</p>
+<p>Do the following steps:</p>
+<ol class="arabic simple">
+<li>Copy a directory with the template unit <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\UnitsTemplates\DynamicUnit</span></code> to the directory for new units <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\</span></code>.</li>
+<li>Rename the copied template’s directory <code class="docutils literal notranslate"><span class="pre">DynamicUnit</span></code> to <code class="docutils literal notranslate"><span class="pre">Basics</span></code>. Open the directory <code class="docutils literal notranslate"><span class="pre">Basics</span></code> and rename the file <cite>Dynamic.vcxproj`</cite> to <code class="docutils literal notranslate"><span class="pre">Basics.vcxproj</span></code>.</li>
+<li>Open the template solution (<code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\Dyssol.sln</span></code>) in Visual Studio.</li>
+<li>Add project with your new unit to the solution: select in Visual Studio <em>File → Add → Existing Project</em> and specify path to the project file <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\Basics\Basics.vcxproj</span></code>.</li>
+<li>Rename added project in Visual Studio from <code class="docutils literal notranslate"><span class="pre">UnitT_Dynamic</span></code> to <code class="docutils literal notranslate"><span class="pre">Unit_Basics</span></code>.</li>
+<li>Open <code class="docutils literal notranslate"><span class="pre">Unit_Basics</span></code> → <code class="docutils literal notranslate"><span class="pre">Unit.cpp</span></code> in the Visual Studio’s <em>Solution Explorer</em> and develop your unit as shown follows. You can use <a class="reference internal" href="class.html#label-baseunit"><span class="std std-ref">Basic unit</span></a>, <a class="reference internal" href="class.html#label-stream"><span class="std std-ref">Stream</span></a> and <a class="reference internal" href="class.html#label-psd"><span class="std std-ref">Particle size distribution</span></a> for references.</li>
+</ol>
+<ul>
+<li><p class="first">Modify constructor <code class="docutils literal notranslate"><span class="pre">CUnit()</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Specify unit’s name by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code> to <code class="docutils literal notranslate"><span class="pre">Basics</span></code>. This name will appear in the drop-down list for unit types in Dyssol simulation.</li>
+<li>Specify author’s name by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>.</li>
+<li>Set new unique key of the unit by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code> to some random string. To generate such a string, you can use <em>GUID generator</em> of Visual Studio (<em>Tools → Create GUID</em>).</li>
+</ul>
+<p>Now your code for constructor should look like this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CUnit</span><span class="o">::</span><span class="n">CUnit</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// Basic unit&#39;s info</span>
+        <span class="n">m_sUnitName</span> <span class="o">=</span> <span class="s">&quot;Basics&quot;</span><span class="p">;</span>
+        <span class="n">m_sAuthorName</span> <span class="o">=</span> <span class="s">&quot;Your name&quot;</span><span class="p">;</span>
+        <span class="n">m_sUniqueID</span> <span class="o">=</span> <span class="s">&quot;30D8887B8E5F4BF5B91B98342684E707&quot;</span><span class="p">;</span>
+
+        <span class="c1">// Add ports</span>
+        <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;InPort&quot;</span><span class="p">,</span> <span class="n">INPUT_PORT</span><span class="p">);</span>
+        <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;OutPort&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
+
+        <span class="c1">// Add unit parameters</span>
+        <span class="n">AddTDParameter</span><span class="p">(</span><span class="s">&quot;ParamTD&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1e+6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Unit parameter description&quot;</span><span class="p">);</span>
+        <span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;ParamConst&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mf">1e+6</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Unit parameter description&quot;</span><span class="p">);</span>
+        <span class="n">AddStringParameter</span><span class="p">(</span><span class="s">&quot;ParamString&quot;</span><span class="p">,</span> <span class="s">&quot;Initial value&quot;</span><span class="p">,</span> <span class="s">&quot;Unit parameter description&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Add holdups</span>
+        <span class="n">AddHoldup</span><span class="p">(</span><span class="s">&quot;HoldupName&quot;</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Modify function <code class="docutils literal notranslate"><span class="pre">Initialize(double</span> <span class="pre">_dTime)</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Add warnings if liquid or vapor phases are not defined. Use functions <code class="docutils literal notranslate"><span class="pre">IsPhaseDefined</span></code> and <code class="docutils literal notranslate"><span class="pre">RaiseWarning</span></code>.</li>
+<li>Add an internal material stream named “BufStream” using the function <code class="docutils literal notranslate"><span class="pre">AddMaterialStream</span></code>.</li>
+<li>Add new plot with the name “Plot1” to show dependency of holdup’s mass (Y axis is “Mass”) over time (X axis is “Time”). Add a curve on this plot with the name “Curve1”. Use the functions <code class="docutils literal notranslate"><span class="pre">AddPlot</span></code> and <code class="docutils literal notranslate"><span class="pre">AddCurveOnPlot</span></code>.</li>
+</ul>
+<p>An example for this section is shown below.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">/// Add state variables ///</span>
+        <span class="n">AddStateVariable</span><span class="p">(</span><span class="s">&quot;VarName&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="nb">true</span><span class="p">);</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsPhaseDefined</span><span class="p">(</span><span class="n">SOA_LIQUID</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseWarning</span><span class="p">(</span><span class="s">&quot;Liquid phase has not been defined&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsPhaseDefined</span><span class="p">(</span><span class="n">SOA_VAPOR</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseWarning</span><span class="p">(</span><span class="s">&quot;Vapor phase has not been defined&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Add buffer stream</span>
+        <span class="n">AddMaterialStream</span><span class="p">(</span><span class="s">&quot;BufStream&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Add plot</span>
+        <span class="n">AddPlot</span><span class="p">(</span><span class="s">&quot;Plot1&quot;</span><span class="p">,</span> <span class="s">&quot;Mass&quot;</span><span class="p">,</span> <span class="s">&quot;Time&quot;</span><span class="p">);</span>
+        <span class="n">AddCurveOnPlot</span><span class="p">(</span><span class="s">&quot;Plot1&quot;</span><span class="p">,</span> <span class="s">&quot;Curve1&quot;</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Modify funciton <code class="docutils literal notranslate"><span class="pre">Simulate(double</span> <span class="pre">_dStartTime,</span> <span class="pre">double</span> <span class="pre">_dEndTime)</span></code>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Obtain pointer to the <code class="docutils literal notranslate"><span class="pre">BufStream</span></code> into the new variable <code class="docutils literal notranslate"><span class="pre">CMaterialStream</span> <span class="pre">*bufStream</span></code> (with the function <code class="docutils literal notranslate"><span class="pre">GetMaterialStream</span></code>).</li>
+<li>Add new time point <code class="docutils literal notranslate"><span class="pre">_dStartTime</span></code> to <code class="docutils literal notranslate"><span class="pre">BufStream</span></code> with <code class="docutils literal notranslate"><span class="pre">bufStream-&gt;AddTimePoint</span></code>.</li>
+<li>Copy inlet into BufStream at <code class="docutils literal notranslate"><span class="pre">_dEndTime</span></code> with the function <code class="docutils literal notranslate"><span class="pre">bufStream-&gt;CopyFromStream</span></code>.</li>
+<li>Set mass flow to 12.5 kg/s of the liquid phase in BufStream at t = 10s (<code class="docutils literal notranslate"><span class="pre">bufStream-&gt;SetPhaseMassFlow</span></code>).</li>
+<li>Add inlet to the holdup on entire time interval from _dStartTime to _dEndTime (<code class="docutils literal notranslate"><span class="pre">pHoldup-&gt;AddStream</span></code>).</li>
+<li>Copy the holdup into the outlet for <code class="docutils literal notranslate"><span class="pre">_dStartTime</span></code> time point with mass flow 1 kg/s (<code class="docutils literal notranslate"><span class="pre">pOutStream-&gt;CopyFromHoldup</span></code>).</li>
+<li>Set new temperature T = 320 K to the outlet at t = 15 s (<code class="docutils literal notranslate"><span class="pre">pOutStream-&gt;SetTemperature</span></code>).</li>
+<li>Plot mass of the holdup for all defined time points. Use the functions <code class="docutils literal notranslate"><span class="pre">GetAllDefinedTimePoints</span></code>, <code class="docutils literal notranslate"><span class="pre">AddPointOnCurve</span></code> and <code class="docutils literal notranslate"><span class="pre">pHoldup-&gt;GetMass</span></code>.</li>
+</ul>
+<p>The example code looks like follows:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="kt">double</span> <span class="n">_dEndTime</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// Get pointers to streams</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">pInStream</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;InPort&quot;</span><span class="p">);</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">pOutStream</span> <span class="o">=</span> <span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;OutPort&quot;</span><span class="p">);</span>
+        <span class="n">CMaterialStream</span><span class="o">*</span> <span class="n">bufStream</span> <span class="o">=</span> <span class="n">GetMaterialStream</span><span class="p">(</span><span class="s">&quot;bufStream&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Get pointers to holdups</span>
+        <span class="n">CHoldup</span><span class="o">*</span> <span class="n">pHoldup</span> <span class="o">=</span> <span class="n">GetHoldup</span><span class="p">(</span><span class="s">&quot;Holdup&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Add start time point to bufStream</span>
+        <span class="n">bufStream</span><span class="o">-&gt;</span><span class="n">AddTimePoint</span><span class="p">(</span><span class="n">_dStartTime</span><span class="p">);</span>
+
+        <span class="c1">// Copy inlet stream into bufStream</span>
+        <span class="n">bufStream</span><span class="o">-&gt;</span><span class="n">CopyFromStream</span><span class="p">(</span><span class="n">pInStream</span><span class="p">,</span> <span class="n">_dEndTime</span><span class="p">);</span>
+
+        <span class="c1">// Set mass flow 12.5 kg/s of liquid phase in bufStream at time point 10 s</span>
+        <span class="n">bufStream</span><span class="o">-&gt;</span><span class="n">SetPhaseMassFlow</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="n">SOA_LIQUID</span><span class="p">,</span> <span class="mf">12.5</span><span class="p">,</span> <span class="n">BASIS_MASS</span><span class="p">);</span>
+
+        <span class="c1">// Add inlet to the holdup on entire time interval</span>
+        <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">AddStream</span><span class="p">(</span><span class="n">pInStream</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="n">_dEndTime</span><span class="p">);</span>
+
+        <span class="c1">// Copy the holdup into outlet stream at end time point with mass flow 1 kg/s</span>
+        <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">pHoldup</span><span class="p">,</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">false</span><span class="p">);</span>
+
+        <span class="c1">// Set new temperature 320 K to outlet at time point 15 s</span>
+        <span class="c1">//pOutStream-&gt;AddTimePoint(15);</span>
+        <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">SetTemperature</span><span class="p">(</span><span class="n">_dEndTime</span><span class="p">,</span> <span class="mi">320</span><span class="p">);</span>
+
+        <span class="c1">// Plot holdup mass for all defined time points</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">times</span> <span class="o">=</span> <span class="n">GetAllDefinedTimePoints</span><span class="p">(</span><span class="n">_dStartTime</span><span class="p">,</span> <span class="n">_dEndTime</span><span class="p">);</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">times</span><span class="p">.</span><span class="n">size</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="kt">double</span> <span class="n">x</span> <span class="o">=</span> <span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+                <span class="kt">double</span> <span class="n">y</span> <span class="o">=</span> <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">GetMass</span><span class="p">(</span><span class="n">times</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="n">BASIS_MASS</span><span class="p">);</span>
+                <span class="n">AddPointOnCurve</span><span class="p">(</span><span class="s">&quot;Time dependence of holdup mass&quot;</span><span class="p">,</span> <span class="s">&quot;Curve1&quot;</span><span class="p">,</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Data acquisition:</span>
+        <span class="c1">// Get unit parameters</span>
+        <span class="kt">double</span> <span class="n">TDParameter</span> <span class="o">=</span> <span class="n">GetTDParameterValue</span><span class="p">(</span><span class="s">&quot;ParamTD&quot;</span><span class="p">,</span> <span class="mi">5</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">ConstParameter</span> <span class="o">=</span> <span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;ParamConst&quot;</span><span class="p">);</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">StringParameter</span> <span class="o">=</span> <span class="n">GetStringParameterValue</span><span class="p">(</span><span class="s">&quot;ParamString&quot;</span><span class="p">);</span>
+        <span class="c1">// Get common compound information</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&gt;</span> <span class="n">compounds</span> <span class="o">=</span> <span class="n">GetCompoundsList</span><span class="p">();</span> <span class="c1">//only one compound in task6, so only one element in compounds array</span>
+        <span class="kt">double</span> <span class="n">molarMass</span> <span class="o">=</span> <span class="n">GetCompoundConstant</span><span class="p">(</span><span class="n">compounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">MOLAR_MASS</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">critTemp</span> <span class="o">=</span> <span class="n">GetCompoundConstant</span><span class="p">(</span><span class="n">compounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">CRITICAL_TEMPERATURE</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">density</span> <span class="o">=</span> <span class="n">GetCompoundTPDProp</span><span class="p">(</span><span class="n">compounds</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">DENSITY</span><span class="p">,</span> <span class="mi">273</span><span class="p">,</span> <span class="mf">1e5</span><span class="p">);</span>
+        <span class="c1">// Get tolerance</span>
+        <span class="kt">double</span> <span class="n">absTol</span> <span class="o">=</span> <span class="n">GetAbsTolerance</span><span class="p">();</span>
+        <span class="kt">double</span> <span class="n">relTol</span> <span class="o">=</span> <span class="n">GetRelTolerance</span><span class="p">();</span>
+        <span class="c1">// Get overall properties of streams and holdups</span>
+        <span class="kt">double</span> <span class="n">massFlow</span> <span class="o">=</span> <span class="n">pInStream</span><span class="o">-&gt;</span><span class="n">GetMassFlow</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">BASIS_MASS</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">massHoldup</span> <span class="o">=</span> <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">GetMass</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="n">BASIS_MASS</span><span class="p">);</span>
+        <span class="c1">//double outTemp1 = pOutStream-&gt;GetTemperature(15);</span>
+        <span class="kt">double</span> <span class="n">outTemp2</span> <span class="o">=</span> <span class="n">pOutStream</span><span class="o">-&gt;</span><span class="n">GetTemperature</span><span class="p">(</span><span class="n">_dEndTime</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">molarMassHoldup</span> <span class="o">=</span> <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">GetOverallProperty</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">MOLAR_MASS</span><span class="p">);</span>
+        <span class="c1">// Get solid distribution information</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">PSD_b3</span> <span class="o">=</span> <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">GetPSD</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">PSD_Q3</span><span class="p">);</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">PSD_s3</span> <span class="o">=</span> <span class="n">pHoldup</span><span class="o">-&gt;</span><span class="n">GetPSD</span><span class="p">(</span><span class="mi">50</span><span class="p">,</span> <span class="n">PSD_q3</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+<ol class="arabic" start="7">
+<li><p class="first">Test your unit in Dyssol:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Build the solution by <em>Build → Build Solution</em> and run Dyssol by <em>Debug → Start Debugging</em>.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Change the flowsheet from <em>Task 5</em> to be able to test new unit: remove units <em>Out2</em>, <em>Out3</em> and streams <em>Out2</em>, <em>Out3</em>.</li>
+<li>Change unit model <em>MySplitter</em> to <em>Basics</em>. Set unit parameters as ParamTD = 1.2, ParamConst = 1e-8.</li>
+<li>Run the simulation, make sure the simulation is finished and save the obtained flowsheet as <em>Task6</em>. Close Dyssol.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Extend the <code class="docutils literal notranslate"><span class="pre">Simulate</span></code> function with the code to obtain values of unit’s and streams’ parameters, which are specified in the table at the end of this section.</p>
+</li>
+<li><p class="first">Use breakpoints in debug mode of Visual Studio to obtain values of variables at runtime. To do this, place a breakpoint at the end of the function <code class="docutils literal notranslate"><span class="pre">Simulate</span></code> (select desired line of code, then choose <em>Debug → Toggle Breakpoint</em> or press <kbd class="kbd docutils literal notranslate">F9</kbd>) and start debugging (<em>Debug → Start Debugging</em> or <kbd class="kbd docutils literal notranslate">F5</kbd>). After pressing the <em>Simulate</em> button in Dyssol, the program stops at the breakpoint. Values of all previously calculated variables will be available on mouse hover in Visual Studio. Compare your results with expected values below.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Unit parameters:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="34%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Function</th>
+<th class="head">Expected value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Value of Time-dependent unit parameter <em>ParamTD</em> at time point 5s</td>
+<td><code class="docutils literal notranslate"><span class="pre">GetTDParameterValue()</span></code></td>
+<td>1.2</td>
+</tr>
+<tr class="row-odd"><td>Value of constant unit parameter <em>ParamConst</em></td>
+<td><code class="docutils literal notranslate"><span class="pre">GetConstParameterValue()</span></code></td>
+<td>1E-8</td>
+</tr>
+<tr class="row-even"><td>Value of string unit parameter <em>ParamString</em></td>
+<td><code class="docutils literal notranslate"><span class="pre">GetStringParameterValue()</span></code></td>
+<td>Initial value</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+<li><p class="first">Common compounds information:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="34%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Function</th>
+<th class="head">Expected value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>List of defined compounds</td>
+<td><code class="docutils literal notranslate"><span class="pre">GetCompoundsList()</span></code></td>
+<td>4031BC62EC7F17EFA33F</td>
+</tr>
+<tr class="row-odd"><td>Molar mass of the first defined compound</td>
+<td><code class="docutils literal notranslate"><span class="pre">GetCompoundConstant(…</span> <span class="pre">MOLAR_MASS)</span></code></td>
+<td>0.06</td>
+</tr>
+<tr class="row-even"><td>Critical temperature of the first defined   compound</td>
+<td><code class="docutils literal notranslate"><span class="pre">GetCompoundConstant(…</span> <span class="pre">CRITICAL_TEMPERATURE)</span></code></td>
+<td>3500</td>
+</tr>
+<tr class="row-odd"><td>Density of the first compound by T = 273 K, P = 1e+5 Pa</td>
+<td><code class="docutils literal notranslate"><span class="pre">GetCompoundTPDProp(…</span> <span class="pre">DENSITY,</span> <span class="pre">…)</span></code></td>
+<td>1600</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+<li><p class="first">Tolerances:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="34%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Function</th>
+<th class="head">Expected value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Global absolute tolerance</td>
+<td><code class="docutils literal notranslate"><span class="pre">GetAbsTolerance()</span></code></td>
+<td>1E-6</td>
+</tr>
+<tr class="row-odd"><td>Global relative tolerance</td>
+<td><code class="docutils literal notranslate"><span class="pre">GetRelTolerance()</span></code></td>
+<td>0.001</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+<li><p class="first">Overall properties of streams and holdups:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="34%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Function</th>
+<th class="head">Expected value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Mass flow of the inlet at t = 2 s</td>
+<td><code class="docutils literal notranslate"><span class="pre">pInStream-&gt;GetMassFlow()</span></code></td>
+<td>1</td>
+</tr>
+<tr class="row-odd"><td>Mass of the holdup at t = 5 s</td>
+<td><code class="docutils literal notranslate"><span class="pre">pHoldup-&gt;GetMass()</span></code></td>
+<td>5</td>
+</tr>
+<tr class="row-even"><td>Temperature of the outlet at t = 15 s</td>
+<td><code class="docutils literal notranslate"><span class="pre">pOutStream-&gt;GetTemperature()</span></code></td>
+<td>300</td>
+</tr>
+<tr class="row-odd"><td>Molar mass of the holdup at t = 1 s</td>
+<td><code class="docutils literal notranslate"><span class="pre">pHoldup-&gt;GetOverallProperty()</span></code></td>
+<td>0.06</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+<li><p class="first">Solid distributed properties and PSD of streams and holdups:</p>
+<blockquote>
+<div><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="34%" />
+<col width="16%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Parameter</th>
+<th class="head">Function</th>
+<th class="head">Expected value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><span class="math notranslate nohighlight">\(Q_3\)</span> distribution of the holdup at t = 50 s</td>
+<td><code class="docutils literal notranslate"><span class="pre">pHoldup-&gt;GetPSD(…</span> <span class="pre">PSD_Q3)</span></code></td>
+<td>(not applicable)</td>
+</tr>
+<tr class="row-odd"><td><span class="math notranslate nohighlight">\(q_3\)</span> distribution of the holdup at t = 50 s</td>
+<td><code class="docutils literal notranslate"><span class="pre">pHoldup-&gt;GetPSD(…</span> <span class="pre">PSD_q3)</span></code></td>
+<td>(not applicable)</td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ol>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+</div>
 </div>
 <div class="section" id="development-of-dynamic-units-with-internal-dae-solver">
 <h3>Development of dynamic units with internal DAE solver<a class="headerlink" href="#development-of-dynamic-units-with-internal-dae-solver" title="Permalink to this headline">¶</a></h3>
-<p>You can solve systems of differential-algebraic equations (DAE) automatically in Dyssol system. In this case, the unit should contain one or several additional objects of <code class="docutils literal notranslate"><span class="pre">DAEModel</span></code> class. This class is used to describe DAE systems and can be automatically solved with <code class="docutils literal notranslate"><span class="pre">DAESolver</span></code> class.</p>
+<p>You can solve systems of <abbr title="Differential-algebraic equations">DAE</abbr> automatically in Dyssol system. In this case, the unit should contain one or several additional objects of <code class="docutils literal notranslate"><span class="pre">CDAEModel</span></code> class. This class is used to describe <abbr title="Differential-algebraic equations">DAE</abbr> systems and can be automatically solved by class <code class="docutils literal notranslate"><span class="pre">CDAESolver</span></code>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -388,15 +1200,15 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="n">Time</span><span class="p">)</span>
+<div class="highlight-cpp notranslate" id="label-dynamicunitinitialize"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>Unit‘s <strong>initialization</strong>. This function is called only once at the start of the simulation. Starting from this point, information about defined compounds, phases, distributions, etc. are available for the unit. Here you can create state variables and initialize some additionaly objects (e.g. holdups, material streams or state variables).</p>
-<p>In this function, variables of all DAEModels should be specified by using function <code class="docutils literal notranslate"><span class="pre">DAEModel::AddDAEVariable()</span></code>; connection between <code class="docutils literal notranslate"><span class="pre">DAEModel</span></code> and <code class="docutils literal notranslate"><span class="pre">DAESolver</span></code> classes should be created by calling function <code class="docutils literal notranslate"><span class="pre">DAESolver::SetModel()</span></code>.</p>
+<p>In this function, variables of all DAEModels should be specified by using function <a class="reference internal" href="class.html#label-adddaevariable"><span class="std std-ref">AddDAEVariable</span></a>; connection between <code class="docutils literal notranslate"><span class="pre">CDAEModel</span></code> and <code class="docutils literal notranslate"><span class="pre">CDAESolver</span></code> classes should be created by calling function <a class="reference internal" href="class.html#label-setmodel"><span class="std std-ref">SetModel</span></a>.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="n">Tstart</span><span class="p">,</span> <span class="n">Tend</span><span class="p">)</span>
+<div class="highlight-cpp notranslate" id="label-dynamicunitsimulate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">Simulate</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dStartTime</span><span class="p">,</span> <span class="kt">double</span> <span class="n">_dEndTime</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Dynamic calculation</strong> for a specified time interval. Is called for each time window on simulation interval. Calculation of the defined DAE-system can be run here by calling function <code class="docutils literal notranslate"><span class="pre">DAESolver::Calculate()</span></code>.</p>
@@ -406,14 +1218,14 @@
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">SaveState</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <code class="docutils literal notranslate"><span class="pre">AddStateVariable()</span></code>, <code class="docutils literal notranslate"><span class="pre">AddMaterialStream()</span></code> or <code class="docutils literal notranslate"><span class="pre">AddHoldup()</span></code> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
+<p>For flowsheets containing <strong>recycled streams</strong>, <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function is called when the convergence on the current time interval is reached, this also ensures the return to the previous state of the unit if convergence fails during the calculation. Here all internal time-dependent variables which weren’t added to the unit by using <a class="reference internal" href="class.html#label-addstatevariable"><span class="std std-ref">AddStateVariable</span></a>, <a class="reference internal" href="class.html#label-addmaterialstream"><span class="std std-ref">AddMaterialStream</span></a> or <a class="reference internal" href="class.html#label-addholdup"><span class="std std-ref">AddHoldup</span></a> functions should be manually saved. Implementation of this function is not obligatory and can be skipped.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
 <div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">Unit</span><span class="o">::</span><span class="n">LoadState</span><span class="p">()</span>
 </pre></div>
 </div>
-<p><strong>Load last state</strong> of the unit which has been saved with SaveState() function. Implementation of this function is not obligatory and can be skipped.</p>
+<p><strong>Load last state</strong> of the unit which has been saved with <code class="docutils literal notranslate"><span class="pre">SaveState()</span></code> function. Implementation of this function is not obligatory and can be skipped.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -424,19 +1236,344 @@
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">DAEModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">()</span>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">DAEModel</span><span class="o">::</span><span class="n">CalculateResiduals</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDers</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pRes</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Here the DAE system should be <strong>specified in implicit form</strong>. This function will be called by solver automatically.</p>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">DAEModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDers</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">)</span>
 </pre></div>
 </div>
 <p><strong>Handling of results</strong>, which are returned from <code class="docutils literal notranslate"><span class="pre">DAESolver</span></code> on each time point. Called by solver every time when the solution in a new time point is ready.</p>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
-<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">DAEModel</span><span class="o">::</span><span class="n">CalculateResiduals</span><span class="p">()</span>
+<div class="section" id="id3">
+<h4>Application example<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>In this example, you will learn how to develop a dynamic screen model with a holdup, wherein the screening efficiency reduces with time and also depends on the holdup‘s mass. Additionally, the time dependency of screening efficiency should be plotted.</p>
+<p>The screening efficiency is calculated according to the equation below:</p>
+<div class="math notranslate nohighlight">
+\[G(x_i) = \left [ 1 + \left( \dfrac{x_{cut}}{x_i} \right )^2 \cdot e^{\alpha \cdot \left( 1 - (x_i / x_{cut})^2 \right ) }   \right ]^{-1}\]</div>
+<p>To complete the simulation, you need to solve the following dynamic equation system:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\dot{m}_c + \dot{m}_f =
+\begin{cases}
+        \dot{m}_{out} &amp; \text{sufficient holdup mass} \\
+        \dot{m}_{in} &amp; \text{insufficient holdup mass} \\
+\end{cases}\end{split}\]</div>
+<div class="math notranslate nohighlight">
+\[\dfrac{dM_h}{dt} = \dot{m}_{in} - \dot{m}_{out}\]</div>
+<div class="math notranslate nohighlight">
+\[\dfrac{d\alpha}{dt} = -\alpha \cdot k_1 - \alpha \cdot M_h \cdot k_2\]</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Notations:</p>
+<p><span class="math notranslate nohighlight">\(\alpha\)</span> – separation sharpness (specified by user)</p>
+<p><span class="math notranslate nohighlight">\(x_{cut}\)</span> – cut size (specified by user)</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{out}\)</span> – output mass flow (specified by user)</p>
+<p><span class="math notranslate nohighlight">\(k_1\)</span> – time-dependent sharpness reduction factor [<span class="math notranslate nohighlight">\(s^{-1}\)</span>] (specified by user)</p>
+<p><span class="math notranslate nohighlight">\(k_2\)</span> – mass-dependent sharpness reduction factor [<span class="math notranslate nohighlight">\(kg^{-1}\)</span>] (specified by user)</p>
+<p><span class="math notranslate nohighlight">\(G(x_i)\)</span> – screening efficiency for particle of size class <span class="math notranslate nohighlight">\(i\)</span></p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_c\)</span> – mass flow of coarse particles</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_f\)</span> – mass flow of fines particles</p>
+<p><span class="math notranslate nohighlight">\(\dot{m}_{in}\)</span> – input mass flow</p>
+<p><span class="math notranslate nohighlight">\(M_h\)</span> – holdup mass</p>
+<p class="last"><span class="math notranslate nohighlight">\(x_i\)</span> – particle diameter</p>
+</div>
+<p>Now you need the following steps:</p>
+<ol class="arabic simple">
+<li>Copy the directory with the template unit <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\UnitsTemplates\DynamicWithDAESolver\</span></code> to the directory for new units <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\</span></code>. Rename the folder to <code class="docutils literal notranslate"><span class="pre">ScreenTemplate</span></code> and the file <code class="docutils literal notranslate"><span class="pre">DynamicWithDAESolver.vcxproj</span></code> to <code class="docutils literal notranslate"><span class="pre">Screen.vcxproj</span></code>.</li>
+<li>Along with this application example, you obtain a pre-configured template folder of the air classifier unit <code class="docutils literal notranslate"><span class="pre">...\Task7\ScreenTemplate\</span></code>, in which you find the source file <code class="docutils literal notranslate"><span class="pre">Unit.cpp</span></code> and header file <code class="docutils literal notranslate"><span class="pre">Unit.h</span></code>. Copy the contents of them to the corresponding <code class="docutils literal notranslate"><span class="pre">Unit.cpp</span></code> and <code class="docutils literal notranslate"><span class="pre">Unit.h</span></code> files in your template folder <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\ScreenTemplate\</span></code>.</li>
+<li>Open the template solution <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Dyssol.sln</span></code> in Visual Studio.</li>
+<li>Add project with your new unit to the solution: select <em>File → Add → Existing Project</em> and specify path to the project file <code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Units\ScreenTemplate\</span></code>. Rename the unit to <code class="docutils literal notranslate"><span class="pre">Unit_Screen</span></code>.</li>
+<li>Open <code class="docutils literal notranslate"><span class="pre">Unit_AirClassifier</span></code> → <code class="docutils literal notranslate"><span class="pre">Unit.cpp</span></code> and extend the unit with the following functionality:</li>
+</ol>
+<ul>
+<li><p class="first">Edit the unit <code class="docutils literal notranslate"><span class="pre">CUnit</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Modify constructor <code class="docutils literal notranslate"><span class="pre">CUnit()</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Specify unit’s name by changing value of variable <code class="docutils literal notranslate"><span class="pre">m_sUnitName</span></code> to <code class="docutils literal notranslate"><span class="pre">Dynamic</span> <span class="pre">screen</span></code>. This name will appear in the drop-down list for unit types in Dyssol simulation.</p>
+</li>
+<li><p class="first">Specify author’s name by changing the value of the variable <code class="docutils literal notranslate"><span class="pre">m_sAuthorName</span></code>.</p>
+</li>
+<li><p class="first">For <code class="docutils literal notranslate"><span class="pre">m_sUniqueID</span></code>, unlike the examples in steady-state unit, DO NOT change the ID, because the given ID is connected with the simulation file provided. If you change the ID, the parameter in simulation file would not be read by Dyssol and you can’t carry out your simulaiton.</p>
+</li>
+<li><p class="first">Add unit parameters: add 5 constant unit parameters using <code class="docutils literal notranslate"><span class="pre">AddConstParameter</span></code> and set their initial values according to your wish:</p>
+<blockquote>
+<div><ul class="simple">
+<li>0 ≤ <code class="docutils literal notranslate"><span class="pre">alpha</span></code> ≤ 100</li>
+<li>0 ≤ <code class="docutils literal notranslate"><span class="pre">Xcut</span></code> ≤ 1</li>
+<li>0 ≤ <code class="docutils literal notranslate"><span class="pre">Mout</span></code> ≤ 100</li>
+<li>0 ≤ <code class="docutils literal notranslate"><span class="pre">k1</span></code> ≤1</li>
+<li>0 ≤ <code class="docutils literal notranslate"><span class="pre">k2</span></code> ≤ 1</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>Now your constructor code looks like this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="n">CUnit</span><span class="o">::</span><span class="n">CUnit</span><span class="p">()</span> <span class="p">{</span>
+
+        <span class="c1">// Basic unit&#39;s info</span>
+        <span class="n">m_sUnitName</span> <span class="o">=</span> <span class="s">&quot;Dynamic Screen&quot;</span><span class="p">;</span>
+        <span class="n">m_sAuthorName</span> <span class="o">=</span> <span class="s">&quot;Your name&quot;</span><span class="p">;</span>
+        <span class="n">m_sUniqueID</span> <span class="o">=</span> <span class="s">&quot;C7755DAF619C448D863D1CBCC13648BC&quot;</span><span class="p">;</span> <span class="c1">// DO NOT change this ID</span>
+
+        <span class="c1">// Add ports</span>
+        <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">,</span> <span class="n">INPUT_PORT</span><span class="p">);</span>
+        <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Coarse&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
+        <span class="n">AddPort</span><span class="p">(</span><span class="s">&quot;Fines&quot;</span><span class="p">,</span> <span class="n">OUTPUT_PORT</span><span class="p">);</span>
+
+        <span class="c1">// Add unit parameters</span>
+        <span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;alpha&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Separation sharpness&quot;</span><span class="p">);</span> <span class="c1">// alpha</span>
+        <span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;Xcut&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Cut size [m]&quot;</span><span class="p">);</span> <span class="c1">// Xcut</span>
+        <span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;Mout&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">100</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Output mass flow [kg/s]&quot;</span><span class="p">);</span> <span class="c1">// Mout</span>
+        <span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;k1&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="s">&quot;Time-dependent sharpness reduction factor [1/s]&quot;</span><span class="p">);</span> <span class="c1">// k1</span>
+        <span class="n">AddConstParameter</span><span class="p">(</span><span class="s">&quot;k2&quot;</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">0.001</span><span class="p">,</span> <span class="s">&quot;Mass-dependent sharpness reduction factor [1/kg]&quot;</span><span class="p">);</span> <span class="c1">// k2</span>
+
+        <span class="c1">// Add holdups</span>
+        <span class="n">AddHoldup</span><span class="p">(</span><span class="s">&quot;Holdup&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Set this unit as user data of model</span>
+        <span class="n">m_Model</span><span class="p">.</span><span class="n">SetUserData</span><span class="p">(</span><span class="k">this</span><span class="p">);</span>
+
+<span class="p">}</span>
 </pre></div>
 </div>
-<p>Here the DAE system should be <strong>specified in implicit form</strong>. This function will be called by solver automatically.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Modify function <code class="docutils literal notranslate"><span class="pre">Initialize(double</span> <span class="pre">_dTime)</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Check flowsheet parameters: raise errors (<code class="docutils literal notranslate"><span class="pre">RaiseError</span></code>) if distribution by size (<code class="docutils literal notranslate"><span class="pre">IsDistributionDefined</span></code>) and the solid phase (<code class="docutils literal notranslate"><span class="pre">IsPhaseDefined</span></code>) are not defined.</p>
+</li>
+<li><p class="first">Add plots: add a plot with the name “Plot1” to show dependency of the separation sharpness (Y axis is “Sharpness”) over time (X axis is “Time”). Add a curve on this plot with the name “Sharpness”. Use functions <code class="docutils literal notranslate"><span class="pre">AddPlot</span></code>, <code class="docutils literal notranslate"><span class="pre">AddCurveOnPlot</span></code>.</p>
+</li>
+<li><p class="first">Add state variables to the model: add differential and algebraic variables (<code class="docutils literal notranslate"><span class="pre">AddDAEVariable</span></code>), which will be calculated by the internal DAE solver (see equations above). Set all initial values to 0.</p>
+<blockquote>
+<div><ul class="simple">
+<li>Differential variable for the holdup mass <code class="docutils literal notranslate"><span class="pre">Holdup</span></code> (already defined);</li>
+<li>Differential variable for the separation sharpness <code class="docutils literal notranslate"><span class="pre">alpha</span></code>;</li>
+<li>Algebraic variable for the output mass flow <code class="docutils literal notranslate"><span class="pre">Mout</span></code>.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>The example code for this function is shown below.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CUnit</span><span class="o">::</span><span class="n">Initialize</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// Check flowsheet parameters</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsDistributionDefined</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseError</span><span class="p">(</span><span class="s">&quot;Size distribution has not been defined!&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">IsPhaseDefined</span><span class="p">(</span><span class="n">SOA_SOLID</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseError</span><span class="p">(</span><span class="s">&quot;Solid phase has not been defined!&quot;</span><span class="p">);</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Add plots</span>
+        <span class="n">AddPlot</span><span class="p">(</span><span class="s">&quot;Plot1&quot;</span><span class="p">,</span> <span class="s">&quot;Time [s]&quot;</span><span class="p">,</span> <span class="s">&quot;Sharpness [-]&quot;</span><span class="p">);</span>
+        <span class="n">AddCurveOnPlot</span><span class="p">(</span><span class="s">&quot;Plot1&quot;</span><span class="p">,</span> <span class="s">&quot;Sharpness&quot;</span><span class="p">);</span>
+
+        <span class="c1">// Clear all state variables in model</span>
+        <span class="n">m_Model</span><span class="p">.</span><span class="n">ClearVariables</span><span class="p">();</span>
+
+        <span class="c1">// Add state variables to a model</span>
+        <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="n">GetHoldup</span><span class="p">(</span><span class="s">&quot;Holdup&quot;</span><span class="p">)</span><span class="o">-&gt;</span><span class="n">GetMass</span><span class="p">(</span><span class="n">_dTime</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// holdup mass</span>
+        <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">true</span><span class="p">,</span> <span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;alpha&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// separation sharpness</span>
+        <span class="n">m_Model</span><span class="p">.</span><span class="n">AddDAEVariable</span><span class="p">(</span><span class="nb">false</span><span class="p">,</span> <span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;Mout&quot;</span><span class="p">),</span> <span class="mi">0</span><span class="p">);</span> <span class="c1">// output mass flow</span>
+
+        <span class="c1">// Set tolerances to model</span>
+        <span class="n">m_Model</span><span class="p">.</span><span class="n">SetTolerance</span><span class="p">(</span><span class="n">GetRelTolerance</span><span class="p">()</span> <span class="o">*</span> <span class="mi">10</span><span class="p">,</span> <span class="n">GetAbsTolerance</span><span class="p">()</span> <span class="o">*</span> <span class="mi">10</span><span class="p">);</span>
+
+        <span class="c1">// Set model to a solver</span>
+        <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">m_Solver</span><span class="p">.</span><span class="n">SetModel</span><span class="p">(</span><span class="o">&amp;</span><span class="n">m_Model</span><span class="p">))</span> <span class="p">{</span>
+                <span class="n">RaiseError</span><span class="p">(</span><span class="n">m_Solver</span><span class="p">.</span><span class="n">GetError</span><span class="p">());</span>
+        <span class="p">}</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Edit the solver <code class="docutils literal notranslate"><span class="pre">CMyDAEModel</span></code>:</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Modify function <code class="docutils literal notranslate"><span class="pre">CalculateResiduals(double</span> <span class="pre">_dTime,</span> <span class="pre">double*</span> <span class="pre">_pVars,</span> <span class="pre">double*</span> <span class="pre">_pDers,</span> <span class="pre">double*</span> <span class="pre">_pRes,</span> <span class="pre">void*</span> <span class="pre">_pUserData)</span></code>: this function computes the problem residual for given values of the independent variable <code class="docutils literal notranslate"><span class="pre">_dTime</span></code>, state vector <code class="docutils literal notranslate"><span class="pre">_pVars</span></code> (defined variables from 7.3), and their derivatives <code class="docutils literal notranslate"><span class="pre">_pDerivs</span></code>. Here the DAE system itself must be specified in implicit form.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Get pointers to streams: obtain pointer to holdup for further work with its parameters: <code class="docutils literal notranslate"><span class="pre">GetHoldup</span></code>.</p>
+</li>
+<li><p class="first">Get values of input and internal parameters: obtain current values of:</p>
+<blockquote>
+<div><ul class="simple">
+<li>unit parameters <span class="math notranslate nohighlight">\(k_1\)</span>, <span class="math notranslate nohighlight">\(k_2\)</span>, <span class="math notranslate nohighlight">\(\dot{m}_{out}\)</span> (<code class="docutils literal notranslate"><span class="pre">unit-&gt;GetConstParameterValue()</span></code>)</li>
+<li>mass flow of the inlet at current time point (<code class="docutils literal notranslate"><span class="pre">inStream-&gt;GetMassFlow()</span></code>)</li>
+<li>mass in the holdup at current time point (<code class="docutils literal notranslate"><span class="pre">holdup-&gt;GetMass()</span></code>)</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">Calculate and set residuals: calculate residuals of all variables from 7.2 according to equations above:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">_pVars[0]</span></code> – calculated value of the holdup mass <span class="math notranslate nohighlight">\(M_h\)</span></li>
+<li><code class="docutils literal notranslate"><span class="pre">_pVars[1]</span></code> – calculated value of the separation sharpness <span class="math notranslate nohighlight">\(\alpha\)</span></li>
+<li><code class="docutils literal notranslate"><span class="pre">_pVars[2]</span></code> – calculated value of the output mass flow <span class="math notranslate nohighlight">\(\dot{m}_{out}\)</span>.</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>The example code is shown below.</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CMyDAEModel</span><span class="o">::</span><span class="n">CalculateResiduals</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDers</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pRes</span><span class="p">,</span> <span class="kt">void</span><span class="o">*</span> <span class="n">_pUserData</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// Get pointers to streams</span>
+        <span class="n">CUnit</span> <span class="o">*</span><span class="n">unit</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">CUnit</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">_pUserData</span><span class="p">);</span>
+        <span class="n">CMaterialStream</span> <span class="o">*</span><span class="n">inStream</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">);</span> <span class="c1">// Input</span>
+        <span class="n">CHoldup</span> <span class="o">*</span><span class="n">holdup</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetHoldup</span><span class="p">(</span><span class="s">&quot;Holdup&quot;</span><span class="p">);</span> <span class="c1">// Holdup</span>
+
+        <span class="c1">// Get time parameters</span>
+        <span class="kt">double</span> <span class="n">prevTime</span> <span class="o">=</span> <span class="n">holdup</span><span class="o">-&gt;</span><span class="n">GetLastTimePoint</span><span class="p">();</span>
+        <span class="kt">double</span> <span class="n">dTime</span> <span class="o">=</span> <span class="n">_dTime</span> <span class="o">-</span> <span class="n">prevTime</span><span class="p">;</span>
+
+        <span class="c1">// Get values of input and internal parameters</span>
+        <span class="kt">double</span> <span class="n">k1</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;k1&quot;</span><span class="p">);</span> <span class="c1">// k1</span>
+        <span class="kt">double</span> <span class="n">k2</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;k2&quot;</span><span class="p">);</span> <span class="c1">// k2</span>
+        <span class="kt">double</span> <span class="n">mOut</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;Mout&quot;</span><span class="p">);</span> <span class="c1">// Mout</span>
+        <span class="kt">double</span> <span class="n">mIn</span> <span class="o">=</span> <span class="n">inStream</span><span class="o">-&gt;</span><span class="n">GetMassFlow</span><span class="p">(</span><span class="n">_dTime</span><span class="p">);</span> <span class="c1">// Mass flow in inlet</span>
+        <span class="kt">double</span> <span class="n">MhPrev</span> <span class="o">=</span> <span class="n">holdup</span><span class="o">-&gt;</span><span class="n">GetMass</span><span class="p">(</span><span class="n">prevTime</span><span class="p">);</span> <span class="c1">// Mass in holdup</span>
+
+        <span class="c1">// Calculate and set residuals</span>
+        <span class="kt">double</span> <span class="n">derMassHoldup</span> <span class="o">=</span> <span class="n">mIn</span> <span class="o">-</span> <span class="n">mOut</span><span class="p">;</span>
+        <span class="kt">double</span> <span class="n">derAlpha</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">k1</span> <span class="o">-</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="p">(</span><span class="n">MhPrev</span> <span class="o">+</span> <span class="n">derMassHoldup</span><span class="p">)</span><span class="o">*</span><span class="n">k2</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">valMassFlowOut</span><span class="p">;</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">mOut</span> <span class="o">*</span> <span class="n">dTime</span> <span class="o">&lt;</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span> <span class="p">{</span>
+                <span class="n">valMassFlowOut</span> <span class="o">=</span> <span class="n">mOut</span><span class="p">;</span>
+        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+                <span class="n">valMassFlowOut</span> <span class="o">=</span> <span class="n">mIn</span><span class="p">;</span>
+        <span class="p">}</span>
+
+        <span class="n">_pRes</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pDers</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">-</span> <span class="n">derMassHoldup</span><span class="p">;</span>
+        <span class="n">_pRes</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pDers</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">derAlpha</span><span class="p">;</span>
+        <span class="n">_pRes</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">2</span><span class="p">]</span> <span class="o">-</span> <span class="n">valMassFlowOut</span><span class="p">;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+<li><p class="first">Modify function <code class="docutils literal notranslate"><span class="pre">ResultsHandler(double</span> <span class="pre">_dTime,</span> <span class="pre">double*</span> <span class="pre">_pVars,</span> <span class="pre">double*</span> <span class="pre">_pDerivs,</span> <span class="pre">void</span> <span class="pre">*_pUserData)</span></code>: this function processes the results returned by the solver at each calculated step. Is called by solver every time, when the solution in the new time point is ready.</p>
+<blockquote>
+<div><ul>
+<li><p class="first">Get pointers to streams: obtain pointers to streams <code class="docutils literal notranslate"><span class="pre">Input</span></code>, <code class="docutils literal notranslate"><span class="pre">Coarse</span></code> and <code class="docutils literal notranslate"><span class="pre">Fines</span></code>, as well as to holdup <code class="docutils literal notranslate"><span class="pre">Holdup</span></code> for further work with their parameters (use functions <code class="docutils literal notranslate"><span class="pre">GetPortStream</span></code> and <code class="docutils literal notranslate"><span class="pre">GetHoldup</span></code>).</p>
+</li>
+<li><p class="first">Add points on plot: put value of the separation sharpness <span class="math notranslate nohighlight">\(\alpha\)</span> (calculated by the <abbr title="Differential-algebraic equation">DAE</abbr> solver in <code class="docutils literal notranslate"><span class="pre">_pVars[1]</span></code>) on the curve “Sharpness” of the plot “Plot1”. Use the function <code class="docutils literal notranslate"><span class="pre">AddPointOnCurve()</span></code>.</p>
+</li>
+<li><p class="first">Mix the input stream with the holdup: use the function <code class="docutils literal notranslate"><span class="pre">AddStream</span></code> to add the content of the inlet between  time points <code class="docutils literal notranslate"><span class="pre">holdup-&gt;GetLastTimePoint()</span></code> and <code class="docutils literal notranslate"><span class="pre">_dTime</span></code> to the holdup.</p>
+</li>
+<li><p class="first">Calculate <a class="reference internal" href="multiDim.html#label-tm"><span class="std std-ref">transformation matrices</span></a>: calculate values of the screening efficiency <span class="math notranslate nohighlight">\(G(x_i)\)</span> to fill in two transformation matrices:</p>
+<blockquote>
+<div><p><code class="docutils literal notranslate"><span class="pre">THoldupToFines</span></code> – to transform holdup into the output of fines material. All elements NOT on diagonal are zero. <span class="math notranslate nohighlight">\(G(x_i)\)</span> of classe <span class="math notranslate nohighlight">\(i\)</span> locates at position <span class="math notranslate nohighlight">\((i,i)\)</span>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">THoldupToCoarse</span></code> – to transform holdup into the output of coarse material. All elements NOT on diagonal are zero. The value <span class="math notranslate nohighlight">\(1-G(x_i)\)</span> of classe <span class="math notranslate nohighlight">\(i\)</span> locates at position <span class="math notranslate nohighlight">\((i,i)\)</span>.</p>
+<p>Here also fractions of mass streams of coarse and fines outlets must be calculated according to the grade efficiency <span class="math notranslate nohighlight">\(G(x_i)\)</span>. The <a class="reference internal" href="units.html#label-screenplitt"><span class="std std-ref">screen unit of Plitt’s model</span></a> can be used as a reference.</p>
+</div></blockquote>
+</li>
+<li><p class="first">Copy the holdup to the output streams: copy all parameters of the holdup into the both outlet streams using function <code class="docutils literal notranslate"><span class="pre">CopyFromHoldup</span></code> and set their new mass flows, calculated by the <abbr title="Differential-algebraic equation">DAE</abbr> solver in <code class="docutils literal notranslate"><span class="pre">_pVars[2]</span></code>. This calculated mass must be previously scaled according to the grade efficiency <span class="math notranslate nohighlight">\(G(x_i)\)</span>.</p>
+</li>
+<li><p class="first">Apply transformation matrices: apply transformation of the <abbr title="Particle size distribution">PSD</abbr> to the outputs, using the function <code class="docutils literal notranslate"><span class="pre">ApplyTM</span></code>.</p>
+</li>
+<li><p class="first">Set new mass to the holdup, using the function <code class="docutils literal notranslate"><span class="pre">SetMass</span></code>. It is calculated by the <abbr title="Differential-algebraic equation">DAE</abbr> solver in <code class="docutils literal notranslate"><span class="pre">_pVars[0]</span></code>.</p>
+</li>
+</ul>
+<p>The example code looks like this:</p>
+<div class="highlight-cpp notranslate"><div class="highlight"><pre><span></span><span class="kt">void</span> <span class="n">CMyDAEModel</span><span class="o">::</span><span class="n">ResultsHandler</span><span class="p">(</span><span class="kt">double</span> <span class="n">_dTime</span><span class="p">,</span><span class="kt">double</span><span class="o">*</span> <span class="n">_pVars</span><span class="p">,</span> <span class="kt">double</span><span class="o">*</span> <span class="n">_pDerivs</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">_pUserData</span><span class="p">)</span> <span class="p">{</span>
+
+        <span class="c1">// Get pointers to streams</span>
+        <span class="n">CUnit</span> <span class="o">*</span><span class="n">unit</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">CUnit</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">_pUserData</span><span class="p">);</span>
+        <span class="n">CMaterialStream</span> <span class="o">*</span><span class="n">inStream</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Input&quot;</span><span class="p">);</span> <span class="c1">// Input</span>
+        <span class="n">CMaterialStream</span> <span class="o">*</span><span class="n">outStreamC</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Coarse&quot;</span><span class="p">);</span> <span class="c1">// Coarse</span>
+        <span class="n">CMaterialStream</span> <span class="o">*</span><span class="n">outStreamF</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPortStream</span><span class="p">(</span><span class="s">&quot;Fines&quot;</span><span class="p">);</span> <span class="c1">// Fines</span>
+        <span class="n">CHoldup</span> <span class="o">*</span><span class="n">holdup</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetHoldup</span><span class="p">(</span><span class="s">&quot;Holdup&quot;</span><span class="p">);</span> <span class="c1">// Holdup</span>
+
+        <span class="c1">// Get values of unit parameters at current time point</span>
+        <span class="kt">double</span> <span class="n">xCut</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetConstParameterValue</span><span class="p">(</span><span class="s">&quot;Xcut&quot;</span><span class="p">);</span>
+        <span class="kt">double</span> <span class="n">Mh</span> <span class="o">=</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">0</span><span class="p">];</span>
+        <span class="kt">double</span> <span class="n">alpha</span> <span class="o">=</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+        <span class="kt">double</span> <span class="n">mFlowOut</span> <span class="o">=</span> <span class="n">_pVars</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+
+        <span class="c1">// Add points on plot</span>
+        <span class="n">unit</span><span class="o">-&gt;</span><span class="n">AddPointOnCurve</span><span class="p">(</span><span class="s">&quot;Plot1&quot;</span><span class="p">,</span> <span class="s">&quot;Sharpness&quot;</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">,</span> <span class="n">alpha</span><span class="p">);</span>
+
+        <span class="c1">// Mix input stream with holdup</span>
+        <span class="n">holdup</span><span class="o">-&gt;</span><span class="n">AddStream</span><span class="p">(</span><span class="n">inStream</span><span class="p">,</span> <span class="n">holdup</span><span class="o">-&gt;</span><span class="n">GetLastTimePoint</span><span class="p">(),</span> <span class="n">_dTime</span><span class="p">);</span>
+
+        <span class="c1">// Obtain parameters for PSD calculation</span>
+        <span class="kt">unsigned</span> <span class="n">classesNum</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetClassesNumber</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">);</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">unit</span><span class="o">-&gt;</span><span class="n">GetPSDMeanDiameters</span><span class="p">();</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">holdupPSD</span> <span class="o">=</span> <span class="n">holdup</span><span class="o">-&gt;</span><span class="n">GetPSD</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">PSD_MassFrac</span><span class="p">);</span>
+
+        <span class="c1">// Setup transformation matrices</span>
+        <span class="n">CTransformMatrix</span> <span class="nf">THoldupToCoarse</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">,</span> <span class="n">classesNum</span><span class="p">);</span>
+        <span class="n">CTransformMatrix</span> <span class="nf">THoldupToFines</span><span class="p">(</span><span class="n">DISTR_SIZE</span><span class="p">,</span> <span class="n">classesNum</span><span class="p">);</span>
+
+        <span class="c1">// Calculate transformation matrices</span>
+        <span class="kt">double</span> <span class="n">massFactor</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+        <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">classesNum</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="k">for</span> <span class="p">(</span><span class="kt">unsigned</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">j</span> <span class="o">&lt;</span> <span class="n">classesNum</span><span class="p">;</span> <span class="n">j</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                        <span class="k">if</span> <span class="p">(</span><span class="n">i</span> <span class="o">==</span> <span class="n">j</span><span class="p">)</span>  <span class="p">{</span> <span class="c1">// if this is a diagonal element</span>
+                                <span class="kt">double</span> <span class="n">val</span> <span class="o">=</span> <span class="mi">1</span> <span class="o">/</span> <span class="p">(</span><span class="mi">1</span> <span class="o">+</span> <span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">xCut</span> <span class="o">/</span> <span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">],</span> <span class="mf">2.0</span><span class="p">)</span> <span class="o">*</span> <span class="n">std</span><span class="o">::</span><span class="n">exp</span><span class="p">(</span><span class="n">alpha</span> <span class="o">*</span> <span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">pow</span><span class="p">(</span><span class="n">x</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">/</span> <span class="n">xCut</span><span class="p">,</span> <span class="mf">2.0</span><span class="p">)))));</span>
+                                <span class="n">THoldupToCoarse</span><span class="p">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="n">val</span><span class="p">);</span>
+                                <span class="n">THoldupToFines</span><span class="p">.</span><span class="n">SetValue</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">j</span><span class="p">,</span> <span class="mi">1</span> <span class="o">-</span> <span class="n">val</span><span class="p">);</span>
+                                <span class="n">massFactor</span> <span class="o">=</span> <span class="n">massFactor</span> <span class="o">+</span> <span class="n">holdupPSD</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="n">val</span><span class="p">;</span>
+                        <span class="p">}</span>
+                <span class="p">}</span>
+        <span class="p">}</span>
+
+        <span class="c1">// Copy holdup to output streams</span>
+        <span class="n">outStreamC</span><span class="o">-&gt;</span><span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">holdup</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">,</span> <span class="n">mFlowOut</span><span class="o">*</span><span class="n">massFactor</span><span class="p">);</span>
+        <span class="n">outStreamF</span><span class="o">-&gt;</span><span class="n">CopyFromHoldup</span><span class="p">(</span><span class="n">holdup</span><span class="p">,</span> <span class="n">_dTime</span><span class="p">,</span> <span class="n">mFlowOut</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span> <span class="o">-</span> <span class="n">massFactor</span><span class="p">));</span>
+
+        <span class="c1">// Apply transformation matrix</span>
+        <span class="n">outStreamC</span><span class="o">-&gt;</span><span class="n">ApplyTM</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">THoldupToCoarse</span><span class="p">);</span>
+        <span class="n">outStreamF</span><span class="o">-&gt;</span><span class="n">ApplyTM</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">THoldupToFines</span><span class="p">);</span>
+
+        <span class="c1">// Set new mass to the holdup</span>
+        <span class="n">holdup</span><span class="o">-&gt;</span><span class="n">SetMass</span><span class="p">(</span><span class="n">_dTime</span><span class="p">,</span> <span class="n">Mh</span><span class="p">);</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<ol class="arabic simple" start="6">
+<li>Test your unit in Dyssol:</li>
+</ol>
+<ul class="simple">
+<li>Build the solution and run Dyssol: <em>Build → Build Solution</em>, and then <em>Debug → Start Debugging</em>.</li>
+<li>Use exemplary flowsheet <code class="docutils literal notranslate"><span class="pre">...\Task7\DynamicScreen.dflw</span></code> to test your unit. Compare your results with the expected ones in the figures below.</li>
+</ul>
+<a class="reference internal image-reference" href="_images/task7-1.jpg"><img alt="" class="align-center" src="_images/task7-1.jpg" style="width: 800px;" /></a>
 <div class="line-block">
 <div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/task7-2.jpg"><img alt="" class="align-center" src="_images/task7-2.jpg" style="width: 800px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
+<a class="reference internal image-reference" href="_images/task7-3.jpg"><img alt="" class="align-center" src="_images/task7-3.jpg" style="width: 800px;" /></a>
+<div class="line-block">
+<div class="line"><br /></div>
+</div>
 </div>
 </div>
 <div class="section" id="configure-unit-to-work-with-matlab">
@@ -478,8 +1615,14 @@
 <p>After builiding your own new solvers, the functionality of them can be applied in all units by adding them as <a class="reference internal" href="class.html#label-unitparameters"><span class="std std-ref">unit parameters</span></a>.</p>
 <p>Basically, all solvers have a set of constant functions and parameters, which are available in each new solver (<a class="reference internal" href="class.html#label-externalsolver"><span class="std std-ref">External solver</span></a>). and a set of specific ones, which depend on the solver’s type. New types of solvers can be added upon request and will include a set of parameters and functions that are needed to solve a specific problem.</p>
 <p>You can implement several solvers of one type (e.g. with different models) and then choose a specific one to use it in unit by user interface, please refer to section <a class="reference internal" href="class.html#label-unitparameters"><span class="std std-ref">Unit parameters</span></a> in <a class="reference internal" href="class.html#label-class"><span class="std std-ref">Classes</span></a>.</p>
-<p>There is also detailed information about <a class="reference internal" href="class.html#label-dae"><span class="std std-ref">DAE Systems</span></a>, with which you can solve systems of differential-algebraic equations automatically.</p>
-<p>Please notice that in the current version of Dyssol, only <a class="reference internal" href="solver.html#label-agg-solvers"><span class="std std-ref">Agglomeration solvers</span></a> is available for solver development. The <a class="reference internal" href="class.html#label-externalsolver"><span class="std std-ref">External solver</span></a> and <a class="reference internal" href="class.html#label-daesolver"><span class="std std-ref">DAE solver</span></a> are implemented by means of internet resources connected to Dyssol and thus cannot be developed all by yourself.</p>
+<p>Please notice that in the current version of Dyssol, only <a class="reference internal" href="solver.html#label-agg-solvers"><span class="std std-ref">Agglomeration solvers</span></a> is available for solver development. The following solvers are implemented by means of <a class="reference internal" href="simulation.html#label-equationsolvers"><span class="std std-ref">open-source libraries</span></a> connected to Dyssol and thus cannot be developed by yourself.</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="class.html#label-externalsolver"><span class="std std-ref">External solver</span></a></li>
+<li><a class="reference internal" href="class.html#label-daesolver"><span class="std std-ref">DAE solver</span></a> for dynamic units</li>
+<li><a class="reference internal" href="#label-nlsolver"><span class="std std-ref">Non-linear solver</span></a> for steady-state units</li>
+</ul>
+</div></blockquote>
 <div class="line-block">
 <div class="line"><br /></div>
 </div>
@@ -510,10 +1653,10 @@
 <p>In general, usual configuration of <em>Model manager</em> should include following path for solvers:</p>
 <blockquote>
 <div><ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">&lt;InstallationPath&gt;\Solvers</span></code>: list of standard solvers;</li>
-<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\SolversDebugLibs</span></code>: debug versions of standard solvers;</li>
-<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Debug</span></code>: debug versions of developed solvers;</li>
-<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Release</span></code>: release versions of developed solvers.</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;InstallationPath&gt;\Solvers\</span></code>: list of standard solvers;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\SolversDebugLibs\</span></code>: debug versions of standard solvers;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Debug\</span></code>: debug versions of developed solvers;</li>
+<li><code class="docutils literal notranslate"><span class="pre">&lt;PathToSolution&gt;\VCProject\Release\</span></code>: release versions of developed solvers.</li>
 </ul>
 </div></blockquote>
 <div class="line-block">
@@ -612,10 +1755,22 @@
 <li><a class="reference internal" href="#unit-development">Unit development</a><ul>
 <li><a class="reference internal" href="#add-new-unit-to-the-template-project">Add new unit to the template project</a></li>
 <li><a class="reference internal" href="#configure-dyssol-to-work-with-implemented-units">Configure Dyssol to work with implemented units</a></li>
-<li><a class="reference internal" href="#development-of-steady-state-units">Development of steady-state units</a></li>
-<li><a class="reference internal" href="#development-of-steady-state-units-with-internal-non-linear-solver">Development of steady-state units with internal non-linear solver</a></li>
-<li><a class="reference internal" href="#development-of-dynamic-units">Development of dynamic units</a></li>
-<li><a class="reference internal" href="#development-of-dynamic-units-with-internal-dae-solver">Development of dynamic units with internal DAE solver</a></li>
+<li><a class="reference internal" href="#development-of-steady-state-units">Development of steady-state units</a><ul>
+<li><a class="reference internal" href="#application-example">Application example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development-of-steady-state-units-with-internal-non-linear-solver">Development of steady-state units with internal non-linear solver</a><ul>
+<li><a class="reference internal" href="#id1">Application example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development-of-dynamic-units">Development of dynamic units</a><ul>
+<li><a class="reference internal" href="#id2">Application example</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#development-of-dynamic-units-with-internal-dae-solver">Development of dynamic units with internal DAE solver</a><ul>
+<li><a class="reference internal" href="#id3">Application example</a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#configure-unit-to-work-with-matlab">Configure unit to work with MATLAB</a></li>
 </ul>
 </li>
