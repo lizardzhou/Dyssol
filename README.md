@@ -20,3 +20,4 @@ The `.rst` file with reStructuredText markup language is applied in Sphinx for e
 
 For editing a document, open the corresponding `.rst` file in an editor and edit as you wish, save it and open Anaconda Prompt command window, get to the path where the documentation project locates, then run `make html` and you will see the compiling progress. Afterwards you can check your changes in web pages locating in folder `build`.
 
+For adding a new web page, simply build a new `.rst` file in folder `source`. Please note that all `.rst` files in `source` should be included in the `toctree` section in `index.rst`.
