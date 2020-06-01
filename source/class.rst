@@ -2052,7 +2052,7 @@ Returns ``false`` on error.
 	
 Returns matrix of two distributed dependent properties ``Dim1`` and ``Dim2`` for specified compound ``Compound`` and time point ``Time``. 
 
-Input dimensions should not include distribution by compounds (DISTR_COMPOUNDS). If specified compound has not been defined in the material stream / holdup, nothing will be done. If specified time point has not been defined, then linear interpolation will be used to obtain data. Rows of resulting matrix will correspond to ``Dim1``, columns to ``Dim2``. 
+Input dimensions should not include distribution by compounds (``DISTR_COMPOUNDS``). If specified compound has not been defined in the material stream / holdup, nothing will be done. If specified time point has not been defined, then linear interpolation will be used to obtain data. Rows of resulting matrix will correspond to ``Dim1``, columns to ``Dim2``. 
 
 Returns ``false`` on error.
 
