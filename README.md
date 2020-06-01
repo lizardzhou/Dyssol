@@ -18,5 +18,5 @@ In the python [configuration](https://www.sphinx-doc.org/en/master/usage/configu
 
 The `.rst` file with reStructuredText markup language is applied in Sphinx for editing the pages. For more information about this languague please refer to the [Markdown-Cheatsheet](https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet#links).
 
-For editing a document, open the corresponding `.rst` file in an editor and edit as you wish, save it and open Anaconda Prompt command window, get to the path where the documentation project locates, then run `make html` and you will see the compiling progress. Afterwards you can check your changes in web pages locatting in folder `build`.
+For editing a document, open the corresponding `.rst` file in an editor and edit as you wish, save it and open Anaconda Prompt command window, get to the path where the documentation project locates, then run `make html` and you will see the compiling progress. Afterwards you can check your changes in web pages locating in folder `build`.
 
