@@ -20,7 +20,9 @@ You can find the database structure in the figure below. The compound properties
 DMDB file
 ---------
 
-You can find the file ``Materials.dmdb`` in your installation folder, which stores global list of **materials** and their **parameters**. Typical examples are air, coal, sand, urea and water. You can extend this database freely by defining your own new materials.
+You can find the file ``Materials.dmdb`` in your installation folder, which stores global list of **materials** and their **parameters**. Typical examples in current database are air, coal, sand, urea and water. 
+
+You can extend this database by defining your own new materials using the *Tools* menu bar → *Materials database*, which opens the *compounds editor* and enables you to set new compounds.
 
 .. image:: ./pics/material/path.png
    :width: 200px
